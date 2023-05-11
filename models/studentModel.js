@@ -30,6 +30,10 @@ const studentSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: "Department",
   },
+  isApplied: {
+    type: Boolean,
+    default: false,
+  },
   isVoted: {
     type: Boolean,
     default: false,

@@ -3,7 +3,11 @@ const mongoose = require("mongoose");
 const facultyRepSchema = new mongoose.Schema({
   candidateInfos: {
     type: mongoose.Schema.ObjectId,
-    ref: "Candidate",
+    ref: "FacultyCandidate",
+  },
+  isCouncilHead: {
+    type: Boolean,
+    default: false,
   },
 });
 

@@ -4,7 +4,7 @@ const facultyElectionSchema = new mongoose.Schema({
   officialCandidates: [
     {
       type: mongoose.Schema.ObjectId,
-      ref: "Candidate",
+      ref: "FacultyCandidate",
     },
   ],
   startDate: {

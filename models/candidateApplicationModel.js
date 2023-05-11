@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+//BU SONRA YAPILACAK
+const multer = require("multer");
 
 const candidateApplicationSchema = new mongoose.Schema({
   studentInfos: {

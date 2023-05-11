@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
 
-const voteSchema = new mongoose.Schema({
+const facultyVoteSchema = new mongoose.Schema({
   voteSender: {
     type: mongoose.Schema.ObjectId,
     ref: "Student",
   },
   voteReceiver: {
     type: mongoose.Schema.ObjectId,
-    ref: "Candidate",
+    ref: "FacultyCandidate",
   },
   voteDate: {
     type: Date,
@@ -15,6 +15,6 @@ const voteSchema = new mongoose.Schema({
   },
 });
 
-const Vote = mongoose.model("Vote", voteSchema);
+const facultyVote = mongoose.model("FacultyVote", facultyVoteSchema);
 
-module.exports = Vote;
+module.exports = FacultyVote;
