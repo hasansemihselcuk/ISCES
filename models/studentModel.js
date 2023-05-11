@@ -26,9 +26,9 @@ const studentSchema = new mongoose.Schema({
     minlength: 6,
     select: false,
   },
-  faculty: {
-    type: String,
-    trim: true,
+  department: {
+    type: mongoose.Schema.ObjectId,
+    ref: "Department",
   },
 });
 
