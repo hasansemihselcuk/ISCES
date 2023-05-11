@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
+//SONRA YAPILCAK
+const multer = require("multer");
 
 const studentSchema = new mongoose.Schema({
   name: {
@@ -29,6 +31,11 @@ const studentSchema = new mongoose.Schema({
   department: {
     type: mongoose.Schema.ObjectId,
     ref: "Department",
+  },
+  image: {
+    type: String,
+    trim: true,
+    default: "default.jpg",
   },
   isApplied: {
     type: Boolean,
