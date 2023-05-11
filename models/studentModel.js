@@ -30,6 +30,10 @@ const studentSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: "Department",
   },
+  isVoted: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 studentSchema.pre("save", async function (next) {
