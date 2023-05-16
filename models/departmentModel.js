@@ -9,6 +9,7 @@ const departmentSchema = new mongoose.Schema({
   faculty: {
     type: mongoose.Schema.ObjectId,
     ref: "Faculty",
+    required: [true, "Department must belong to a faculty"]
   },
 });
 
