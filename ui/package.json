@@ -38,5 +38,10 @@
   },
   "devDependencies": {
     "tailwindcss": "^3.3.2"
-  }
+  },
+  "description": "<<<<<<< Updated upstream\r # Getting Started with Create React App\r =======\r # reactcenk",
+  "main": "tailwind.config.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
