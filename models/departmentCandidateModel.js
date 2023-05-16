@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 
-const departmentCandidateModel = new mongoose.Schema({
-  candidateInfos: {
+const departmentCandidateSchema = new mongoose.Schema({
+  studentInfos: {
     type: mongoose.Schema.ObjectId,
-    Ref: "CandidateApplication",
+    Ref: "Student",
   },
   voteCount: {
     type: Number,
@@ -11,6 +11,6 @@ const departmentCandidateModel = new mongoose.Schema({
   },
 });
 
-const DepartmentCandidate = mongoose.model("DepartmenCandidate", departmentCandidateModel);
+const DepartmentCandidate = mongoose.model("DepartmenCandidate", departmentCandidateSchema);
 
 module.exports = DepartmentCandidate;

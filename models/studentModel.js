@@ -28,6 +28,15 @@ const studentSchema = new mongoose.Schema({
     minlength: 6,
     select: false,
   },
+  GPA: {
+    type: Number,
+    trim: true,
+    default: 2.0,
+  },
+  year: {
+    type: Number,
+    trim: true,
+  },
   department: {
     type: mongoose.Schema.ObjectId,
     ref: "Department",
@@ -41,7 +50,11 @@ const studentSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  isVoted: {
+  isVotedForDepartment: {
+    type: Boolean,
+    default: false,
+  },
+  isVotedForFaculty: {
     type: Boolean,
     default: false,
   },
