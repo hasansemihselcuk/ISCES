@@ -2,6 +2,7 @@ const { promisify } = require("util");
 const jwt = require("jsonwebtoken");
 const Student = require("../models/studentModel");
 const catchAsync = require("./../utils/catchAsync");
+const Election = require("../models/departmentElectionModel");
 const AppError = require("./../utils/appError");
 
 const signToken = (id) => {
@@ -102,3 +103,27 @@ exports.protect = catchAsync(async (req, res, next) => {
   req.user = currentUser;
   next();
 });
+
+exports.checkElectionStatus = catchAsync(async (req, res, next) => {
+  const election = await Election.findOne({
+    isStarted: true,
+    isEnded: false,
+  });
+  if (!election) {
+    return next(new AppError("Seçim henüz başlamadı veya bitti", 400));
+  }
+  next();
+});
+
+exports.checkElectionStatusForEndElection = catchAsync(
+  async (req, res, next) => {
+    const election = await Election.findOne({
+      isStarted: true,
+      isEnded: true,
+    });
+    if (!election) {
+      return next(new AppError("Seçim henüz başlamadı", 400));
+    }
+    next();
+  }
+);

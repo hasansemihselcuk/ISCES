@@ -1,5 +1,8 @@
 const Student = require("../models/studentModel");
 const Candidate = require("../models/departmentCandidateModel");
+const Election = require("../models/departmentElectionModel");
+const Announce = require("../models/announceModel");
+const Ticket = require("../models/ticketModel");
 const Department = require("../models/departmentModel");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
@@ -42,6 +45,46 @@ exports.getAllDepartmentCandidates = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.startElection = catchAsync(async (req, res, next) => {
+  const currentDateTime = new Date();
+  const endDate = new Date(currentDateTime.getTime() + 24 * 60 * 60 * 1000);
+
+  const departmentElection = new Election({
+    startDate: currentDateTime,
+    endDate: endDate,
+    isStarted: true,
+    isEnded: false,
+  });
+
+  await departmentElection.save();
+
+  res.status(200).json({
+    status: "success",
+    message: "Seçim başlatıldı.",
+    data: {
+      departmentElection,
+    },
+  });
+});
+
+exports.endElection = catchAsync(async (req, res, next) => {
+  const election = await Election.findOne({
+    isStarted: true,
+    isEnded: false,
+  });
+  if (!election) {
+    return next(new AppError("Seçim henüz başlamadı veya bitti", 400));
+  }
+  election.isEnded = true;
+  await election.save();
+  res.status(200).json({
+    status: "success",
+    message: "Seçim sonlandırıldı.",
+    data: {
+      election,
+    },
+  });
+});
 
 //sonra tekrar kontrol edilcek
 exports.announceDepartmentWinners = catchAsync(async (req, res, next) => {
@@ -63,5 +106,43 @@ exports.announceDepartmentWinners = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: "success",
     winnersByDepartment,
+  });
+});
+
+exports.makeAnnouncement = catchAsync(async (req, res, next) => {
+  const { title, description } = req.body;
+  const newAnnounce = new Announce({
+    title,
+    description,
+  });
+  await newAnnounce.save();
+  res.status(200).json({
+    status: "success",
+    data: {
+      newAnnounce,
+    },
+  });
+});
+
+//burası student için de kullanılabilir
+exports.getAnnouncements = catchAsync(async (req, res, next) => {
+  const announces = await Announce.find().sort({ date: -1 });
+  res.status(200).json({
+    status: "success",
+    results: announces.length,
+    data: {
+      announces,
+    },
+  });
+});
+
+exports.getTickets = catchAsync(async (req, res, next) => {
+  const tickets = await Ticket.find().sort({ date: -1 });
+  res.status(200).json({
+    status: "success",
+    results: tickets.length,
+    data: {
+      tickets,
+    },
   });
 });

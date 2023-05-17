@@ -15,6 +15,14 @@ const departmentElectionSchema = new mongoose.Schema({
     type: Date,
     default: Date.now() + 1 * 24 * 60 * 60 * 1000,
   },
+  isStarted: {
+    type: Boolean,
+    default: false,
+  },
+  isEnded: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const DepartmentElection = mongoose.model(
