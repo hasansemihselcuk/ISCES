@@ -1,11 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import AuthContext from "../context/AuthContext";
 import iyteLogo from "../components/nav-bar-pictures/iytelogo.png";
 import axios from "axios";
+import { Link } from "react-router-dom";
 const LogInPage = () => {
   const [isRememberUser, setIsRememberUser] = useState(false);
   const [enteredEmail, setEnteredEmail] = useState("");
   const [enteredPassword, setEnteredPassword] = useState("");
   const [formIsValid, setFormIsValid] = useState(false);
+
+  const authCtx = useContext(AuthContext);
 
   useEffect(() => {
     const identifier = setTimeout(() => {
@@ -43,22 +47,20 @@ const LogInPage = () => {
     const signInInfo = { email: enteredEmail, password: enteredPassword };
     event.preventDefault();
     try {
+      //"http://localhost:3001/api/v1/student/login",
       const res = await axios.post(
         "http://localhost:3001/api/v1/student/login",
         JSON.stringify(signInInfo)
       );
       if (res.data.status === "success") {
-        /*localStorage.setItem("uid", res.data.uid);
+        console.log(res.data);
+        localStorage.setItem("sid", res.data.sid);
         localStorage.setItem(
-          "userInfo",
-          JSON.stringify({ email: signInInfo.email })
-        );*/
-        //authCtx.setUserData(userRole, chefId)
-        /*authCtx.setUserData(userRole)
-        authCtx.onLogin({
-          email: enteredEmail,
-          password: enteredPassword,
-        })*/
+          "studentInfo",
+          JSON.stringify({ email: signInInfo.iztechMail })
+        );
+        console.log(authCtx.isLoggedIn);
+        authCtx.onLogin();
       } else {
         console.log("Wrong password or email");
       }
@@ -73,7 +75,8 @@ const LogInPage = () => {
       <div></div>
       <div className="place-self-end bg-gray-100 w-80 py-20 ml-16">
         <img src={iyteLogo} className="w-40 h-40 ml-16 mb-8"></img>
-        <form className="mb-72" onSubmit={submitHandler}>
+
+        <form className="mb-72">
           <input
             onChange={emailChangeHandler}
             type="text"
@@ -97,12 +100,15 @@ const LogInPage = () => {
             ></div>
             <p className="ml-5">Beni Hatırla</p>
           </div>
-          <button
-            className="mt-8 ml-16 mb-12 w-40 h-10 border-rose-700 border-2 hover:bg-red-700 rounded-lg"
-            disabled={!formIsValid}
-          >
-            Submit
-          </button>
+          <Link to={authCtx.isLoggedIn ? "/" : "/login"}>
+            <button
+              onClick={submitHandler}
+              className="mt-8 ml-16 mb-12 w-40 h-10 border-rose-700 border-2 hover:bg-red-700 rounded-lg"
+              disabled={!formIsValid}
+            >
+              Submit
+            </button>
+          </Link>
         </form>
       </div>
     </div>
