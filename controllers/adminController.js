@@ -41,6 +41,8 @@ exports.getAllDepartmentCandidates = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+
 //sonra tekrar kontrol edilcek
 exports.announceDepartmentWinners = catchAsync(async (req, res, next) => {
   const departments = await Department.find();
