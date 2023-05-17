@@ -59,12 +59,13 @@ const studentSchema = new mongoose.Schema({
     default: false,
   },
 });
-
+/*
 studentSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
   this.password = await bcrypt.hashSync(this.password, 12);
   next();
 });
+
 
 studentSchema.methods.correctPassword = async function (
   candidatePassword,
@@ -72,6 +73,8 @@ studentSchema.methods.correctPassword = async function (
 ) {
   return await bcrypt.compare(candidatePassword, userPassword);
 };
+*/
+
 
 const Student = mongoose.model("Student", studentSchema);
 

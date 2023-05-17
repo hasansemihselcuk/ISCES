@@ -44,7 +44,7 @@ const LogInPage = () => {
     event.preventDefault();
     try {
       const res = await axios.post(
-        "http://127.0.0.1:3001/api/v1/student/login",
+        "http://localhost:3001/api/v1/student/login",
         JSON.stringify(signInInfo)
       );
       if (res.data.status === "success") {
