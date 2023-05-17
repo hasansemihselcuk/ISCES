@@ -52,6 +52,7 @@ const LogInPage = () => {
         "http://localhost:3001/api/v1/student/login",
         JSON.stringify(signInInfo)
       );
+      console.log(res.data);
       if (res.data.status === "success") {
         console.log(res.data);
         localStorage.setItem("sid", res.data.sid);

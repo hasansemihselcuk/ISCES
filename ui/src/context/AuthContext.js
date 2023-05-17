@@ -33,7 +33,7 @@ export const AuthContextProvider = (props) => {
     setIsClickedLogInButton((prevState) => !prevState);
   };
 
-  const loginHandler = () => {
+  const loginHandler = (data) => {
     setIsLoggedIn(true);
   };
   return (

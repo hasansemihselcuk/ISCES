@@ -15,7 +15,6 @@ const MakeApplication = (props) => {
     }
   };
   const sendHandler = (event) => {
-
     if (selected.length === 4) {
       setIsSend(true);
       console.log("deneme");
@@ -44,12 +43,12 @@ const MakeApplication = (props) => {
   ];
 
   return (
-    <form className="candidate-app">
+    <form className="candidate-app mt-20 border-2 border-rose-900 p-8">
       <p className="head">Adaylık Başvurusu</p>{" "}
       {requirements.map((option) => (
         <p key={option.value}>
           <input
-            className="req-op"
+            className="req-op mr-4 mb-4"
             type="checkbox"
             value={option.value}
             onChange={handleOptionChange}
@@ -62,7 +61,9 @@ const MakeApplication = (props) => {
         <label>Fotoğraf(isteğe bağlı) </label>
         <input type="file" id="photo" />
       </div>
-      <button onClick={sendHandler}>Başvuruyu Gönder</button>
+      <button onClick={sendHandler} className="ml-12">
+        Başvuruyu Gönder
+      </button>
       {!isSend && <p>Aday olmak için yeterli şartları taşımıyorsunuz!</p>}
     </form>
   );
