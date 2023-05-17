@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import AuthContext from "../context/AuthContext";
 import iyteLogo from "../components/nav-bar-pictures/iytelogo.png";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const LogInPage = () => {
   const [isRememberUser, setIsRememberUser] = useState(false);
   const [enteredEmail, setEnteredEmail] = useState("");
@@ -10,7 +10,7 @@ const LogInPage = () => {
   const [formIsValid, setFormIsValid] = useState(false);
 
   const authCtx = useContext(AuthContext);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const identifier = setTimeout(() => {
       setFormIsValid(
@@ -61,6 +61,7 @@ const LogInPage = () => {
         );
         console.log(authCtx.isLoggedIn);
         authCtx.onLogin();
+        navigate("/");
       } else {
         console.log("Wrong password or email");
       }
@@ -69,14 +70,13 @@ const LogInPage = () => {
       console.log(err);
     }
   };
-
   return (
     <div className="grid grid-cols-2 gap-4 ">
       <div></div>
       <div className="place-self-end bg-gray-100 w-80 py-20 ml-16">
         <img src={iyteLogo} className="w-40 h-40 ml-16 mb-8"></img>
 
-        <form className="mb-72">
+        <div className="mb-72">
           <input
             onChange={emailChangeHandler}
             type="text"
@@ -100,16 +100,14 @@ const LogInPage = () => {
             ></div>
             <p className="ml-5">Beni Hatırla</p>
           </div>
-          <Link to={authCtx.isLoggedIn ? "/" : "/login"}>
-            <button
-              onClick={submitHandler}
-              className="mt-8 ml-16 mb-12 w-40 h-10 border-rose-700 border-2 hover:bg-red-700 rounded-lg"
-              disabled={!formIsValid}
-            >
-              Submit
-            </button>
-          </Link>
-        </form>
+          <button
+            onClick={submitHandler}
+            className="mt-8 ml-16 mb-12 w-40 h-10 border-rose-700 border-2 hover:bg-red-700 rounded-lg"
+            disabled={!formIsValid}
+          >
+            Submit
+          </button>
+        </div>
       </div>
     </div>
   );

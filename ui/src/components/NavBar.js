@@ -1,6 +1,5 @@
 import iztechLogo from "./nav-bar-pictures/iytelogo.png";
 import turkishFlag from "./nav-bar-pictures/turk_bayragi.png";
-import darkModeIcon from "./nav-bar-pictures/dark_mode_icon.png";
 import darkMode from "./nav-bar-pictures/dark_mode.png";
 import bellIcon from "./nav-bar-pictures/bell_icon.png";
 const NavBar = () => {

@@ -1,3 +1,4 @@
+import { set } from "mongoose";
 import React, { useState, useEffect } from "react";
 
 const AuthContext = React.createContext({
@@ -16,8 +17,8 @@ export const AuthContextProvider = (props) => {
   const [isClickedLogInButton, setIsClickedLogInButton] = useState(false);
 
   useEffect(() => {
-    const uid = localStorage.getItem("sid");
-    if (uid !== undefined && uid !== null) {
+    const sid = localStorage.getItem("sid");
+    if (sid !== undefined && sid !== null) {
       setIsLoggedIn(true);
     }
   }, []);
@@ -33,16 +34,13 @@ export const AuthContextProvider = (props) => {
   };
 
   const loginHandler = () => {
-    console.log("a");
     setIsLoggedIn(true);
   };
   return (
     <AuthContext.Provider
       value={{
         isLoggedIn: isLoggedIn,
-
         isClickedLogInButton: isClickedLogInButton,
-
         onLogout: logoutHandler,
         onLogin: loginHandler,
         handleLogin: handleLogin,
