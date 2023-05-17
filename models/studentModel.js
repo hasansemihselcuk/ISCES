@@ -46,7 +46,7 @@ const studentSchema = new mongoose.Schema({
     trim: true,
     default: "default.jpg",
   },
-  isApplied: {
+  isCandidate: {
     type: Boolean,
     default: false,
   },

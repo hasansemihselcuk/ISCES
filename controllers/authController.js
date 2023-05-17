@@ -12,19 +12,24 @@ const signToken = (id) => {
 
 exports.login = catchAsync(async (req, res, next) => {
   const body = Object.keys(req.body)[0];
+
   const fixedResponse = body.replace(/'/g, '"');
   const parsedResponse = JSON.parse(fixedResponse);
   const { email, password } = parsedResponse;
+
   if (!email || !password) {
     return next(new AppError("Please provide email and password!", 400));
   }
   const student = await Student.findOne({ iztechMail: email }).select(
     "+password"
   );
+  console.log(password);
   const correct = await user.correctPassword(password, user.password);
+
   if (!user || !correct) {
     return next(new AppError("Incorrect email or password", 401));
   }
+
   const token = signToken(student._id);
   return res.status(200).json({
     status: "success",

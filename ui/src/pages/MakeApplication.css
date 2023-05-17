@@ -1,0 +1,32 @@
+.candidate-app {
+  margin-left: auto;
+  margin-right: auto;
+  width: 350px;
+}
+
+.candidate-app .head {
+    margin-left: 70px;
+  font-weight: bold;
+  font-size: large;
+  margin-bottom: 10px;
+}
+
+.candidate-app p{
+    margin-top: 5px;
+    font-size: large;
+}
+
+.candidate-app button{
+    background-color: red;
+    color:white;
+    padding:3px;
+    margin-top: 5px;
+    width: 200px;
+}
+
+.candidate-app .in{
+    display: flex;
+    flex-direction: row;
+    width: 450px;
+    margin-top: 6px;
+}
