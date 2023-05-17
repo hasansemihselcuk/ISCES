@@ -1,9 +1,28 @@
 import { useState } from "react";
 import "./MakeApplication.css";
 const MakeApplication = (props) => {
-  const [selectedOption, setSelectedOption] = useState("");
+  const [isSend, setIsSend] = useState(true);
+
+  let selected = [];
   const handleOptionChange = (event) => {
-    setSelectedOption(event.target.value);
+    console.log(selected.length);
+    console.log(selected);
+    if (selected.includes(event.target.value)) {
+      const index = selected.indexOf(event.target.value);
+      selected.splice(index, 1);
+    } else {
+      selected.push(event.target.value);
+    }
+  };
+  const sendHandler = (event) => {
+
+    if (selected.length === 4) {
+      setIsSend(true);
+      console.log("deneme");
+    } else {
+      setIsSend(false);
+      event.preventDefault();
+    }
   };
   const requirements = [
     {
@@ -43,7 +62,8 @@ const MakeApplication = (props) => {
         <label>Fotoğraf(isteğe bağlı) </label>
         <input type="file" id="photo" />
       </div>
-      <button>Başvuruyu Gönder</button>
+      <button onClick={sendHandler}>Başvuruyu Gönder</button>
+      {!isSend && <p>Aday olmak için yeterli şartları taşımıyorsunuz!</p>}
     </form>
   );
 };
