@@ -26,18 +26,30 @@ export const AuthContextProvider = (props) => {
 
     if (sid !== undefined && sid !== null) {
       if (JSON.parse(studentInfo).isCandidate) {
+        console.log("a");
         setIsCandidate(true);
       }
       if (JSON.parse(studentInfo).isAdmin) {
+        console.log("b");
         setIsAdmin(true);
       }
       setIsLoggedIn(true);
     }
-  }, []);
+  }, [isLoggedIn]);
 
   const logoutHandler = () => {
-    localStorage.removeItem("sid");
-    localStorage.removeItem("studentInfo");
+    const sid = localStorage.getItem("sid");
+    const aid = localStorage.getItem("aid");
+    if (sid) {
+      localStorage.removeItem("sid");
+      localStorage.removeItem("studentInfo");
+    }
+    if (aid) {
+      localStorage.removeItem("aid");
+      localStorage.removeItem("adminInfo");
+    }
+    setIsAdmin(false);
+    setIsCandidate(false);
     setIsLoggedIn(false);
   };
 

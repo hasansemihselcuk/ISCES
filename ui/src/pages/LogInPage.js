@@ -60,10 +60,13 @@ const LogInPage = () => {
         }
         if (res.data.isAdmin) {
           authCtx.handleAdmin();
+          localStorage.setItem("aid", res.data.aid);
+          localStorage.setItem("adminInfo", JSON.stringify(res.data));
+        } else {
+          localStorage.setItem("sid", res.data.sid);
+          localStorage.setItem("studentInfo", JSON.stringify(res.data));
         }
-        localStorage.setItem("sid", res.data.sid);
-        localStorage.setItem("studentInfo", JSON.stringify(res.data));
-        console.log(authCtx.isLoggedIn);
+
         authCtx.onLogin();
         navigate("/");
       } else {
