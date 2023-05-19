@@ -18,4 +18,6 @@ router
   .route("/votes/:id/")
   .get(studentController.getCandidatesVoteFromStudentsDepartment);
 
+router.route("/sendTicket").post(studentController.sendTicket);
+
 module.exports = router;
