@@ -5,7 +5,7 @@
 }
 
 .candidate-app .head {
-  margin-left: 70px;
+  text-align: center;
   font-weight: bold;
   font-size: large;
   margin-bottom: 10px;
@@ -16,7 +16,7 @@
   font-size: large;
 }
 
-.candidate-app button {
+.apply-button {
   background-color: red;
   color: white;
   padding: 3px;
@@ -24,9 +24,26 @@
   width: 200px;
 }
 
+.apply-button.not-valid {
+  background-color: grey;
+}
+
 .candidate-app .in {
   display: flex;
   flex-direction: row;
   width: 450px;
   margin-top: 6px;
+}
+
+.error label {
+  font-size: xx-large;
+  margin-left: auto;
+  margin-right: auto;
+  color: rgb(120, 120, 208);
+  font-weight: bolder;
+}
+
+.error {
+  text-align: center;
+  margin-top: 180px;
 }

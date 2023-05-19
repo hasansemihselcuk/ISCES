@@ -4,7 +4,7 @@ import HomePage from "./pages/HomePage";
 import NavBar from "./components/NavBar";
 import LogInPage from "./pages/LogInPage";
 import VotingPage from "./pages/VotingPage";
-import MakeApplication from "./pages/MakeApplication";
+import ApplyCandidacy from "./pages/ApplyCandidacy";
 import ElectionResult from "./pages/ElectionResults";
 import CandidateWithdraw from "./pages/CandidateWithdraw";
 import Announcement from "./admin-pages/Announcement";
@@ -27,7 +27,7 @@ function App() {
           <Route path="/admin/result" element={<Result />} />
           <Route path="/admin/candidate" element={<AnnounceCandidate />} />
           <Route path="/vote" element={<VotingPage />} />
-          <Route path="/apply" element={<MakeApplication />} />
+          <Route path="/apply" element={<ApplyCandidacy />} />
           <Route path="/withdraw" element={<CandidateWithdraw />} />
           <Route path="/result" element={<ElectionResult />} />
         </Routes>
