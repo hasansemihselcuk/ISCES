@@ -13,7 +13,6 @@ const SideBar = () => {
           <button className="w-full text-left p-2 ">Ana Sayfa</button>
         </Link>
       </li>
-
       {authCtx.isAdmin && (
         <li className="mb-2 bg-gray-100 hover:bg-gray-300 ml-4 mr-4 mt-4">
           <Link to="/admin/announcement">
@@ -21,7 +20,6 @@ const SideBar = () => {
           </Link>
         </li>
       )}
-
       {authCtx.isAdmin && (
         <li className="mb-2 bg-gray-100 hover:bg-gray-300 ml-4 mr-4 mt-4">
           <Link to="/admin/date">
@@ -31,7 +29,6 @@ const SideBar = () => {
           </Link>
         </li>
       )}
-
       {authCtx.isAdmin && (
         <li className="mb-2 bg-gray-100 hover:bg-gray-300 ml-4 mr-4 mt-4">
           <Link to="/admin/authority">
@@ -39,7 +36,6 @@ const SideBar = () => {
           </Link>
         </li>
       )}
-
       {authCtx.isAdmin && (
         <li className="mb-2 bg-gray-100 hover:bg-gray-300 ml-4 mr-4 mt-4">
           <Link to="/admin/result">
@@ -47,7 +43,6 @@ const SideBar = () => {
           </Link>
         </li>
       )}
-
       {authCtx.isAdmin && (
         <li className="mb-2 bg-gray-100 hover:bg-gray-300 ml-4 mr-4 mt-4">
           <Link to="/admin/candidate">
@@ -55,7 +50,6 @@ const SideBar = () => {
           </Link>
         </li>
       )}
-
       {authCtx.isAdmin && (
         <li className="mb-2 bg-gray-100 hover:bg-gray-300 ml-4 mr-4 mt-4">
           <Link to="/admin/feedback">
@@ -63,7 +57,6 @@ const SideBar = () => {
           </Link>
         </li>
       )}
-
       {!authCtx.isAdmin && (
         <li className="mb-2 bg-gray-100 hover:bg-gray-300 ml-4 mr-4 mt-4">
           <Link to="/apply">
@@ -71,7 +64,6 @@ const SideBar = () => {
           </Link>
         </li>
       )}
-
       {!authCtx.isAdmin && authCtx.isCandidate && (
         <li className="mb-2 bg-gray-100 hover:bg-gray-300 ml-4 mr-4 mt-4">
           <Link to="/withdraw">
@@ -79,7 +71,6 @@ const SideBar = () => {
           </Link>
         </li>
       )}
-
       {!authCtx.isAdmin && (
         <li className="mb-2 bg-gray-100 hover:bg-gray-300 ml-4 mr-4 mt-4">
           <Link to="/vote">
@@ -87,7 +78,6 @@ const SideBar = () => {
           </Link>
         </li>
       )}
-
       {!authCtx.isAdmin && (
         <li className="mb-5 bg-gray-100 hover:bg-gray-300 ml-4 mr-4 mt-4">
           <Link to="/result">
@@ -95,20 +85,19 @@ const SideBar = () => {
           </Link>
         </li>
       )}
-
-      {!authCtx.isAdmin && (
-        <li className="mb-5 bg-gray-100 hover:bg-gray-300 ml-4 mr-4 mt-4">
-          <button
-            onClick={() => {
-              authCtx.onLogout();
-              navigate("/login");
-            }}
-            className="w-full text-left p-2 "
-          >
-            Çıkış yap
-          </button>
-        </li>
-      )}
+      (
+      <li className="mb-5 bg-gray-100 hover:bg-gray-300 ml-4 mr-4 mt-4">
+        <button
+          onClick={() => {
+            authCtx.onLogout();
+            navigate("/login");
+          }}
+          className="w-full text-left p-2 "
+        >
+          Çıkış yap
+        </button>
+      </li>
+      )
     </ul>
   );
 };
