@@ -4,7 +4,7 @@ import ACandidate from "./aCandidate";
 const Ballot = (props) => {
   const [selectedCandidate, setSelectedCandidate] = useState(null);
   const [isDeclined, setIsDeclined] = useState(false);
-
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(false);
 
@@ -24,6 +24,7 @@ const Ballot = (props) => {
   };
 
   const handleVote = () => {
+    setIsSubmitted(true);
     if (selectedCandidate) {
       console.log(`Oy verilen aday: ${selectedCandidate.name}`);
       alert(`Oy verilen aday: ${selectedCandidate.name}`);
@@ -41,11 +42,11 @@ const Ballot = (props) => {
   const isLastRowCentered = remainder !== 0 && remainder !== 1;
 
   return (
-    <div>
+    <div className="relative">
       <div
         className={`grid grid-cols-3 gap-4 ${
-          isLastRowCentered ? "justify-center" : ""
-        }`}
+          isLastRowCentered ? "justify-center " : " "
+        } ${isSubmitted ? "blur" : " "}`}
       >
         {props.candidates.map((candidate, index) => (
           <div key={index} className="bg-gray-200 p-4">
@@ -62,12 +63,34 @@ const Ballot = (props) => {
           </div>
         )}
       </div>
+      <div
+        className={
+          isSubmitted ? "absolute  bg-gray-100 -mt-80 ml-52 z-20 p-8" : "hidden"
+        }
+      >
+        {isSubmitted && !isDeclined && (
+          <p className="mb-4">Oyunuzu bu kişiye kullanmak istiyor musunuz?</p>
+        )}
+        {isSubmitted && isDeclined && (
+          <p className="mb-4">
+            Oyunuzu kimseye vermek istemediğinizden emin misiniz?
+          </p>
+        )}
+        <div className="flex">
+          <button className="p-2 border-2 border-rose-600 hover:bg-rose-600">
+            Evet
+          </button>
+          <button className="p-2 border-2 ml-72 border-rose-600 hover:bg-rose-600">
+            Hayır
+          </button>
+        </div>
+      </div>
 
       <div>
         <div
           className={`decline-option flex justify-center ${
             isDeclined ? "selected" : ""
-          }`}
+          } ${isSubmitted ? "blur" : " "} `}
           onClick={handleDecline}
         >
           <input
@@ -80,7 +103,11 @@ const Ballot = (props) => {
           Oy kullanmak istemiyorum
         </div>
       </div>
-      <div className=" flex justify-center">
+      <div
+        className={
+          isSubmitted ? "flex justify-center blur" : "flex justify-center"
+        }
+      >
         <button
           className="text-black bg-red-700  px-4 py-1"
           onClick={handleVote}
