@@ -7,7 +7,7 @@ const SideBar = () => {
   const navigate = useNavigate();
   const authCtx = useContext(AuthContext);
   return (
-    <ul className="bg-zinc-800 absolute  mt-10 -ml-9  shadow-lg rounded-md  text-black  scale-125 z-10 text-sm side-bar p-2">
+    <ul className="bg-zinc-800 absolute  mt-12 -ml-9  shadow-lg rounded-md  text-black  scale-125 z-10 text-sm side-bar p-2">
       <li className="mb-2 bg-gray-100 hover:bg-gray-300 ml-4 mr-4 mb-8 mt-4">
         <Link to="/">
           <button
@@ -28,6 +28,14 @@ const SideBar = () => {
           </button>
         </Link>
       </li>
+
+      {authCtx.isCandidate && (
+        <li className="mb-2 bg-gray-100 hover:bg-gray-300 ml-4 mr-4 mt-4">
+          <Link to="/withdraw">
+            <button className="w-full text-left p-2 ">Aday Ol.</button>
+          </Link>
+        </li>
+      )}
 
       <li className="mb-2 bg-gray-100 hover:bg-gray-300 ml-4 mr-4 mt-8">
         <Link to="/vote">

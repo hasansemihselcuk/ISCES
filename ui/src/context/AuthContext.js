@@ -22,10 +22,11 @@ export const AuthContextProvider = (props) => {
   useEffect(() => {
     const sid = localStorage.getItem("sid");
     const studentInfo = localStorage.getItem("studentInfo");
-    if (studentInfo.isCandidate) {
+
+    if (JSON.parse(studentInfo).isCandidate) {
       setIsCandidate(true);
     }
-    if (studentInfo.isAdmin) {
+    if (JSON.parse(studentInfo).isAdmin) {
       setIsAdmin(true);
     }
     if (sid !== undefined && sid !== null) {

@@ -56,10 +56,7 @@ const LogInPage = () => {
       if (res.data.status === "success") {
         console.log(res.data);
         localStorage.setItem("sid", res.data.sid);
-        localStorage.setItem(
-          "studentInfo",
-          JSON.stringify({ email: signInInfo.iztechMail })
-        );
+        localStorage.setItem("studentInfo", JSON.stringify(res.data));
         console.log(authCtx.isLoggedIn);
         authCtx.onLogin();
         navigate("/");

@@ -6,6 +6,7 @@ import LogInPage from "./pages/LogInPage";
 import VotingPage from "./pages/VotingPage";
 import MakeApplication from "./pages/MakeApplication";
 import ElectionResult from "./pages/ElectionResults";
+import CandidateWithdraw from "./pages/CandidateWithdraw";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/login" element={<LogInPage />}></Route>
           <Route path="/vote" element={<VotingPage />} />
           <Route path="/apply" element={<MakeApplication />} />
+          <Route path="/withdraw" element={<CandidateWithdraw />} />
           <Route path="/result" element={<ElectionResult />} />
         </Routes>
       </BrowserRouter>
