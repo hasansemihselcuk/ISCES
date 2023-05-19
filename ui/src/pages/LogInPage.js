@@ -53,9 +53,14 @@ const LogInPage = () => {
         "http://localhost:3001/api/v1/student/login",
         JSON.stringify(signInInfo)
       );
-      console.log(res.data);
+
       if (res.data.status === "success") {
-        console.log(res.data);
+        if (res.data.isCandidate) {
+          authCtx.handleCandidate();
+        }
+        if (res.data.isAdmin) {
+          authCtx.handleAdmin();
+        }
         localStorage.setItem("sid", res.data.sid);
         localStorage.setItem("studentInfo", JSON.stringify(res.data));
         console.log(authCtx.isLoggedIn);

@@ -6,11 +6,12 @@ const AuthContext = React.createContext({
   isCandidate: false,
   isAdmin: false,
   isClickedLogInButton: false,
-
   //chefId: null,
   onLogout: () => {},
   onLogin: () => {},
   handleLogin: () => {},
+  handleCandidate: () => {},
+  handleAdmin: () => {},
 });
 
 export const AuthContextProvider = (props) => {
@@ -23,13 +24,13 @@ export const AuthContextProvider = (props) => {
     const sid = localStorage.getItem("sid");
     const studentInfo = localStorage.getItem("studentInfo");
 
-    if (JSON.parse(studentInfo).isCandidate) {
-      setIsCandidate(true);
-    }
-    if (JSON.parse(studentInfo).isAdmin) {
-      setIsAdmin(true);
-    }
     if (sid !== undefined && sid !== null) {
+      if (JSON.parse(studentInfo).isCandidate) {
+        setIsCandidate(true);
+      }
+      if (JSON.parse(studentInfo).isAdmin) {
+        setIsAdmin(true);
+      }
       setIsLoggedIn(true);
     }
   }, []);
@@ -38,6 +39,14 @@ export const AuthContextProvider = (props) => {
     localStorage.removeItem("sid");
     localStorage.removeItem("studentInfo");
     setIsLoggedIn(false);
+  };
+
+  const handleCandidate = () => {
+    setIsCandidate(true);
+  };
+
+  const handleAdmin = () => {
+    setIsAdmin(true);
   };
 
   const handleLogin = () => {
@@ -57,6 +66,8 @@ export const AuthContextProvider = (props) => {
         onLogout: logoutHandler,
         onLogin: loginHandler,
         handleLogin: handleLogin,
+        handleCandidate: handleCandidate,
+        handleAdmin: handleAdmin,
       }}
     >
       {props.children}
