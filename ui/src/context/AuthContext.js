@@ -17,7 +17,7 @@ export const AuthContextProvider = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isClickedLogInButton, setIsClickedLogInButton] = useState(false);
   const [isCandidate, setIsCandidate] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     const sid = localStorage.getItem("sid");
