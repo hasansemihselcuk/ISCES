@@ -1,0 +1,37 @@
+Admin işleri:
+
+Adayları getirme:
+http://localhost:3001/api/v1/admin/candidates (get)
+Kazananları açıklama:
+http://localhost:3001/api/v1/admin/candidates/winners (get)
+Bildiri:
+http://localhost:3001/api/v1/admin/announcements (get/post)
+Ticketları getirme:
+http://localhost:3001/api/v1/admin/tickets(get)
+Seçim başlat:
+http://localhost:3001/api/v1/admin/electionStart
+Seçim bitir:
+http://localhost:3001/api/v1/admin/electionEnd
+
+Aday işleri:
+Aday olma ve çekilme:
+http://localhost:3001/api/v1/candidate/:id (post/delete)
+
+Öğrenci işleri:
+
+Giriş:
+http://localhost:3001/api/v1/student/login (post)
+Kendi departmanındaki adayları görme:
+http://localhost:3001/api/v1/student/:id (get)
+Oy verme:
+http://localhost:3001/api/v1/student/:id/:cid (put)
+Adayların oylarını görme:
+http://localhost:3001/api/v1/student/votes/:id(get)
+Ticket oluşturma:
+http://localhost:3001/api/v1/student/sendTicket/ (post)
+
+
+
+
+
+

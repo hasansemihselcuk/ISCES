@@ -5,6 +5,10 @@ const adminSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
+  surname: {
+    type: String,
+    trim: true,
+  },
   iztechMail: {
     type: String,
     trim: true,
