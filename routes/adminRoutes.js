@@ -3,6 +3,9 @@ const adminController = require("../controllers/adminController");
 const authController = require("../controllers/authController");
 const router = express.Router();
 
+//test için
+router.route("/create").post(adminController.createAdmin);
+
 router.route("/").get(adminController.getAllStudents);
 
 router.route("/:id").get(adminController.getStudent);

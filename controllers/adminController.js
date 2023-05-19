@@ -3,9 +3,27 @@ const Candidate = require("../models/departmentCandidateModel");
 const Election = require("../models/departmentElectionModel");
 const Announce = require("../models/announceModel");
 const Ticket = require("../models/ticketModel");
+const Admin = require("../models/adminModel");
 const Department = require("../models/departmentModel");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
+
+exports.createAdmin = catchAsync(async (req, res, next) => {
+  const { name, surname, iztechMail, password } = req.body;
+  const newAdmin = new Admin({
+    name,
+    surname,
+    iztechMail,
+    password,
+  });
+  await newAdmin.save();
+  res.status(200).json({
+    status: "success",
+    data: {
+      newAdmin,
+    },
+  });
+});
 
 exports.getAllStudents = catchAsync(async (req, res, next) => {
   const students = await Student.find();

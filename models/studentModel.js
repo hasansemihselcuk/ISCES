@@ -50,6 +50,10 @@ const studentSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  isAdmin: {
+    type: Boolean,
+    default: false,
+  },
   isVotedForDepartment: {
     type: Boolean,
     default: false,
@@ -59,22 +63,6 @@ const studentSchema = new mongoose.Schema({
     default: false,
   },
 });
-/*
-studentSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next();
-  this.password = await bcrypt.hashSync(this.password, 12);
-  next();
-});
-
-
-studentSchema.methods.correctPassword = async function (
-  candidatePassword,
-  userPassword
-) {
-  return await bcrypt.compare(candidatePassword, userPassword);
-};
-*/
-
 
 const Student = mongoose.model("Student", studentSchema);
 

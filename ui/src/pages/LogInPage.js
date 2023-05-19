@@ -14,7 +14,7 @@ const LogInPage = () => {
   useEffect(() => {
     const identifier = setTimeout(() => {
       setFormIsValid(
-        enteredEmail.includes("@") && enteredPassword.trim().length > 6
+        enteredEmail.includes("@") && enteredPassword.trim().length > 3
       );
     }, 500);
 
@@ -45,6 +45,7 @@ const LogInPage = () => {
 
   const submitHandler = async (event) => {
     const signInInfo = { email: enteredEmail, password: enteredPassword };
+
     event.preventDefault();
     try {
       //"http://localhost:3001/api/v1/student/login",
@@ -52,15 +53,20 @@ const LogInPage = () => {
         "http://localhost:3001/api/v1/student/login",
         JSON.stringify(signInInfo)
       );
-      console.log(res.data);
+
       if (res.data.status === "success") {
-        console.log(res.data);
-        localStorage.setItem("sid", res.data.sid);
-        localStorage.setItem(
-          "studentInfo",
-          JSON.stringify({ email: signInInfo.iztechMail })
-        );
-        console.log(authCtx.isLoggedIn);
+        if (res.data.isCandidate) {
+          authCtx.handleCandidate();
+        }
+        if (res.data.isAdmin) {
+          authCtx.handleAdmin();
+          localStorage.setItem("aid", res.data.aid);
+          localStorage.setItem("adminInfo", JSON.stringify(res.data));
+        } else {
+          localStorage.setItem("sid", res.data.sid);
+          localStorage.setItem("studentInfo", JSON.stringify(res.data));
+        }
+
         authCtx.onLogin();
         navigate("/");
       } else {
