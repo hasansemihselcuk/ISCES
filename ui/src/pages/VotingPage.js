@@ -19,10 +19,28 @@ const VotingPage = ({
       photo: resim,
       id: 2,
     },
+    {
+      name: "Gökhan Türkmens",
+      photo: resim,
+      id: 3,
+    },
+    {
+      name: "Gökhan Türkss",
+      photo: resim,
+      id: 4,
+    },
+    {
+      name: "Gökhan Türkmensss",
+      photo: resim,
+      id: 5,
+    },
   ];
   return (
     <div>
-      <div className=" justify-center p-8 mb-8 rounded-lg relative text-3xl ">
+      <div className="flex justify-center mb-8 text-3xl">
+        <h1>student.department Bölüm Temsilciliği Seçimi</h1>
+      </div>
+      <div className="p-8 mb-8 rounded-lg relative text-3xl ">
         <CandidateForVote candidates={candidates} />
       </div>
     </div>

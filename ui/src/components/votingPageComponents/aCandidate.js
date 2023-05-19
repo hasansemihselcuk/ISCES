@@ -5,14 +5,16 @@ const ACandidate = (props) => {
 
   const handleSelect = () => {
     setIsSelected(true);
+    props.selectCandidate(props.candidate);
   };
-  console.log("aCandidate");
   return (
-    <div className="candidate">
+    <div className="candidate ">
       <img
         src={props.candidate.photo}
         alt={props.candidate.name}
-        className={` rounded-full h-44 w-44 ${isSelected ? "selected" : ""}`}
+        className={`flex justify-center rounded-full h-44 w-44 ${
+          isSelected ? "selected" : ""
+        }`}
       />
 
       <div className="flex justify-center mr-4">
@@ -20,7 +22,10 @@ const ACandidate = (props) => {
           name="selectedCandidate"
           type="radio"
           className="form-radio h-4 w-4 border-red-500  text-red-500 focus:ring-red-500"
+          onClick={handleSelect}
           checked
+          // checked={props.selectedCandidate === props.candidate}
+          onChange={() => props.selectCandidate(props.candidate)}
         />
       </div>
       <div className="name flex justify-center">{props.candidate.name}</div>
