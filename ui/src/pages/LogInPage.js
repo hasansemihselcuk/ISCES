@@ -14,7 +14,7 @@ const LogInPage = () => {
   useEffect(() => {
     const identifier = setTimeout(() => {
       setFormIsValid(
-        enteredEmail.includes("@") && enteredPassword.trim().length > 6
+        enteredEmail.includes("@") && enteredPassword.trim().length > 3
       );
     }, 500);
 
@@ -45,6 +45,7 @@ const LogInPage = () => {
 
   const submitHandler = async (event) => {
     const signInInfo = { email: enteredEmail, password: enteredPassword };
+
     event.preventDefault();
     try {
       //"http://localhost:3001/api/v1/student/login",
