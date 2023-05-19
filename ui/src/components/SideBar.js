@@ -23,7 +23,7 @@ const SideBar = () => {
             onClick={() => console.log("Settings")}
             className="w-full text-left p-2 "
           >
-            Aday Ol
+            Aday Ol.
           </button>
         </Link>
       </li>
