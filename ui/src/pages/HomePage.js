@@ -34,6 +34,7 @@ const MyComponent = () => {
       return updatedTexts;
     });
   };
+  console.log(localStorage.getItem("studentInfo"));
 
   return (
     <div style={{ display: "flex" }}>
@@ -80,25 +81,23 @@ const MyComponent = () => {
               ))}
             {text.content.split("\n").length > 3 && !text.showMore && (
               <button
-              onClick={() => handleShowMore(index)}
-              style={{ fontWeight: "bold" }}
-            >
-              Daha fazla göster
-            </button>
-            
+                onClick={() => handleShowMore(index)}
+                style={{ fontWeight: "bold" }}
+              >
+                Daha fazla göster
+              </button>
             )}
             {text.showMore &&
-              text.content.split("\n").map((line, lineIndex) => (
-                <div key={lineIndex}>{line}</div>
-              ))}
+              text.content
+                .split("\n")
+                .map((line, lineIndex) => <div key={lineIndex}>{line}</div>)}
             {text.content.split("\n").length > 3 && text.showMore && (
               <button
-              onClick={() => handleShowMore(index)}
-              style={{ fontWeight: "bold" }}
-            >
-              Daha az göster
-            </button>
-            
+                onClick={() => handleShowMore(index)}
+                style={{ fontWeight: "bold" }}
+              >
+                Daha az göster
+              </button>
             )}
           </div>
         ))}
