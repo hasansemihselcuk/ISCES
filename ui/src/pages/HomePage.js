@@ -1,7 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import myImage from "./iyte.jpg";
 
 const MyComponent = () => {
+  const [texts, setTexts] = useState([]);
+
+  useEffect(() => {
+    // Simulating data received from the backend
+    const backendData = [
+      "Tüm öğrenciler sadece bir kullanabilir.",
+      "Lütfen iki adayı aynı anda seçmeyin.",
+      "Seneye görüşürüz!",
+      "İYTE süper!",
+      "Duyuru 5\nSatır 1\nSatır 2\nSatır 3\nSatır 4",
+      "Duyuru 6 \nSatır 1\nSatır 2",
+      // Add more two-line announcements here
+    ];
+
+    // Update the state with the backend data
+    setTexts(
+      backendData.map((text) => ({
+        content: text,
+        showMore: false,
+      }))
+    );
+  }, []);
+
+  const handleShowMore = (index) => {
+    setTexts((prevTexts) => {
+      const updatedTexts = [...prevTexts];
+      const currentText = { ...updatedTexts[index] };
+      currentText.showMore = !currentText.showMore;
+      updatedTexts[index] = currentText;
+      return updatedTexts;
+    });
+  };
+
   return (
     <div style={{ display: "flex" }}>
       <div style={{ flex: "1" }}>
@@ -25,18 +58,50 @@ const MyComponent = () => {
           flex: "1",
           display: "flex",
           flexDirection: "column",
-          marginTop: "200px",
+          marginTop: "100px",
           marginLeft: "10%",
         }}
       >
-        <div style={{ marginBottom: "10px" }}>
-          Tüm öğrenciler sadece bir kullanabilir.
-        </div>
-        <div style={{ marginBottom: "10px" }}>
-          Lütfen iki adayı aynı anda seçmeyin.
-        </div>
-        <div style={{ marginBottom: "10px" }}>Seneye görüşürüz!</div>
-        <div>İyte süper!</div>
+        {texts.map((text, index) => (
+          <div
+            key={index}
+            style={{
+              marginBottom: "10px",
+              backgroundColor: "lightgray",
+              padding: "10px",
+              borderRadius: "5px",
+            }}
+          >
+            {text.content
+              .split("\n")
+              .slice(0, 3)
+              .map((line, lineIndex) => (
+                <div key={lineIndex}>{line}</div>
+              ))}
+            {text.content.split("\n").length > 3 && !text.showMore && (
+              <button
+              onClick={() => handleShowMore(index)}
+              style={{ fontWeight: "bold" }}
+            >
+              Daha fazla göster
+            </button>
+            
+            )}
+            {text.showMore &&
+              text.content.split("\n").map((line, lineIndex) => (
+                <div key={lineIndex}>{line}</div>
+              ))}
+            {text.content.split("\n").length > 3 && text.showMore && (
+              <button
+              onClick={() => handleShowMore(index)}
+              style={{ fontWeight: "bold" }}
+            >
+              Daha az göster
+            </button>
+            
+            )}
+          </div>
+        ))}
       </div>
     </div>
   );
