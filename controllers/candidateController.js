@@ -34,14 +34,25 @@ exports.candidateApplication = catchAsync(async (req, res, next) => {
 
 //bozuk gibi
 exports.cancelCandidateApplication = catchAsync(async (req, res, next) => {
-    const candidate = req.params.id
-    await Candidate.findByIdAndDelete(candidate)
+  try{
+    const candidate = req.params.id;
+    let student = await Candidate.findById(candidate);
+    let oneStudent = await Student.findById(student.studentInfos);
+    oneStudent.isCandidate = false;
+    await Candidate.findByIdAndDelete(candidate);
+    await oneStudent.save();
 
     res.status(200).json({
         status: "success",
         data: null
-    })
-})
+    });
+  }catch(error){
+    res.status(400).json({
+        status: "error",
+        message: "You might not be a candidate"
+    });
+}
+});
 
 
 
