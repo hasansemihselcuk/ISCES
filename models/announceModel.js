@@ -18,3 +18,7 @@ const announceSchema = new mongoose.Schema({
     ref: "Admin",
   },
 });
+
+const Announce = mongoose.model("Announce", announceSchema);
+
+module.exports = Announce;

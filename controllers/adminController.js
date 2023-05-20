@@ -7,6 +7,7 @@ const Admin = require("../models/adminModel");
 const Department = require("../models/departmentModel");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
+const moment = require("moment");
 
 exports.createAdmin = catchAsync(async (req, res, next) => {
   const { name, surname, iztechMail, password } = req.body;
@@ -128,10 +129,13 @@ exports.announceDepartmentWinners = catchAsync(async (req, res, next) => {
 });
 
 exports.makeAnnouncement = catchAsync(async (req, res, next) => {
+  const adminId = req.params.id;
   const { title, description } = req.body;
   const newAnnounce = new Announce({
     title,
     description,
+    //burası sonradan eklencek
+    //sender: adminId,
   });
   await newAnnounce.save();
   res.status(200).json({

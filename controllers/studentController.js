@@ -67,15 +67,15 @@ exports.getCandidatesVoteFromStudentsDepartment = catchAsync(
 );
 
 exports.sendTicket = catchAsync(async (req, res, next) => {
-  const { sId, title, description } = req.body;
-  const student = await Student.findById(sId);
+  const { studentInfos, ticketTitle, ticketDescription } = req.body;
+  const student = await Student.findById(studentInfos);
   if (!student) {
     return next(new AppError("No student found with that ID", 404));
   }
   const newTicket = new Ticket({
-    title,
-    description,
-    studentInfos: sId,
+    ticketTitle,
+    ticketDescription,
+    studentInfos: studentInfos,
   });
   await newTicket.save();
   res.status(200).json({
