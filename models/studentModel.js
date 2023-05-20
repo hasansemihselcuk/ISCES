@@ -38,7 +38,7 @@ const studentSchema = new mongoose.Schema({
     trim: true,
   },
   department: {
-    type: mongoose.Schema.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "Department",
   },
   image: {
@@ -63,6 +63,19 @@ const studentSchema = new mongoose.Schema({
     default: false,
   },
 });
+
+studentSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
+  this.password = await bcrypt.hashSync(this.password, 12);
+  next();
+});
+
+studentSchema.methods.correctPassword = async function (
+  candidatePassword,
+  userPassword
+) {
+  return await bcrypt.compare(candidatePassword, userPassword);
+};
 
 const Student = mongoose.model("Student", studentSchema);
 

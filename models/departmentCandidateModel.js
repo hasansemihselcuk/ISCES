@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 
 const departmentCandidateSchema = new mongoose.Schema({
   studentInfos: {
-    type: mongoose.Schema.ObjectId,
-    Ref: "Student",
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Student",
   },
   voteCount: {
     type: Number,

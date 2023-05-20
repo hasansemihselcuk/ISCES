@@ -5,7 +5,7 @@ const router = express.Router();
 
 router
     .route("/:id")
-    .put(candidateController.candidateApplication);
+    .post(candidateController.candidateApplication);
     //delete niye hata veriyo anlamadım
     //.delete(candidateController.cancelCandidateApplication);
 

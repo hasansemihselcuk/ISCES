@@ -41,6 +41,32 @@ exports.login = catchAsync(async (req, res, next) => {
   });
 });
 */
+
+// TAMAMEN ŞİFRELERİ HASHLI TUTABİLMEK İÇİN
+
+exports.signup = catchAsync(async (req, res, next) => {
+  const infos = req.body;
+  const newStudent = await Student.create({
+    name: infos.name,
+    surname: infos.surname,
+    studentNumber: infos.studentNumber,
+    iztechMail: infos.iztechMail,
+    password: infos.password,
+    GPA: infos.GPA,
+    year: infos.year,
+    department: infos.department,
+  });
+  const token = signToken(newStudent._id);
+
+  res.status(201).json({
+    status: "success",
+    token,
+    data: {
+      newStudent,
+    },
+  });
+});
+
 exports.login = catchAsync(async (req, res, next) => {
   const body = Object.keys(req.body)[0];
   const fixedResponse = body.replace(/'/g, '"');
@@ -92,7 +118,6 @@ exports.login = catchAsync(async (req, res, next) => {
     }
   }
 
-
   return next(new AppError("Incorrect email or password", 401));
 });
 exports.protect = catchAsync(async (req, res, next) => {
@@ -112,20 +137,17 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
-
   const currentUserStudent = await Student.findById(decoded.id);
   if (currentUserStudent) {
     req.user = currentUserStudent;
     return next();
   }
 
-
   const currentUserAdmin = await Admin.findById(decoded.id);
   if (currentUserAdmin) {
     req.user = currentUserAdmin;
     return next();
   }
-
 
   return next(
     new AppError("The user belonging to this token does no longer exist.", 401)

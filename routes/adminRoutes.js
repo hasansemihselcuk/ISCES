@@ -8,8 +8,6 @@ router.route("/create").post(adminController.createAdmin);
 
 router.route("/").get(adminController.getAllStudents);
 
-router.route("/:id").get(adminController.getStudent);
-
 router.route("/candidates").get(adminController.getAllDepartmentCandidates);
 
 router
@@ -29,5 +27,7 @@ router.route("/tickets").get(adminController.getTickets);
 router.route("/electionStart").post(adminController.startElection);
 
 router.route("/electionEnd").put(adminController.endElection);
+
+router.route("/:id").get(adminController.getStudent);
 
 module.exports = router;

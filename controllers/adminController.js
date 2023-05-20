@@ -1,5 +1,5 @@
 const Student = require("../models/studentModel");
-const Candidate = require("../models/departmentCandidateModel");
+const DepartmentCandidate = require("../models/departmentCandidateModel");
 const Election = require("../models/departmentElectionModel");
 const Announce = require("../models/announceModel");
 const Ticket = require("../models/ticketModel");
@@ -50,15 +50,15 @@ exports.getStudent = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllDepartmentCandidates = catchAsync(async (req, res, next) => {
-  const candidates = await Candidate.find();
-  const infos = candidates.map((candidate) => {
-    return candidate.studentInfos;
+  const candidates = await DepartmentCandidate.find().populate({
+    path: "studentInfos",
   });
+
   res.status(200).json({
     status: "success",
     results: candidates.length,
     data: {
-      infos,
+      candidates,
     },
   });
 });
