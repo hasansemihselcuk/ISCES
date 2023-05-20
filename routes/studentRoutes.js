@@ -3,12 +3,15 @@ const authController = require("./../controllers/authController");
 const studentController = require("../controllers/studentController");
 const router = express.Router();
 
-router
-  .post("/login", authController.login);
+router.post("/login", authController.login);
+
+router.route("/sendTicket").post(studentController.sendTicket);
+
+router.route("/:id").get(studentController.getCandidatesFromStudentsDepartment);
 
 router
-  .route("/:id")
-  .get(studentController.getCandidatesFromStudentsDepartment);
+  .route("/votes/:id/")
+  .get(studentController.getCandidatesVoteFromStudentsDepartment);
 
 router
   .route("/:id/:cid")
@@ -16,11 +19,5 @@ router
     authController.checkElectionStatus,
     studentController.voteDepartmentCandidate
   );
-
-router
-  .route("/votes/:id/")
-  .get(studentController.getCandidatesVoteFromStudentsDepartment);
-
-router.route("/sendTicket").post(studentController.sendTicket);
 
 module.exports = router;

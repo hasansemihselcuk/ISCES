@@ -32,27 +32,22 @@ exports.candidateApplication = catchAsync(async (req, res, next) => {
   });
 });
 
-//bozuk gibi
 exports.cancelCandidateApplication = catchAsync(async (req, res, next) => {
-  try{
-    const candidate = req.params.id;
-    let student = await Candidate.findById(candidate);
-    let oneStudent = await Student.findById(student.studentInfos);
-    oneStudent.isCandidate = false;
-    await Candidate.findByIdAndDelete(candidate);
-    await oneStudent.save();
-
-    res.status(200).json({
-        status: "success",
-        data: null
-    });
-  }catch(error){
-    res.status(400).json({
-        status: "error",
-        message: "You might not be a candidate"
-    });
-}
+  const candidate = req.params.id;
+  let departmentCandidate = await Candidate.findOne({
+    studentInfos: candidate,
+  });
+  if (!departmentCandidate) {
+    return next(new AppError("Aday bulunamadı.", 400));
+  }
+  let student = await Student.findById(departmentCandidate.studentInfos);
+  student.isCandidate = false;
+  await Candidate.findByIdAndDelete(departmentCandidate._id);
+  await student.save();
+  res.status(200).json({
+    status: "success",
+    data: {
+      student,
+    },
+  });
 });
-
-
-
