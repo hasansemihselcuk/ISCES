@@ -81,8 +81,12 @@ exports.login = catchAsync(async (req, res, next) => {
   );
 
   if (student) {
-    const isPasswordCorrect = student.password === password;
+    const isPasswordCorrect = await student.correctPassword(
+      password,
+      student.password
+    );
     if (isPasswordCorrect) {
+      console.log(student);
       const token = signToken(student._id);
 
       return res.status(200).json({
@@ -102,7 +106,10 @@ exports.login = catchAsync(async (req, res, next) => {
   const admin = await Admin.findOne({ iztechMail: email }).select("+password");
   if (admin) {
     console.log(email, password);
-    const isPasswordCorrect = admin.password === password;
+    const isPasswordCorrect = await admin.correctPassword(
+      password,
+      admin.password
+    );
     if (isPasswordCorrect) {
       const token = signToken(admin._id);
 
