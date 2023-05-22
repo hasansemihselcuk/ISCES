@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import DepartmentResults from "../components/resultPageComponents/departmentResults";
 import resim from "../components/votingPageComponents/defaultUser.png";
+import AuthContext from "../context/AuthContext";
 
 const ElectionResult = ({ candidates, candidatesVote }) => {
+  const authCtx = useContext(AuthContext);
   const results = [
     {
       name: "Gökhan Türkmen",
@@ -21,7 +23,7 @@ const ElectionResult = ({ candidates, candidatesVote }) => {
   return (
     <div>
       <div className="flex justify-center  mb-8 mt-16 text-3xl">
-        <h1>candidate.department Bölüm Temsilciliği Seçimi</h1>
+        <h1>{authCtx.department} Bölüm Temsilciliği Seçimi</h1>
       </div>
       <div className="p-8 mb-8 rounded-lg relative text-3xl ">
         <DepartmentResults candidates={results} />
