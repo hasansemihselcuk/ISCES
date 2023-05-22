@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ACandidate from "./aCandidate";
+import axios from "axios";
 
 const Ballot = (props) => {
   const [selectedCandidate, setSelectedCandidate] = useState(null);
@@ -38,6 +39,18 @@ const Ballot = (props) => {
       alert("asan");
     }
   };
+  const sendVote = async () => {
+    const id = await localStorage.getItem("sid");
+    const res = await axios.put(
+      `http://localhost:3001/api/v1/student/${id}/${selectedCandidate.id}`
+    );
+    if (res.data.status === "success") {
+      console.log("Oy gönderildi");
+    } else {
+      console.log("Oy gönderilemedi");
+    }
+  };
+
   const remainder = props.candidates.length % 3;
   const isLastRowCentered = remainder !== 0 && remainder !== 1;
 
@@ -77,7 +90,10 @@ const Ballot = (props) => {
           </p>
         )}
         <div className="flex">
-          <button className="p-2 border-2 border-rose-600 hover:bg-rose-600">
+          <button
+            onClick={sendVote}
+            className="p-2 border-2 border-rose-600 hover:bg-rose-600"
+          >
             Evet
           </button>
           <button className="p-2 border-2 ml-72 border-rose-600 hover:bg-rose-600">
