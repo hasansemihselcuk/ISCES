@@ -7,30 +7,25 @@ const MyComponent = () => {
   const [announcements, setAnnouncements] = useState([]);
 
   useEffect(() => {
+    let announceDatas;
     // Simulating data received from the backend
     axios
       .get("http://localhost:3001/api/v1/admin/announcements")
       .then((res) => {
-        setAnnouncements(res.data.data.announces);
+        console.log(res.data.data.announces);
+        announceDatas = res.data.data.announces;
+        const backendData = announceDatas.map((announce) => {
+          return `${announce.title}\n${announce.description}`;
+        });
+        setTexts(
+          backendData.map((text) => ({
+            content: text,
+            showMore: false,
+          }))
+        );
       });
 
-    const backendData = [
-      "Tüm öğrenciler sadece bir kullanabilir.",
-      "Lütfen iki adayı aynı anda seçmeyin.",
-      "Seneye görüşürüz!",
-      "İYTE süper!",
-      "Duyuru 5\nSatır 1\nSatır 2\nSatır 3\nSatır 4",
-      "Duyuru 6 \nSatır 1\nSatır 2",
-      // Add more two-line announcements here
-    ];
-
     // Update the state with the backend data
-    setTexts(
-      backendData.map((text) => ({
-        content: text,
-        showMore: false,
-      }))
-    );
   }, []);
 
   const handleShowMore = (index) => {
