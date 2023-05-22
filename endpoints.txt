@@ -29,6 +29,8 @@ Adayların oylarını görme:
 http://localhost:3001/api/v1/student/votes/:id(get)
 Ticket oluşturma:
 http://localhost:3001/api/v1/student/sendTicket/ (post)
+Oy verme işleminde departman ismini dinamik görme:
+http://localhost:3001/api/v1/student/department/:id (get)
 
 
 

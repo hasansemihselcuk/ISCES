@@ -1,8 +1,22 @@
 const Student = require("../models/studentModel");
+const Department = require("../models/departmentModel");
 const Candidate = require("../models/departmentCandidateModel");
 const Ticket = require("../models/ticketModel");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
+
+
+exports.getDepartmentName = catchAsync(async (req, res, next) => {
+  const student = await Student.findById(req.params.id);
+  const department = student.department;
+  const depName = await Department.findOne({ _id: department }).populate({ path: "name" });
+  res.status(200).json({
+    status: "success",
+    data: {
+      depName,
+    },
+  });
+});
 
 exports.getCandidatesFromStudentsDepartment = catchAsync(
   async (req, res, next) => {
