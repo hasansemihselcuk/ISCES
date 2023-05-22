@@ -1,4 +1,4 @@
-import { set } from "mongoose";
+import axios from "axios";
 import React, { useState, useEffect } from "react";
 
 const AuthContext = React.createContext({
@@ -6,6 +6,7 @@ const AuthContext = React.createContext({
   isCandidate: false,
   isAdmin: false,
   isClickedLogInButton: false,
+  department: "",
   //chefId: null,
   onLogout: () => {},
   onLogin: () => {},
@@ -15,6 +16,7 @@ const AuthContext = React.createContext({
 });
 
 export const AuthContextProvider = (props) => {
+  const [department, setDepartment] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isClickedLogInButton, setIsClickedLogInButton] = useState(false);
   const [isCandidate, setIsCandidate] = useState(false);
@@ -23,7 +25,11 @@ export const AuthContextProvider = (props) => {
   useEffect(() => {
     const sid = localStorage.getItem("sid");
     const studentInfo = localStorage.getItem("studentInfo");
-
+    axios
+      .get(`http://localhost:3001/api/v1/student/department/${sid}`)
+      .then((res) => {
+        setDepartment(res.data.data.depName.name);
+      });
     if (sid !== undefined && sid !== null) {
       if (JSON.parse(studentInfo).isCandidate) {
         console.log("a");
@@ -75,6 +81,7 @@ export const AuthContextProvider = (props) => {
         isClickedLogInButton: isClickedLogInButton,
         isCandidate: isCandidate,
         isAdmin: isAdmin,
+        department: department,
         onLogout: logoutHandler,
         onLogin: loginHandler,
         handleLogin: handleLogin,
