@@ -7,15 +7,31 @@ const AppError = require("../utils/appError");
 exports.getCandidatesFromStudentsDepartment = catchAsync(
   async (req, res, next) => {
     const student = await Student.findById(req.params.id);
+    const department = student.department;
 
-    const candidates = await Candidate.find({
-      "studentInfos.department": student.department,
-    });
+    const candidatesFromStudentsDepartment = await Candidate.aggregate([
+      {
+        $lookup: {
+          from: "students",
+          localField: "studentInfos",
+          foreignField: "_id",
+          as: "studentInfos",
+        },
+      },
+      {
+        $unwind: "$studentInfos",
+      },
+      {
+        $match: {
+          "studentInfos.department": department,
+        },
+      },
+    ]);
 
     res.status(200).json({
       status: "success",
       data: {
-        candidates,
+        candidatesFromStudentsDepartment,
       },
     });
   }
