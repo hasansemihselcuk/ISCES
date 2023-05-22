@@ -1,11 +1,19 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import myImage from "./iyte.jpg";
 
 const MyComponent = () => {
   const [texts, setTexts] = useState([]);
+  const [announcements, setAnnouncements] = useState([]);
 
   useEffect(() => {
     // Simulating data received from the backend
+    axios
+      .get("http://localhost:3001/api/v1/admin/announcements")
+      .then((res) => {
+        setAnnouncements(res.data.data.announces);
+      });
+
     const backendData = [
       "Tüm öğrenciler sadece bir kullanabilir.",
       "Lütfen iki adayı aynı anda seçmeyin.",

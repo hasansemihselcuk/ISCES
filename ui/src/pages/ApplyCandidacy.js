@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState, useEffect } from "react";
 import "./ApplyCandidacy.css";
 const ApplyCandidacy = (props) => {
@@ -31,10 +32,19 @@ const ApplyCandidacy = (props) => {
     }
   }, []);
 
-  const sendHandler = (event) => {
+  const sendHandler = async (event) => {
     event.preventDefault();
     setCanBeCandidate(false);
+    const studentId = localStorage.getItem("sid");
     //BURADAN DA VERİTABANINA BAŞVURUSU AKTARILACAK
+    const res = await axios.post(
+      `http://localhost:3001/api/v1/candidate/${studentId}`
+    );
+    if (res.data.status === "success") {
+      console.log("You are candidate");
+    } else {
+      console.log("You can not be candidate.");
+    }
   };
 
   const requirements = [
