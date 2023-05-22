@@ -42,13 +42,14 @@ const Ballot = (props) => {
   const sendVote = async () => {
     const id = await localStorage.getItem("sid");
     const res = await axios.put(
-      `http://localhost:3001/api/v1/student/${id}/${selectedCandidate.id}`
+      `http://localhost:3001/api/v1/student/${id}/${selectedCandidate._id}`
     );
     if (res.data.status === "success") {
       console.log("Oy gönderildi");
     } else {
       console.log("Oy gönderilemedi");
     }
+    setIsSubmitted(false);
   };
 
   const remainder = props.candidates.length % 3;
@@ -96,7 +97,12 @@ const Ballot = (props) => {
           >
             Evet
           </button>
-          <button className="p-2 border-2 ml-72 border-rose-600 hover:bg-rose-600">
+          <button
+            className="p-2 border-2 ml-72 border-rose-600 hover:bg-rose-600"
+            onClick={() => {
+              setIsSubmitted(false);
+            }}
+          >
             Hayır
           </button>
         </div>

@@ -17,6 +17,7 @@ const VotingPage = ({
     axios
       .get(`http://localhost:3001/api/v1/student/${studentId}`)
       .then((res) => {
+        console.log(res.data.data.candidatesFromStudentsDepartment);
         setCandidates(
           res.data.data.candidatesFromStudentsDepartment.map((student) => {
             return {

@@ -5,11 +5,12 @@ const Ticket = require("../models/ticketModel");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 
-
 exports.getDepartmentName = catchAsync(async (req, res, next) => {
   const student = await Student.findById(req.params.id);
   const department = student.department;
-  const depName = await Department.findOne({ _id: department }).populate({ path: "name" });
+  const depName = await Department.findOne({ _id: department }).populate({
+    path: "name",
+  });
   res.status(200).json({
     status: "success",
     data: {
@@ -54,10 +55,11 @@ exports.getCandidatesFromStudentsDepartment = catchAsync(
 exports.voteDepartmentCandidate = catchAsync(async (req, res, next) => {
   const student = req.params.id;
   const candidate = req.params.cid;
+  console.log(sid, candidate);
   if (student.isVotedForDepartment) {
     return next(new AppError("Öğrenci zaten oy kullanmış.", 400));
   }
-  const votingTime = new Date.now();
+  //const votingTime = new Date.now();
   const votedCandidate = await Candidate.findByIdAndUpdate(
     candidate,
     { $inc: { voteCount: 1 } },
@@ -73,7 +75,7 @@ exports.voteDepartmentCandidate = catchAsync(async (req, res, next) => {
     data: {
       votedCandidate,
       votedStudent,
-      votingTime,
+      //votingTime,
     },
   });
 });

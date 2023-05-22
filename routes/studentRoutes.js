@@ -13,15 +13,11 @@ router
   .route("/votes/:id/")
   .get(studentController.getCandidatesVoteFromStudentsDepartment);
 
-router
-  .route("/department/:id")
-  .get(studentController.getDepartmentName)
+router.route("/department/:id").get(studentController.getDepartmentName);
 
-router
-  .route("/:id/:cid")
-  .put(
-    authController.checkElectionStatus,
-    studentController.voteDepartmentCandidate
-  );
+router.route("/:id/:cid").put(
+  //authController.checkElectionStatus,
+  studentController.voteDepartmentCandidate
+);
 
 module.exports = router;
