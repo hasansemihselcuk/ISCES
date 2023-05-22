@@ -20,7 +20,11 @@ const VotingPage = ({
         console.log(res.data.data.candidatesFromStudentsDepartment);
         setCandidates(
           res.data.data.candidatesFromStudentsDepartment.map((student) => {
-            return { ...student.studentInfos, photo: resim };
+            return {
+              ...student.studentInfos,
+              name: `${student.studentInfos.name} ${student.studentInfos.surname}`,
+              photo: resim,
+            };
           })
         );
       });
