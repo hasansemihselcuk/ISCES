@@ -17,7 +17,6 @@ const VotingPage = ({
     axios
       .get(`http://localhost:3001/api/v1/student/${studentId}`)
       .then((res) => {
-        console.log(res.data.data.candidatesFromStudentsDepartment);
         setCandidates(
           res.data.data.candidatesFromStudentsDepartment.map((student) => {
             return {
@@ -30,33 +29,6 @@ const VotingPage = ({
       });
   }, []);
 
-  const candidates = [
-    {
-      name: "Gökhan Türkmen",
-      photo: resim,
-      id: 1,
-    },
-    {
-      name: "Gökhan Türk",
-      photo: resim,
-      id: 2,
-    },
-    {
-      name: "Gökhan Türkmens",
-      photo: resim,
-      id: 3,
-    },
-    {
-      name: "Gökhan Türkss",
-      photo: resim,
-      id: 4,
-    },
-    {
-      name: "Gökhan Türkmensss",
-      photo: resim,
-      id: 5,
-    },
-  ];
   return (
     <div>
       <div className="flex justify-center mb-8 text-3xl">
