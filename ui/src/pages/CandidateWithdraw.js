@@ -17,7 +17,7 @@ const CandidateWithdraw = () => {
       setWithdraw(true);
       const studentInfos = await localStorage.getItem("studentInfo");
       const newStudentInfo = { isCandidate: false, ...studentInfos };
-      await localStorage.setItem("studentInfo", newStudentInfo);
+      await localStorage.setItem("studentInfo", JSON.stringify(newStudentInfo));
       authCtx.withdrawCand();
     }
   };

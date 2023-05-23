@@ -45,7 +45,7 @@ const ApplyCandidacy = (props) => {
     if (res.data.status === "success") {
       const studentInfos = await localStorage.getItem("studentInfo");
       const newStudentInfo = { isCandidate: true, ...studentInfos };
-      await localStorage.setItem("studentInfo", newStudentInfo);
+      await localStorage.setItem("studentInfo", JSON.stringify(newStudentInfo));
       authCtx.handleCandidate();
       console.log("You are candidate");
     } else {
