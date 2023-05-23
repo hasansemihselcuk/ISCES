@@ -16,7 +16,7 @@ const MyComponent = () => {
         announceDatas = res.data.data.announces;
         const backendData = announceDatas.map((announce) => {
           const date = new Date(announce.date);
-          date.setHours(date.getHours() + 3);
+          console.log(date);
 
           // Tarih değerlerini alın
           const day = date.getDate().toString().padStart(2, "0");
@@ -29,7 +29,7 @@ const MyComponent = () => {
 
           // Biçimlendirilmiş tarih ve saat değerini oluşturun
           const formattedDate = `${day}.${month}.${year} ${hours}:${minutes}`;
-
+          console.log(formattedDate);
           // verilen saate 3 saat eklendi
 
           announce.date = formattedDate;
