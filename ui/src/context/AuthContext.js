@@ -13,6 +13,7 @@ const AuthContext = React.createContext({
   handleLogin: () => {},
   handleCandidate: () => {},
   handleAdmin: () => {},
+  withdrawCand: () => {},
 });
 
 export const AuthContextProvider = (props) => {
@@ -32,11 +33,9 @@ export const AuthContextProvider = (props) => {
       });
     if (sid !== undefined && sid !== null) {
       if (JSON.parse(studentInfo).isCandidate) {
-        console.log("a");
         setIsCandidate(true);
       }
       if (JSON.parse(studentInfo).isAdmin) {
-        console.log("b");
         setIsAdmin(true);
       }
       setIsLoggedIn(true);
@@ -63,6 +62,10 @@ export const AuthContextProvider = (props) => {
     setIsCandidate(true);
   };
 
+  const withdrawCand = () => {
+    setIsCandidate(false);
+  };
+
   const handleAdmin = () => {
     setIsAdmin(true);
   };
@@ -87,6 +90,7 @@ export const AuthContextProvider = (props) => {
         handleLogin: handleLogin,
         handleCandidate: handleCandidate,
         handleAdmin: handleAdmin,
+        withdrawCand: withdrawCand,
       }}
     >
       {props.children}

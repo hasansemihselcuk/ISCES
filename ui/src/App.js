@@ -12,8 +12,12 @@ import Date from "./admin-pages/Date";
 import Authority from "./admin-pages/Authority";
 import Result from "./admin-pages/Result";
 import AnnounceCandidate from "./admin-pages/AnnounceCandidate";
+import { useContext } from "react";
+import AuthContext from "./context/AuthContext";
 
 function App() {
+  const authCtx = useContext(AuthContext);
+
   return (
     <div className="">
       <BrowserRouter>
@@ -21,14 +25,24 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LogInPage />} />
-          <Route path="/admin/announcement" element={<Announcement />} />
-          <Route path="/admin/date" element={<Date />} />
-          <Route path="/admin/authority" element={<Authority />} />
-          <Route path="/admin/result" element={<Result />} />
-          <Route path="/admin/candidate" element={<AnnounceCandidate />} />
+          {authCtx.isAdmin && (
+            <Route path="/admin/announcement" element={<Announcement />} />
+          )}
+          {authCtx.isAdmin && <Route path="/admin/date" element={<Date />} />}
+          {authCtx.isAdmin && (
+            <Route path="/admin/authority" element={<Authority />} />
+          )}
+          {authCtx.isAdmin && (
+            <Route path="/admin/result" element={<Result />} />
+          )}
+          {authCtx.isAdmin && (
+            <Route path="/admin/candidate" element={<AnnounceCandidate />} />
+          )}
           <Route path="/vote" element={<VotingPage />} />
           <Route path="/apply" element={<ApplyCandidacy />} />
-          <Route path="/withdraw" element={<CandidateWithdraw />} />
+          {authCtx.isCandidate && (
+            <Route path="/withdraw" element={<CandidateWithdraw />} />
+          )}
           <Route path="/result" element={<ElectionResult />} />
         </Routes>
       </BrowserRouter>
