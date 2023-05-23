@@ -20,8 +20,9 @@ const VotingPage = ({
       .then((res) => {
         setCandidates(
           res.data.data.candidatesFromStudentsDepartment.map((student) => {
+            console.log(student._id);
             return {
-              ...student.studentInfos,
+              id: student._id,
               name: `${student.studentInfos.name} ${student.studentInfos.surname}`,
               photo: resim,
             };

@@ -55,7 +55,7 @@ exports.getCandidatesFromStudentsDepartment = catchAsync(
 exports.voteDepartmentCandidate = catchAsync(async (req, res, next) => {
   const student = req.params.id;
   const candidate = req.params.cid;
-  console.log(sid, candidate);
+
   if (student.isVotedForDepartment) {
     return next(new AppError("Öğrenci zaten oy kullanmış.", 400));
   }

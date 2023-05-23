@@ -41,8 +41,9 @@ const Ballot = (props) => {
   };
   const sendVote = async () => {
     const id = await localStorage.getItem("sid");
+    console.log(selectedCandidate);
     const res = await axios.put(
-      `http://localhost:3001/api/v1/student/${id}/${selectedCandidate._id}`
+      `http://localhost:3001/api/v1/student/${id}/${selectedCandidate.id}`
     );
     if (res.data.status === "success") {
       console.log("Oy gönderildi");
