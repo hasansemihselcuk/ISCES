@@ -1,5 +1,6 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import AuthContext from "../context/AuthContext";
 import "./ApplyCandidacy.css";
 const ApplyCandidacy = (props) => {
   const [markOne, setMarkOne] = useState(false);
@@ -8,6 +9,7 @@ const ApplyCandidacy = (props) => {
   const [markFour, setMarkFour] = useState(false);
   const [isValid, setIsValid] = useState(false);
   const [canBeCandidate, setCanBeCandidate] = useState(true);
+  const authCtx = useContext(AuthContext);
 
   const handleOptionChange = (event) => {
     if (event.target.value === "op1") {
@@ -41,6 +43,10 @@ const ApplyCandidacy = (props) => {
       `http://localhost:3001/api/v1/candidate/${studentId}`
     );
     if (res.data.status === "success") {
+      const studentInfos = await localStorage.getItem("studentInfo");
+      const newStudentInfo = { isCandidate: true, ...studentInfos };
+      await localStorage.setItem("studentInfo", newStudentInfo);
+      authCtx.handleCandidate();
       console.log("You are candidate");
     } else {
       console.log("You can not be candidate.");

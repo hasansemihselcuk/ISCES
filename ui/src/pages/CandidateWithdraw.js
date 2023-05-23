@@ -15,9 +15,10 @@ const CandidateWithdraw = () => {
     );
     if (res.data.status === "success") {
       setWithdraw(true);
-
+      const studentInfos = await localStorage.getItem("studentInfo");
+      const newStudentInfo = { isCandidate: false, ...studentInfos };
+      await localStorage.setItem("studentInfo", newStudentInfo);
       authCtx.withdrawCand();
-      navigate("/");
     }
   };
   return (
