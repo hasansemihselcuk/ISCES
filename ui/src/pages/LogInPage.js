@@ -55,6 +55,7 @@ const LogInPage = () => {
       );
 
       if (res.data.status === "success") {
+        console.log(res.data);
         if (res.data.isCandidate) {
           authCtx.handleCandidate();
         }

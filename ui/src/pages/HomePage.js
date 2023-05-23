@@ -55,7 +55,6 @@ const MyComponent = () => {
       return updatedTexts;
     });
   };
-  console.log(localStorage.getItem("studentInfo"));
 
   return (
     <div style={{ display: "flex" }}>
