@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import myImage from "./iyte.jpg";
+import Map from "../components/map";
 
 const MyComponent = () => {
   const [texts, setTexts] = useState([]);
@@ -8,14 +9,31 @@ const MyComponent = () => {
 
   useEffect(() => {
     let announceDatas;
-    // Simulating data received from the backend
     axios
       .get("http://localhost:3001/api/v1/admin/announcements")
       .then((res) => {
         console.log(res.data.data.announces);
         announceDatas = res.data.data.announces;
         const backendData = announceDatas.map((announce) => {
-          return `${announce.title}\n${announce.description}`;
+          const date = new Date(announce.date);
+          date.setHours(date.getHours() + 3);
+
+          // Tarih değerlerini alın
+          const day = date.getDate().toString().padStart(2, "0");
+          const month = (date.getMonth() + 1).toString().padStart(2, "0");
+          const year = date.getFullYear();
+
+          // Saat ve dakika değerlerini alın
+          const hours = date.getHours().toString().padStart(2, "0");
+          const minutes = date.getMinutes().toString().padStart(2, "0");
+
+          // Biçimlendirilmiş tarih ve saat değerini oluşturun
+          const formattedDate = `${day}.${month}.${year} ${hours}:${minutes}`;
+
+          // verilen saate 3 saat eklendi
+
+          announce.date = formattedDate;
+          return `${announce.title}\n${announce.date}\n${announce.description}`;
         });
         setTexts(
           backendData.map((text) => ({
@@ -44,17 +62,7 @@ const MyComponent = () => {
       <div style={{ flex: "1" }}>
         <header style={{ height: "1px" }}></header>
         <div style={{ position: "relative" }}>
-          <img
-            src={myImage}
-            alt="My Image"
-            style={{
-              position: "absolute",
-              top: "100px",
-              left: "20%",
-              maxWidth: "100%",
-              height: "auto",
-            }}
-          />
+          <Map myImage={myImage} />
         </div>
       </div>
       <div
@@ -74,13 +82,19 @@ const MyComponent = () => {
               backgroundColor: "lightgray",
               padding: "10px",
               borderRadius: "5px",
+              paddingRight: "20px",
+              marginRight: "50px",
             }}
           >
+            <div className="flex justify-between">
+              <div className="font-bold">{text.content.split("\n")[0]}</div>
+              <div className="italic">{text.content.split("\n")[1]}</div>
+            </div>
             {text.content
               .split("\n")
-              .slice(0, 3)
+              .slice(2, 5)
               .map((line, lineIndex) => (
-                <div key={lineIndex}>{line}</div>
+                <div key={lineIndex}> {line}</div>
               ))}
             {text.content.split("\n").length > 3 && !text.showMore && (
               <button
@@ -93,6 +107,7 @@ const MyComponent = () => {
             {text.showMore &&
               text.content
                 .split("\n")
+                .slice(5)
                 .map((line, lineIndex) => <div key={lineIndex}>{line}</div>)}
             {text.content.split("\n").length > 3 && text.showMore && (
               <button
