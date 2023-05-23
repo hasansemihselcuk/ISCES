@@ -130,7 +130,10 @@ exports.announceDepartmentWinners = catchAsync(async (req, res, next) => {
 
 exports.makeAnnouncement = catchAsync(async (req, res, next) => {
   const adminId = req.params.id;
-  const { title, description } = req.body;
+  const body = Object.keys(req.body)[0];
+  const fixedResponse = body.replace(/'/g, '"');
+  const parsedResponse = JSON.parse(fixedResponse);
+  const { title, description } = parsedResponse;
   const newAnnounce = new Announce({
     title,
     description,
