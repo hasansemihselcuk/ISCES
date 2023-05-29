@@ -21,14 +21,6 @@ const Announcement = () => {
     } else {
       console.log("Can not posted.");
     }
-    // Replace this with your actual API call to send data to the backend
-    // axios.post('/api/announcement', data)
-    //   .then(response => {
-    //     // Handle successful response
-    //   })
-    //   .catch(error => {
-    //     // Handle error
-    //   });
 
     console.log(data); // For demonstration purposes
   };
