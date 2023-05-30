@@ -85,6 +85,13 @@ const SideBar = () => {
           </Link>
         </li>
       )}
+      {!authCtx.isAdmin && (
+        <li className="mb-5 bg-gray-100 hover:bg-gray-300 ml-4 mr-4 mt-4">
+          <Link to="/feedback">
+            <button className="w-full text-left p-2 ">Geri Bildirim</button>
+          </Link>
+        </li>
+      )}
 
       <li className="mb-5 bg-gray-100 hover:bg-gray-300 ml-4 mr-4 mt-4">
         <button

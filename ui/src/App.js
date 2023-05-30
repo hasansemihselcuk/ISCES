@@ -14,6 +14,7 @@ import Result from "./admin-pages/Result";
 import AnnounceCandidate from "./admin-pages/AnnounceCandidate";
 import { useContext } from "react";
 import AuthContext from "./context/AuthContext";
+import Feedback from "./pages/Feedback";
 
 function App() {
   const authCtx = useContext(AuthContext);
@@ -39,7 +40,8 @@ function App() {
             <Route path="/admin/candidate" element={<AnnounceCandidate />} />
           )}
           <Route path="/vote" element={<VotingPage />} />
-          <Route path="/apply" element={<ApplyCandidacy />} />
+          <Route path="/apply" element={<ApplyCandidacy/>} />
+          <Route path="/feedback" element={<Feedback />} />
           {authCtx.isCandidate && (
             <Route path="/withdraw" element={<CandidateWithdraw />} />
           )}
