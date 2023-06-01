@@ -1,5 +1,6 @@
 const Student = require("../models/studentModel");
 const Candidate = require("../models/departmentCandidateModel");
+const Notification = require("../models/notificationModel");
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 
@@ -33,6 +34,12 @@ exports.nomineeRejection = catchAsync(async (req, res, next) => {
     { isNominee: false },
     { new: true, runValidators: true }
   );
+
+  const newNotification = new Notification({
+    message: "Adaylık başvurunuz reddedildi",
+    to: student._id,
+  });
+
   res.status(200).json({
     status: "success",
     data: {
@@ -62,6 +69,12 @@ exports.candidateApplication = catchAsync(async (req, res, next) => {
   const newCandidate = new Candidate({
     studentInfos: student._id,
   });
+
+  const newNotification = new Notification({
+    message: "Adaylık başvurunuz kabul edildi",
+    to: student._id,
+  });
+
   await newCandidate.save();
   res.status(200).json({
     status: "success",
