@@ -21,7 +21,7 @@ const FeedBack = () => {
         {feedbacks.map((ticket) => (
           <TicketCard
             key={Math.random()}
-            name="İnan Deniz Bal"
+            name={ticket.studentNameSurname}
             title={ticket.ticketTitle}
             ticketText={ticket.ticketDescription}
           />
