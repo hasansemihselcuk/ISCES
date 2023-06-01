@@ -174,12 +174,25 @@ exports.getAnnouncements = catchAsync(async (req, res, next) => {
 });
 
 exports.getTickets = catchAsync(async (req, res, next) => {
-  const tickets = await Ticket.find().sort({ date: -1 });
+  const tickets = await Ticket.find()
+    .sort({ ticketDate: -1 })
+    .populate("studentInfos", "name surname");
+
+  const formattedTickets = tickets.map((ticket) => {
+    const fullName =
+      ticket.studentInfos.name + " " + ticket.studentInfos.surname;
+    return {
+      ...ticket._doc,
+      studentNameSurname: fullName,
+    };
+  });
+
   res.status(200).json({
     status: "success",
-    results: tickets.length,
+    results: formattedTickets.length,
     data: {
-      tickets,
+      tickets: formattedTickets,
     },
   });
 });
+
