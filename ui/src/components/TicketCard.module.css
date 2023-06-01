@@ -1,0 +1,30 @@
+.form {
+  display: flex;
+  flex-direction: row;
+  width: 90%;
+
+  place-content: center;
+  margin: 15px;
+}
+
+.form label {
+  margin-top: 60px;
+  font-size: x-large;
+}
+
+.ticket {
+  margin-left: 80px;
+  width: 80%;
+  text-align: center;
+}
+
+.white {
+  background-color: white;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  width: 100%;
+}
+
+.form p {
+  font-size: x-large;
+}
