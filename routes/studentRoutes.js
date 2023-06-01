@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.post("/login", authController.login);
 
-router.route("/sendTicket").post(studentController.sendTicket);
+router.route("/sendTicket/:id").post(studentController.sendTicket);
 
 router.route("/:id").get(studentController.getCandidatesFromStudentsDepartment);
 
