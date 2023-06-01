@@ -35,11 +35,14 @@ http://localhost:3001/api/v1/student/:id/:cid (put)
 Adayların oylarını görme:
 http://localhost:3001/api/v1/student/votes/:id(get)
 Ticket oluşturma:
-http://localhost:3001/api/v1/student/sendTicket/ (post)
+http://localhost:3001/api/v1/student/sendTicket/:id (post)
 Oy verme işleminde departman ismini dinamik görme:
 http://localhost:3001/api/v1/student/department/:id (get)
-Notificationlatı alma:
-http://localhost:3001/api/v1/student/notifications/:id (get)
+Notificationları alma:
+http://localhost:3001/api/v1/student/notifications/:id (get)fakat öğrenci idsi
+Notification silme:
+http://localhost:3001/api/v1/student/notifications/:id (delete) fakat notification idsi
+
 
 
 

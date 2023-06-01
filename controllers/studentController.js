@@ -133,3 +133,15 @@ exports.getNotifications = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+exports.deleteNotification = catchAsync(async (req, res, next) => {
+  const notificationId = req.params.id;
+  const notification = await Notification.findByIdAndDelete(notificationId);
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      notification,
+    },
+  });
+});
