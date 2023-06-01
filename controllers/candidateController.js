@@ -3,13 +3,52 @@ const Candidate = require("../models/departmentCandidateModel");
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 
+exports.nomineeApplication = catchAsync(async (req, res, next) => {
+  const student = await Student.findByIdAndUpdate(
+    req.params.id,
+    { isNominee: true },
+    { new: true, runValidators: true }
+  );
+  if (student.GPA < 2.75 || student.year < 2) {
+    student.isNominee = false;
+    return next(new AppError("Başvuru için GPA yetersiz.", 400));
+  }
+  const existingNominee = await Candidate.findOne({
+    studentInfos: student._id,
+  });
+  if (existingNominee) {
+    return next(new AppError("Öğrenci zaten aday olarak eklenmiş.", 400));
+  }
+  res.status(200).json({
+    status: "success",
+    data: {
+      student,
+    },
+  });
+});
+
+exports.nomineeRejection = catchAsync(async (req, res, next) => {
+  const student = await Student.findByIdAndUpdate(
+    req.params.id,
+    { isNominee: false },
+    { new: true, runValidators: true }
+  );
+  res.status(200).json({
+    status: "success",
+    data: {
+      student,
+    },
+  });
+});
+
 exports.candidateApplication = catchAsync(async (req, res, next) => {
   const student = await Student.findByIdAndUpdate(
     req.params.id,
     { isCandidate: true },
+    { isNominee: false },
     { new: true, runValidators: true }
   );
-  if (student.GPA < 2.75) {
+  if (student.GPA < 2.75 || student.year < 2) {
     student.isCandidate = false;
     return next(new AppError("Başvuru için GPA yetersiz.", 400));
   }

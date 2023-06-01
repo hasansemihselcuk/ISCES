@@ -13,6 +13,13 @@ http://localhost:3001/api/v1/admin/electionStart
 Seçim bitir:
 http://localhost:3001/api/v1/admin/electionEnd
 
+Aday adayı işleri:
+Aday adayı olma:
+http://localhost:3001/api/v1/candidate/nomineeApplication (put)
+Aday adaylığını reddetme:
+http://localhost:3001/api/v1/candidate/nomineeRejection/:id (put)
+
+
 Aday işleri:
 Aday olma ve çekilme:
 http://localhost:3001/api/v1/candidate/:id (post/delete)

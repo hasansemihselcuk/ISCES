@@ -8,4 +8,10 @@ router
   .post(candidateController.candidateApplication)
   .delete(candidateController.cancelCandidateApplication);
 
+router
+  .route("/nomineeApplication/:id")
+  .put(candidateController.nomineeApplication);
+
+router.route("/nomineeRejection/:id").put(candidateController.nomineeRejection);
+
 module.exports = router;
