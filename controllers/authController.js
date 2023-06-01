@@ -129,6 +129,13 @@ exports.login = catchAsync(async (req, res, next) => {
         isAdmin: admin.isAdmin,
       });
     }
+    if (!isPasswordCorrect) {
+      res.status(401).json({
+        status: "fail",
+        message: "Incorrect email or password",
+      });
+    }
+    
   }
 
   return next(new AppError("Incorrect email or password", 401));
