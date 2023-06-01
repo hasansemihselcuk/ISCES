@@ -101,6 +101,12 @@ exports.login = catchAsync(async (req, res, next) => {
         isCandidate: student.isCandidate,
       });
     }
+    if (!isPasswordCorrect) {
+      res.status(401).json({
+        status: "fail",
+        message: "Incorrect email or password",
+      });
+    }
   }
 
   const admin = await Admin.findOne({ iztechMail: email }).select("+password");

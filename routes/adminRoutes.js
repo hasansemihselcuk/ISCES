@@ -13,7 +13,7 @@ router.route("/candidates").get(adminController.getAllDepartmentCandidates);
 router
   .route("/candidates/winners")
   .get(
-    authController.checkElectionStatusForEndElection,
+    //authController.checkElectionStatusForEndElection,
     adminController.announceDepartmentWinners
   );
 

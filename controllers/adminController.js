@@ -114,14 +114,25 @@ exports.announceDepartmentWinners = catchAsync(async (req, res, next) => {
         department: department._id,
       })
         .sort({ voteCount: -1 })
-        .populate("studentInfos");
-      const topThreeWinners = winners.slice(0, 3);
+        .populate({
+          path: "studentInfos",
+          model: "Student",
+        });
+
+      const winnersWithVoteCount = winners.map((winner) => {
+        return {
+          studentName: winner.studentInfos.name,
+          voteCount: winner.voteCount,
+        };
+      });
+
       return {
         department: department.name,
-        winners: topThreeWinners,
+        winners: winnersWithVoteCount,
       };
     })
   );
+
   res.status(200).json({
     status: "success",
     winnersByDepartment,
