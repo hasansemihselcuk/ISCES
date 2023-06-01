@@ -40,6 +40,8 @@ exports.nomineeRejection = catchAsync(async (req, res, next) => {
     to: student._id,
   });
 
+  await newNotification.save();
+
   res.status(200).json({
     status: "success",
     data: {
@@ -74,6 +76,8 @@ exports.candidateApplication = catchAsync(async (req, res, next) => {
     message: "Adaylık başvurunuz kabul edildi",
     to: student._id,
   });
+
+  await newNotification.save();
 
   await newCandidate.save();
   res.status(200).json({

@@ -2,6 +2,7 @@ const Student = require("../models/studentModel");
 const Department = require("../models/departmentModel");
 const Candidate = require("../models/departmentCandidateModel");
 const Ticket = require("../models/ticketModel");
+const Notification = require("../models/notificationModel");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 
@@ -99,7 +100,8 @@ exports.getCandidatesVoteFromStudentsDepartment = catchAsync(
 );
 
 exports.sendTicket = catchAsync(async (req, res, next) => {
-  const { studentInfos, ticketTitle, ticketDescription } = req.body;
+  const studentInfos = req.params.id;
+  const { ticketTitle, ticketDescription } = req.body;
   const student = await Student.findById(studentInfos);
   if (!student) {
     return next(new AppError("No student found with that ID", 404));
@@ -114,6 +116,20 @@ exports.sendTicket = catchAsync(async (req, res, next) => {
     status: "success",
     data: {
       newTicket,
+    },
+  });
+});
+
+exports.getNotifications = catchAsync(async (req, res, next) => {
+  const studentId = req.params.id;
+  const notifications = await Notification.find({ to: studentId })
+    .populate("to")
+    .sort({ date: -1 });
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      notifications,
     },
   });
 });
