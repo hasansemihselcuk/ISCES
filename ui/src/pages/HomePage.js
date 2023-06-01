@@ -1,12 +1,20 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import myImage from "./iyte.jpg";
 import Map from "../components/map";
+import { useNavigate } from "react-router-dom";
+import AuthContext from "../context/AuthContext";
 
-const MyComponent = () => {
+const HomePage = () => {
   const [texts, setTexts] = useState([]);
-  const [announcements, setAnnouncements] = useState([]);
 
+  const authCtx = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  if (!authCtx.isLoggedIn) {
+    console.log(authCtx.isLoggedIn);
+    navigate("/login");
+  }
   useEffect(() => {
     let announceDatas;
     axios
@@ -44,7 +52,7 @@ const MyComponent = () => {
       });
 
     // Update the state with the backend data
-  }, []);
+  });
 
   const handleShowMore = (index) => {
     setTexts((prevTexts) => {
@@ -123,4 +131,4 @@ const MyComponent = () => {
   );
 };
 
-export default MyComponent;
+export default HomePage;

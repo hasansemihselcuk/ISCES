@@ -22,6 +22,7 @@ const CandidateWithdraw = () => {
       };
       await localStorage.setItem("studentInfo", JSON.stringify(newStudentInfo));
       authCtx.withdrawCand();
+      navigate("/");
     }
   };
   return (

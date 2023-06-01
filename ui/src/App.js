@@ -42,7 +42,9 @@ function App() {
             <Route path="/admin/candidate" element={<AnnounceCandidate />} />
           )}
           <Route path="/vote" element={<VotingPage />} />
-          <Route path="/apply" element={<ApplyCandidacy />} />
+          {!authCtx.isCandidate && (
+            <Route path="/apply" element={<ApplyCandidacy />} />
+          )}
           <Route path="/feedback" element={<Feedback />} />
           {authCtx.isCandidate && (
             <Route path="/withdraw" element={<CandidateWithdraw />} />

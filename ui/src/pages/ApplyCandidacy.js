@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import "./ApplyCandidacy.css";
 const ApplyCandidacy = (props) => {
@@ -10,6 +11,7 @@ const ApplyCandidacy = (props) => {
   const [isValid, setIsValid] = useState(false);
   const [canBeCandidate, setCanBeCandidate] = useState(true);
   const authCtx = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleOptionChange = (event) => {
     if (event.target.value === "op1") {
@@ -48,6 +50,7 @@ const ApplyCandidacy = (props) => {
       await localStorage.setItem("studentInfo", JSON.stringify(newStudentInfo));
       authCtx.handleCandidate();
       console.log("You are candidate");
+      navigate("/");
     } else {
       console.log("You can not be candidate.");
     }

@@ -64,6 +64,7 @@ export const AuthContextProvider = (props) => {
     setIsAdmin(false);
     setIsCandidate(false);
     setIsLoggedIn(false);
+    setDepartment("");
   };
 
   const handleCandidate = () => {
