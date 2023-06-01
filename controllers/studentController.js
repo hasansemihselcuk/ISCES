@@ -101,7 +101,10 @@ exports.getCandidatesVoteFromStudentsDepartment = catchAsync(
 
 exports.sendTicket = catchAsync(async (req, res, next) => {
   const studentInfos = req.params.id;
-  const { ticketTitle, ticketDescription } = req.body;
+  const body = Object.keys(req.body)[0];
+  const fixedResponse = body.replace(/'/g, '"');
+  const parsedResponse = JSON.parse(fixedResponse);
+  const { ticketTitle, ticketDescription } = parsedResponse;
   const student = await Student.findById(studentInfos);
   if (!student) {
     return next(new AppError("No student found with that ID", 404));

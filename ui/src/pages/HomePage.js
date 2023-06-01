@@ -29,7 +29,7 @@ const MyComponent = () => {
 
           // Biçimlendirilmiş tarih ve saat değerini oluşturun
           const formattedDate = `${day}.${month}.${year} ${hours}:${minutes}`;
-          console.log(formattedDate);
+
           // verilen saate 3 saat eklendi
 
           announce.date = formattedDate;

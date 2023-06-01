@@ -6,13 +6,14 @@ const Feedback = () => {
   const [content, setContent] = useState("");
 
   const handleSendData = async () => {
+    const sid = localStorage.getItem("sid");
     // Simulating sending data to the backend
     const data = {
-      title: title,
-      description: content,
+      ticketTitle: title,
+      ticketDescription: content,
     };
     const res = await axios.post(
-      "http://localhost:3001/api/v1/student/sendTicket/",
+      `http://localhost:3001/api/v1/student/sendTicket/${sid}`,
       JSON.stringify(data)
     );
 
@@ -101,6 +102,5 @@ const Feedback = () => {
     </div>
   );
 };
-
 
 export default Feedback;

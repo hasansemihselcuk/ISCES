@@ -6,13 +6,19 @@ import SideBar from "./SideBar";
 import { useContext, useState } from "react";
 import AuthContext from "../context/AuthContext";
 import menu from "./nav-bar-pictures/menu.png";
+import Announcements from "./Announcements";
 
 const NavBar = () => {
   const [showSideBar, setShowSideBar] = useState(false);
+  const [showAnnouncements, setShowAnnouncements] = useState(false);
   const authCtx = useContext(AuthContext);
 
   const toggleSideBar = () => {
     setShowSideBar((prevState) => !prevState);
+  };
+
+  const toggleAnnounceBar = () => {
+    setShowAnnouncements((prevState) => !prevState);
   };
 
   return (
@@ -22,7 +28,7 @@ const NavBar = () => {
           <div>
             {authCtx.isLoggedIn && (
               <div>
-                <img src={iztechLogo} className="w-40 h-40 mt-4"></img>
+                <img src={iztechLogo} className="w-40 h-40 mt-4" />
                 <button
                   onClick={toggleSideBar}
                   className="relative w-10 h-10 mt-8 mr-2"
@@ -30,7 +36,7 @@ const NavBar = () => {
                   <img
                     src={menu}
                     className="w-10 h-10 rounded-full overflow-hidden"
-                  ></img>
+                  />
                   <div className="">{showSideBar && <SideBar />}</div>
                 </button>
               </div>
@@ -45,17 +51,18 @@ const NavBar = () => {
                 : "flex place-self-end mb-28 mr-12 mt-12"
             }
           >
-            <button className="mr-12">
-              <img src={bellIcon} className="w-8 h-8"></img>
+            <button className="mr-12" onClick={toggleAnnounceBar}>
+              <img src={bellIcon} className="w-8 h-8" />
             </button>
+            <div>{showAnnouncements && <Announcements />}</div>
             <button className="mr-12">
-              <img src={darkMode} className="w-8 h-8"></img>
+              <img src={darkMode} className="w-8 h-8" />
             </button>
             <button className="">
               <img
                 src={turkishFlag}
                 className="w-14 h-14 rounded-full overflow-hidden"
-              ></img>
+              />
             </button>
           </div>
         </div>
