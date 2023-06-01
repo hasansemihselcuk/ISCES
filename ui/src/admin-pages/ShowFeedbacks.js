@@ -1,26 +1,21 @@
 import React, { useEffect, useState } from "react";
 import classes from "./ShowFeedback.module.css";
 import TicketCard from "../components/TicketCard";
+import axios from "axios";
 const FeedBack = () => {
   const [feedbacks, setFeedbacks] = useState([]);
 
-
-  async function getFeedbacksHandler() {
-    const responseFeedback = await fetch(
-      "http://localhost:3001/api/v1/admin/tickets"
-    );
-    console.log(responseFeedback)
-    const feedbackDatas = await responseFeedback.json();
-    setFeedbacks(feedbackDatas);
-    console.log(feedbackDatas);
-  }
   useEffect(() => {
-    getFeedbacksHandler();
+    axios
+      .get("http://localhost:3001/api/v1/admin/tickets")
+      .then((res) => {
+        setFeedbacks(res.data.data.tickets);
+      })
+      .catch((err) => console.log(err));
   }, []);
 
   return (
-    <React.Fragment>
-      {" "}
+    <div>
       <p className={classes.header}>GERİ BİLDİRİM</p>
       <div className={classes.card}>
         {feedbacks.map((ticket) => (
@@ -32,7 +27,7 @@ const FeedBack = () => {
           />
         ))}
       </div>
-    </React.Fragment>
+    </div>
   );
 };
 

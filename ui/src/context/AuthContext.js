@@ -26,16 +26,24 @@ export const AuthContextProvider = (props) => {
   useEffect(() => {
     const sid = localStorage.getItem("sid");
     const studentInfo = localStorage.getItem("studentInfo");
-    axios
-      .get(`http://localhost:3001/api/v1/student/department/${sid}`)
-      .then((res) => {
-        setDepartment(res.data.data.depName.name);
-      });
+    const aid = localStorage.getItem("aid");
+    const adminInfo = localStorage.getItem("adminInfo");
+    if (sid) {
+      axios
+        .get(`http://localhost:3001/api/v1/student/department/${sid}`)
+        .then((res) => {
+          setDepartment(res.data.data.depName.name);
+        });
+    }
+
     if (sid !== undefined && sid !== null) {
       if (JSON.parse(studentInfo).isCandidate) {
         setIsCandidate(true);
       }
-      if (JSON.parse(studentInfo).isAdmin) {
+
+      setIsLoggedIn(true);
+    } else if (aid) {
+      if (aid !== undefined && JSON.parse(adminInfo).isAdmin) {
         setIsAdmin(true);
       }
       setIsLoggedIn(true);
