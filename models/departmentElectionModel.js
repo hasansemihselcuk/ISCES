@@ -9,11 +9,11 @@ const departmentElectionSchema = new mongoose.Schema({
   ],
   startDate: {
     type: Date,
-    default: Date.now(),
+    default: Date.now,
   },
   endDate: {
     type: Date,
-    default: Date.now() + 1 * 24 * 60 * 60 * 1000,
+    default: Date.now + 1 * 24 * 60 * 60 * 1000,
   },
   isStarted: {
     type: Boolean,

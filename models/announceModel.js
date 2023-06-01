@@ -11,7 +11,7 @@ const announceSchema = new mongoose.Schema({
   },
   date: {
     type: Date,
-    default: Date.now(),
+    default: Date.now,
   },
   sender: {
     type: mongoose.Schema.ObjectId,
