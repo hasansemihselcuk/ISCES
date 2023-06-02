@@ -8,6 +8,7 @@ const cors = require("cors");
 const adminRouter = require("./routes/adminRoutes");
 const candidateRouter = require("./routes/candidateRoutes");
 const studentRouter = require("./routes/studentRoutes");
+const repRouter = require("./routes/repRoutes");
 
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
@@ -21,6 +22,7 @@ app.use(cors());
 app.use("/api/v1/admin", adminRouter);
 app.use("/api/v1/candidate", candidateRouter);
 app.use("/api/v1/student", studentRouter);
+app.use("/api/v1/rep", repRouter);
 
 app.all("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

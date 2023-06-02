@@ -45,7 +45,7 @@ const LogInPage = () => {
   };
 
   const submitHandler = async (event) => {
-    const signInInfo = { email: enteredEmail, password: enteredPassword };
+    const signInInfo = { email: enteredEmail, retrievedPassword: enteredPassword };
 
     event.preventDefault();
     if (formIsValid) {

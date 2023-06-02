@@ -5,10 +5,45 @@ const Announce = require("../models/announceModel");
 const Ticket = require("../models/ticketModel");
 const Admin = require("../models/adminModel");
 const Department = require("../models/departmentModel");
+const Representative = require("../models/departmentRepModel");
 const Notification = require("../models/notificationModel");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 const moment = require("moment");
+
+exports.makeRepresentative = catchAsync(async (req, res, next) => {
+  const id = req.params.id;
+  const candidate = await DepartmentCandidate.find({studentInfos: id});
+  if (!candidate) {
+    return next(new AppError("No candidate found with that ID", 404));
+  }
+  const newRepresentative = new Representative({
+    studentInfos: id,
+  });
+  await newRepresentative.save();
+  res.status(200).json({
+    status: "success",
+    data: {
+      newRepresentative,
+    },
+  });
+});
+
+exports.getAllRepresentatives = catchAsync(async (req, res, next) => {
+  const representatives = await Representative.find().populate({
+    path: "studentInfos",
+  });
+
+  res.status(200).json({
+    status: "success",
+    results: representatives.length,
+    data: {
+      representatives,
+    },
+  });
+});
+
+    
 
 exports.createAdmin = catchAsync(async (req, res, next) => {
   const { name, surname, iztechMail, password } = req.body;
@@ -195,4 +230,3 @@ exports.getTickets = catchAsync(async (req, res, next) => {
     },
   });
 });
-

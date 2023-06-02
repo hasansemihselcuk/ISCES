@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 
 const departmentRepSchema = new mongoose.Schema({
-  candidateInfos: {
+  studentInfos: {
     type: mongoose.Schema.ObjectId,
-    ref: "DepartmentCandidate",
+    ref: "Student",
   },
   isCandidateForFaculty: {
     type: Boolean,
