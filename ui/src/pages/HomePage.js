@@ -52,7 +52,7 @@ const HomePage = () => {
       });
 
     // Update the state with the backend data
-  });
+  }, []);
 
   const handleShowMore = (index) => {
     setTexts((prevTexts) => {
