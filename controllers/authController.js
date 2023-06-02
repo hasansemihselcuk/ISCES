@@ -5,42 +5,30 @@ const Admin = require("../models/adminModel");
 const catchAsync = require("./../utils/catchAsync");
 const Election = require("../models/departmentElectionModel");
 const AppError = require("./../utils/appError");
+const axios = require("axios");
+
+const getMockData = async () => {
+  const response = await axios.get(
+    "https://6479f2d2a455e257fa641adf.mockapi.io/api/v1/users"
+  );
+  return response.data;
+};
+
+const getMockDataAdmin = async () => {
+  const response = await axios.get(
+    "https://6479f2d2a455e257fa641adf.mockapi.io/api/v1/admin"
+  );
+  return response.data;
+};
+
+const datas = getMockData();
+const datasAdmin = getMockDataAdmin();
 
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
 };
-/*
-exports.login = catchAsync(async (req, res, next) => {
-  const body = Object.keys(req.body)[0];
-  const fixedResponse = body.replace(/'/g, '"');
-  const parsedResponse = JSON.parse(fixedResponse);
-  const { email, password } = parsedResponse;
-  if (!email || !password) {
-    return next(new AppError("Please provide email and password!", 400));
-  }
-  const student = await Student.findOne({ iztechMail: email }).select(
-    "+password"
-  );
-  const correct = await user.correctPassword(password, user.password);
-  if (!user || !correct) {
-    return next(new AppError("Incorrect email or password", 401));
-  }
-  const token = signToken(student._id);
-  return res.status(200).json({
-    status: "success",
-    token,
-    sid: student._id,
-    name: student.name,
-    surname: student.surname,
-    studentNumber: student.studentNumber,
-    department: student.department,
-    iztechMail: student.iztechMail,
-    isCandidate: student.isCandidate,
-  });
-});
-*/
 
 // TAMAMEN ŞİFRELERİ HASHLI TUTABİLMEK İÇİN
 
@@ -71,22 +59,29 @@ exports.login = catchAsync(async (req, res, next) => {
   const body = Object.keys(req.body)[0];
   const fixedResponse = body.replace(/'/g, '"');
   const parsedResponse = JSON.parse(fixedResponse);
-  const { email, password } = parsedResponse;
-  if (!email || !password) {
+  const { email, retrievedPassword } = parsedResponse;
+
+  if (!email || !retrievedPassword) {
     return next(new AppError("Please provide email and password!", 400));
   }
+  const users = await datas;
+  const user = users.find((user) => user.iztechMail === email);
+  const password = user.password;
+  const student = await Student.findOne({
+    iztechMail: user.iztechMail,
+  }).select("+password");
+  const admin = await Admin.findOne({
+    iztechMail: user.iztechMail,
+  }).select("+password");
+  
 
-  const student = await Student.findOne({ iztechMail: email }).select(
-    "+password"
-  );
 
   if (student) {
     const isPasswordCorrect = await student.correctPassword(
-      password,
+      retrievedPassword,
       student.password
     );
     if (isPasswordCorrect) {
-      console.log(student);
       const token = signToken(student._id);
 
       return res.status(200).json({
@@ -108,12 +103,15 @@ exports.login = catchAsync(async (req, res, next) => {
       });
     }
   }
-
-  const admin = await Admin.findOne({ iztechMail: email }).select("+password");
+  /*
+  const users1 = await datasAdmin;
+  const user1 = users1.find((user1) => user1.iztechMail === email);
+  const password1 = user1.password;
+  const admin = await Admin.findOne({ iztechMail: user1.iztechMail }).select("+password1");
+  */
   if (admin) {
-    console.log(email, password);
     const isPasswordCorrect = await admin.correctPassword(
-      password,
+      retrievedPassword,
       admin.password
     );
     if (isPasswordCorrect) {
@@ -135,7 +133,6 @@ exports.login = catchAsync(async (req, res, next) => {
         message: "Incorrect email or password",
       });
     }
-    
   }
 
   return next(new AppError("Incorrect email or password", 401));
