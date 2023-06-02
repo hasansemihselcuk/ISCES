@@ -17,7 +17,7 @@ const Announcements = () => {
   const updateAnnouncement = async (id) => {
     const updatedNotifications = notifications.filter((not) => not._id !== id);
     setNotifications(updatedNotifications);
-    console.log(notifications);
+
     await axios.delete(
       `http://localhost:3001/api/v1/student/notifications/${id}`
     );

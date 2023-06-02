@@ -36,6 +36,9 @@ function App() {
             <Route path="/admin/authority" element={<Authority />} />
           )}
           {authCtx.isAdmin && (
+            <Route path="/admin/announcement" element={<Announcement />} />
+          )}
+          {authCtx.isAdmin && (
             <Route path="/admin/result" element={<Result />} />
           )}
           {authCtx.isAdmin && (
