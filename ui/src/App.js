@@ -16,6 +16,7 @@ import { useContext } from "react";
 import AuthContext from "./context/AuthContext";
 import Feedback from "./pages/Feedback";
 import ShowFeedbacks from "./admin-pages/ShowFeedbacks";
+import CandidateControl from "./admin-pages/CandidateControl";
 
 function App() {
   const authCtx = useContext(AuthContext);
@@ -37,6 +38,12 @@ function App() {
           )}
           {authCtx.isAdmin && (
             <Route path="/admin/announcement" element={<Announcement />} />
+          )}
+          {authCtx.isAdmin && (
+            <Route
+              path="/admin/candidatecontrol"
+              element={<CandidateControl />}
+            />
           )}
           {authCtx.isAdmin && (
             <Route path="/admin/result" element={<Result />} />

@@ -7,7 +7,7 @@ const SideBar = () => {
   const navigate = useNavigate();
   const authCtx = useContext(AuthContext);
   return (
-    <ul className="bg-zinc-800 absolute  mt-12 -ml-9  shadow-lg rounded-md  text-black  scale-125 z-10 text-sm side-bar p-2">
+    <ul className="bg-zinc-800 absolute  mt-16 -ml-9  shadow-lg rounded-md  text-black  scale-125 z-10 text-sm side-bar p-2">
       <li className="mb-2 bg-gray-100 hover:bg-gray-300 ml-4 mr-4 mb-4 mt-4">
         <Link to="/">
           <button className="w-full text-left p-2 ">Ana Sayfa</button>
@@ -47,6 +47,13 @@ const SideBar = () => {
         <li className="mb-2 bg-gray-100 hover:bg-gray-300 ml-4 mr-4 mt-4">
           <Link to="/admin/candidate">
             <button className="w-full text-left p-2 ">Kişileri Duyur</button>
+          </Link>
+        </li>
+      )}
+      {authCtx.isAdmin && (
+        <li className="mb-2 bg-gray-100 hover:bg-gray-300 ml-4 mr-4 mt-4">
+          <Link to="/admin/candidatecontrol">
+            <button className="w-full text-left p-2 ">Aday Onayı</button>
           </Link>
         </li>
       )}
