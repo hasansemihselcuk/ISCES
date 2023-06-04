@@ -29,6 +29,28 @@ exports.makeRepresentative = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.cancelRepresentative = catchAsync(async (req, res, next) => {
+  const id = req.params.id;
+  const representative = await Representative.findOneAndDelete({
+    studentInfos: id,
+  });
+  if (!representative) {
+    return next(new AppError("No representative found with that ID", 404));
+  }
+  const student = await Student.findByIdAndUpdate(
+    id,
+    { isCandidate: false, isNominee: false },
+    { new: true, runValidators: true }
+  );
+  await student.save();
+  res.status(200).json({
+    status: "success",
+    data: {
+      student,
+    },
+  });
+});
+
 exports.getNominations = catchAsync(async (req, res, next) => {
   const nominations = await Student.find({ isNominee: true }).populate(
     "department",
@@ -120,7 +142,6 @@ exports.getAllDepartmentCandidates = catchAsync(async (req, res, next) => {
     },
   });
 });
-
 
 exports.startElection = catchAsync(async (req, res, next) => {
   const currentDateTime = new Date();

@@ -7,4 +7,6 @@ router.route("/makeRep/:id").post(adminController.makeRepresentative);
 
 router.route("/").get(adminController.getAllRepresentatives);
 
+router.route("/cancelRep/:id").delete(adminController.cancelRepresentative);
+
 module.exports = router;
