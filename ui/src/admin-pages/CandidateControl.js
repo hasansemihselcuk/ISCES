@@ -14,7 +14,7 @@ const CandidateControl = () => {
           id: nom._id,
           name: nom.name,
           surname: nom.surname,
-          department: nom.department,
+          department: nom.department.name,
         };
       });
       setNominees(nominations);

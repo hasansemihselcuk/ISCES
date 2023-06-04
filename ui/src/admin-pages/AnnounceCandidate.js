@@ -13,7 +13,7 @@ const AnnounceCandidate = () => {
           id: rep.studentInfos._id,
           name: rep.studentInfos.name,
           surname: rep.studentInfos.surname,
-          department: rep.studentInfos.department,
+          department: rep.studentInfos.department.name,
         };
       });
       setNominees(representatives);

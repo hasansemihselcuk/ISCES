@@ -13,6 +13,15 @@ const NavBar = () => {
   const [showAnnouncements, setShowAnnouncements] = useState(false);
   const authCtx = useContext(AuthContext);
 
+  const info =
+    localStorage.getItem("adminInfo") || localStorage.getItem("studentInfo");
+  const parsed = JSON.parse(info);
+
+  /*
+  const studentInfo = localStorage.getItem("studentInfo");
+  const parsed = JSON.parse(studentInfo);
+  const isVoted2 = parsed.isVoted;  
+*/
   const toggleSideBar = () => {
     setShowSideBar((prevState) => !prevState);
   };
@@ -31,7 +40,7 @@ const NavBar = () => {
                 <img src={iztechLogo} className="w-40 h-40 mt-4" />
                 <button
                   onClick={toggleSideBar}
-                  className="relative w-10 h-10 mt-8 mr-2"
+                  className="relative flex w-10 h-10 mt-8 mb-2 mr-2"
                 >
                   <img
                     src={menu}
@@ -43,27 +52,29 @@ const NavBar = () => {
             )}
           </div>
 
-          <p className="ml-20 text-white text-4xl ml-40 mt-16">ISCES</p>
-          <div
-            className={
-              authCtx.isLoggedIn
-                ? "flex place-self-end mb-28 mr-12"
-                : "flex place-self-end mb-28 mr-12 mt-12"
-            }
-          >
-            <button className="mr-12" onClick={toggleAnnounceBar}>
-              <img src={bellIcon} className="w-8 h-8" />
-            </button>
-            <div>{showAnnouncements && <Announcements />}</div>
-            <button className="mr-12">
-              <img src={darkMode} className="w-8 h-8" />
-            </button>
-            <button className="">
-              <img
-                src={turkishFlag}
-                className="w-14 h-14 rounded-full overflow-hidden"
-              />
-            </button>
+          <p className="ml-20 text-white text-4xl ml-64 mt-16">ISCES</p>
+
+          <div className="flex flex-col items-end mt-16  mr-12">
+            <div className="flex justify-end">
+              <button className="mr-12" onClick={toggleAnnounceBar}>
+                <img src={bellIcon} className="w-8 h-8" />
+              </button>
+              <div>{showAnnouncements && <Announcements />}</div>
+              <button className="mr-12">
+                <img src={darkMode} className="w-8 h-8" />
+              </button>
+              <button>
+                <img
+                  src={turkishFlag}
+                  className="w-14 h-14 rounded-full overflow-hidden"
+                />
+              </button>
+            </div>
+            {authCtx.isLoggedIn && (
+              <div className="text-right mt-14  text-2xl">
+                {parsed.name} {parsed.surname}
+              </div>
+            )}
           </div>
         </div>
       </nav>
