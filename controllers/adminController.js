@@ -13,7 +13,7 @@ const moment = require("moment");
 
 exports.makeRepresentative = catchAsync(async (req, res, next) => {
   const id = req.params.id;
-  const candidate = await DepartmentCandidate.find({studentInfos: id});
+  const candidate = await DepartmentCandidate.find({ studentInfos: id });
   if (!candidate) {
     return next(new AppError("No candidate found with that ID", 404));
   }
@@ -25,6 +25,17 @@ exports.makeRepresentative = catchAsync(async (req, res, next) => {
     status: "success",
     data: {
       newRepresentative,
+    },
+  });
+});
+
+exports.getNominations = catchAsync(async (req, res, next) => {
+  const nominations = await Student.find({ isNominee: true });
+  res.status(200).json({
+    status: "success",
+    results: nominations.length,
+    data: {
+      nominations,
     },
   });
 });
@@ -42,8 +53,6 @@ exports.getAllRepresentatives = catchAsync(async (req, res, next) => {
     },
   });
 });
-
-    
 
 exports.createAdmin = catchAsync(async (req, res, next) => {
   const { name, surname, iztechMail, password } = req.body;

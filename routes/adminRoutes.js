@@ -10,12 +10,12 @@ router.route("/").get(adminController.getAllStudents);
 
 router.route("/candidates").get(adminController.getAllDepartmentCandidates);
 
-router
-  .route("/candidates/winners")
-  .get(
-    //authController.checkElectionStatusForEndElection,
-    adminController.announceDepartmentWinners
-  );
+router.route("/nominations").get(adminController.getNominations);
+
+router.route("/candidates/winners").get(
+  //authController.checkElectionStatusForEndElection,
+  adminController.announceDepartmentWinners
+);
 
 router
   .route("/announcements")
