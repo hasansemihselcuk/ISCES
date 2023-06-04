@@ -73,8 +73,6 @@ exports.login = catchAsync(async (req, res, next) => {
   const admin = await Admin.findOne({
     iztechMail: user.iztechMail,
   }).select("+password");
-  
-
 
   if (student) {
     const isPasswordCorrect = await student.correctPassword(
@@ -94,6 +92,8 @@ exports.login = catchAsync(async (req, res, next) => {
         department: student.department,
         iztechMail: student.iztechMail,
         isCandidate: student.isCandidate,
+        isNominee: student.isNominee,
+        isVoted: student.isVotedForDepartment,
       });
     }
     if (!isPasswordCorrect) {

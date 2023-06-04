@@ -20,11 +20,9 @@ const HomePage = () => {
     axios
       .get("http://localhost:3001/api/v1/admin/announcements")
       .then((res) => {
-        console.log(res.data.data.announces);
         announceDatas = res.data.data.announces;
         const backendData = announceDatas.map((announce) => {
           const date = new Date(announce.date);
-          console.log(date);
 
           // Tarih değerlerini alın
           const day = date.getDate().toString().padStart(2, "0");

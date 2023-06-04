@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ACandidate from "./aCandidate";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Ballot = (props) => {
   const [selectedCandidate, setSelectedCandidate] = useState(null);
@@ -8,6 +9,7 @@ const Ballot = (props) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(false);
+  const navigate = useNavigate();
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
@@ -28,15 +30,12 @@ const Ballot = (props) => {
     setIsSubmitted(true);
     if (selectedCandidate) {
       console.log(`Oy verilen aday: ${selectedCandidate.name}`);
-      alert(`Oy verilen aday: ${selectedCandidate.name}`);
     } else if (isDeclined) {
       console.log("Oy kullanmak istemiyorum seçildi.");
-      alert("Oy kullanmak istemiyorum seçildi.");
     } else {
       console.log(
         "Lütfen bir aday seçin veya oy kullanmak istemiyorum seçeneğini işaretleyin."
       );
-      alert("asan");
     }
   };
   const sendVote = async () => {
@@ -47,6 +46,7 @@ const Ballot = (props) => {
     );
     if (res.data.status === "success") {
       console.log("Oy gönderildi");
+      navigate("/");
     } else {
       console.log("Oy gönderilemedi");
     }
