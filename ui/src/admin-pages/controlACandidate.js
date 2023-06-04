@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import image from "./indir.png";
+import axios from "axios";
 
 const AnounceACandidate = (props) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -7,13 +8,25 @@ const AnounceACandidate = (props) => {
   const handleDuyurClick = () => {
     setIsConfirmationOpen(true);
   };
+  const handleRetClick = async () => {
+    setIsConfirmationOpen(false);
+    props.onUpdate(props.data.id);
+    setIsSubmitted(false);
+    // Backend'e ret için bişi yazılcak gönderme işlemleri burada yapılabilir
+    const res = await axios.put(
+      `http://localhost:3001/api/v1/candidate/nomineeRejection/${props.data.id}`
+    );
+  };
 
-  const handleConfirmation = (confirmation) => {
+  const handleConfirmation = async (confirmation) => {
     setIsConfirmationOpen(false);
     if (confirmation === "Evet") {
       props.onUpdate(props.data.id);
       setIsSubmitted(false);
       // Backend'e gönderme işlemleri burada yapılabilir
+      const res = await axios.post(
+        `http://localhost:3001/api/v1/candidate/${props.data.id}`
+      );
     }
   };
 
@@ -34,7 +47,7 @@ const AnounceACandidate = (props) => {
       </div>
       <div className="flex justify-center sm:justify-end w-full sm:w-auto">
         <button
-          className="bg-red-500 hover:bg-red-700 text-white px-8 py-2 rounded"
+          className="bg-green-500 hover:bg-green-700 text-white px-8 py-2 rounded"
           onClick={handleDuyurClick}
         >
           Adayı Onayla
@@ -61,6 +74,12 @@ const AnounceACandidate = (props) => {
           </div>
         </div>
       )}
+      <button
+        className="bg-red-500 hover:bg-red-700 text-white px-8 py-2 rounded"
+        onClick={handleRetClick}
+      >
+        Adayı Reddet
+      </button>
     </div>
   );
 };

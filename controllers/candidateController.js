@@ -53,8 +53,7 @@ exports.nomineeRejection = catchAsync(async (req, res, next) => {
 exports.candidateApplication = catchAsync(async (req, res, next) => {
   const student = await Student.findByIdAndUpdate(
     req.params.id,
-    { isCandidate: true },
-    { isNominee: false },
+    { isCandidate: true, isNominee: false },
     { new: true, runValidators: true }
   );
   if (student.GPA < 2.75 || student.year < 2) {

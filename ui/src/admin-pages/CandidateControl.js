@@ -4,26 +4,28 @@ import axios from "axios";
 const CandidateControl = () => {
   const [nominees, setNominees] = useState([]);
 
-  const fetchRepresantatives = async () => {
+  const fetchNominations = async () => {
     try {
-      const res = await axios.get("http://localhost:3001/api/v1/rep/"); ///BURAYA KAĞANIN VERECEĞİ GET YAZILCAK
-      const representatives = res.data.data.representatives.map((rep) => {
+      const res = await axios.get(
+        "http://localhost:3001/api/v1/admin/nominations"
+      );
+      const nominations = res.data.data.nominations.map((nom) => {
         return {
-          id: rep.studentInfos._id,
-          name: rep.studentInfos.name,
-          surname: rep.studentInfos.surname,
-          department: rep.studentInfos.department,
+          id: nom._id,
+          name: nom.name,
+          surname: nom.surname,
+          department: nom.department,
         };
       });
-      setNominees(representatives);
+      setNominees(nominations);
     } catch (error) {
-      console.log("Error fetching representatives:", error);
+      console.log("Error fetching nominations:", error);
     }
   };
 
   useEffect(() => {
     const fetchData = async () => {
-      await fetchRepresantatives();
+      await fetchNominations();
     };
     fetchData();
   }, []);
