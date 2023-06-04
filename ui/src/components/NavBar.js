@@ -33,8 +33,8 @@ const NavBar = () => {
   return (
     <div className="">
       <nav className="bg-red-700 ">
-        <div className="flex ml-16 grid grid-cols-3 gap-4">
-          <div>
+        <div className="flex grid grid-cols-3 gap-4">
+          <div className="flex ml-16">
             {authCtx.isLoggedIn && (
               <div>
                 <img src={iztechLogo} className="w-40 h-40 mt-4" />
@@ -52,7 +52,7 @@ const NavBar = () => {
             )}
           </div>
 
-          <p className="ml-20 text-white text-center text-4xl  mt-16">ISCES</p>
+          <p className=" text-white text-center text-4xl  mt-16">ISCES</p>
 
           <div className="flex flex-col items-end mt-16  mr-12">
             <div className="flex justify-end">
