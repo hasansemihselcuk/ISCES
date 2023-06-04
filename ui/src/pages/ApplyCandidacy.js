@@ -41,15 +41,14 @@ const ApplyCandidacy = (props) => {
     setCanBeCandidate(false);
     const studentId = localStorage.getItem("sid");
     //BURADAN DA VERİTABANINA BAŞVURUSU AKTARILACAK
-    const res = await axios.post(
-      `http://localhost:3001/api/v1/candidate/${studentId}`
+    const res = await axios.put(
+      `http://localhost:3001/api/v1/candidate/nomineeApplication/${studentId}`
     );
     if (res.data.status === "success") {
       const studentInfos = await localStorage.getItem("studentInfo");
       const newStudentInfo = { ...JSON.parse(studentInfos), isCandidate: true };
       await localStorage.setItem("studentInfo", JSON.stringify(newStudentInfo));
       authCtx.handleCandidate();
-      console.log("You are candidate");
       navigate("/");
     } else {
       console.log("You can not be candidate.");
