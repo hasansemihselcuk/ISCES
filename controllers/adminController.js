@@ -47,6 +47,10 @@ exports.getNominations = catchAsync(async (req, res, next) => {
 exports.getAllRepresentatives = catchAsync(async (req, res, next) => {
   const representatives = await Representative.find().populate({
     path: "studentInfos",
+    populate: {
+      path: "department",
+      select: "name",
+    },
   });
 
   res.status(200).json({
@@ -102,6 +106,10 @@ exports.getStudent = catchAsync(async (req, res, next) => {
 exports.getAllDepartmentCandidates = catchAsync(async (req, res, next) => {
   const candidates = await DepartmentCandidate.find().populate({
     path: "studentInfos",
+    populate: {
+      path: "department",
+      select: "name",
+    },
   });
 
   res.status(200).json({
@@ -112,6 +120,7 @@ exports.getAllDepartmentCandidates = catchAsync(async (req, res, next) => {
     },
   });
 });
+
 
 exports.startElection = catchAsync(async (req, res, next) => {
   const currentDateTime = new Date();

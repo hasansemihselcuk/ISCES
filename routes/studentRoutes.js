@@ -15,8 +15,10 @@ router
 
 router.route("/department/:id").get(studentController.getDepartmentName);
 
-
-router.route("/notifications/:id").get(studentController.getNotifications).delete(studentController.deleteNotification);
+router
+  .route("/notifications/:id")
+  .get(studentController.getNotifications)
+  .delete(studentController.deleteNotification);
 
 router.route("/:id/:cid").put(
   //authController.checkElectionStatus,
