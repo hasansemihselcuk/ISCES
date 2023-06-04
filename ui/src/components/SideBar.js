@@ -31,15 +31,8 @@ const SideBar = () => {
       )}
       {authCtx.isAdmin && (
         <li className="mb-2 bg-gray-100 hover:bg-gray-300 ml-4 mr-4 mt-4">
-          <Link to="/admin/authority">
-            <button className="w-full text-left p-2 ">Yetki Al</button>
-          </Link>
-        </li>
-      )}
-      {authCtx.isAdmin && (
-        <li className="mb-2 bg-gray-100 hover:bg-gray-300 ml-4 mr-4 mt-4">
-          <Link to="/admin/result">
-            <button className="w-full text-left p-2 ">Sonuç Göster</button>
+          <Link to="/admin/candidatecontrol">
+            <button className="w-full text-left p-2 ">Aday Onayı</button>
           </Link>
         </li>
       )}
@@ -52,11 +45,19 @@ const SideBar = () => {
       )}
       {authCtx.isAdmin && (
         <li className="mb-2 bg-gray-100 hover:bg-gray-300 ml-4 mr-4 mt-4">
-          <Link to="/admin/candidatecontrol">
-            <button className="w-full text-left p-2 ">Aday Onayı</button>
+          <Link to="/admin/result">
+            <button className="w-full text-left p-2 ">Sonuç Göster</button>
           </Link>
         </li>
       )}
+      {authCtx.isAdmin && (
+        <li className="mb-2 bg-gray-100 hover:bg-gray-300 ml-4 mr-4 mt-4">
+          <Link to="/admin/authority">
+            <button className="w-full text-left p-2 ">Yetki Al</button>
+          </Link>
+        </li>
+      )}
+
       {authCtx.isAdmin && (
         <li className="mb-2 bg-gray-100 hover:bg-gray-300 ml-4 mr-4 mt-4">
           <Link to="/admin/feedback">
@@ -67,7 +68,7 @@ const SideBar = () => {
       {!authCtx.isAdmin && !authCtx.isCandidate && (
         <li className="mb-2 bg-gray-100 hover:bg-gray-300 ml-4 mr-4 mt-4">
           <Link to="/apply">
-            <button className="w-full text-left p-2 ">Aday Ol</button>
+            <button className="w-full text-left p-2 ">Adaylık Başvurusu</button>
           </Link>
         </li>
       )}
