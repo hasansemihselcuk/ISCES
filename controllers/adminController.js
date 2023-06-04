@@ -30,7 +30,11 @@ exports.makeRepresentative = catchAsync(async (req, res, next) => {
 });
 
 exports.getNominations = catchAsync(async (req, res, next) => {
-  const nominations = await Student.find({ isNominee: true });
+  const nominations = await Student.find({ isNominee: true }).populate(
+    "department",
+    "name"
+  );
+  console.log(nominations);
   res.status(200).json({
     status: "success",
     results: nominations.length,
