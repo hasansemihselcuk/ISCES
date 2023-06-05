@@ -14,6 +14,8 @@ const AuthContext = React.createContext({
   handleLogin: () => {},
   handleCandidate: () => {},
   handleAdmin: () => {},
+  calculateCountdown: () => {},
+  handleTargetDate: () => {},
   withdrawCand: () => {},
   handleElection: () => {},
 });
@@ -25,6 +27,7 @@ export const AuthContextProvider = (props) => {
   const [isCandidate, setIsCandidate] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isElectionStarted, setIsElectionStarted] = useState(false);
+  const [targetDate, setTargetDate] = useState(null);
 
   useEffect(() => {
     const sid = localStorage.getItem("sid");
@@ -55,6 +58,7 @@ export const AuthContextProvider = (props) => {
 
   useEffect(() => {
     // ELECTION BAŞLAMA BACKEND KONTROLÜ
+    // BACKENDDEN TARGET DATAYI ALMA
   }, [isLoggedIn]);
 
   const logoutHandler = () => {
@@ -72,6 +76,31 @@ export const AuthContextProvider = (props) => {
     setIsCandidate(false);
     setIsLoggedIn(false);
     setDepartment("");
+  };
+
+  const handleTargetDate = (date) => {
+    setTargetDate(date);
+  };
+
+  const calculateCountdown = () => {
+    const now = new Date().getTime();
+    const targetTime = new Date(targetDate).getTime();
+    const remainingTime = targetTime - now;
+
+    // Calculate days, hours, and minutes
+    const days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
+    const hours = Math.floor(
+      (remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    );
+    const minutes = Math.floor(
+      (remainingTime % (1000 * 60 * 60)) / (1000 * 60)
+    );
+
+    return {
+      days,
+      hours,
+      minutes,
+    };
   };
 
   const handleCandidate = () => {
@@ -112,6 +141,8 @@ export const AuthContextProvider = (props) => {
         handleAdmin: handleAdmin,
         withdrawCand: withdrawCand,
         handleElection: handleElection,
+        calculateCountdown: calculateCountdown,
+        handleTargetDate: handleTargetDate,
       }}
     >
       {props.children}
