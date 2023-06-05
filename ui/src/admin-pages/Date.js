@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import Countdown from "./Countdown";
 
 const Date = () => {
   const [electionStarted, setElectionStarted] = useState(false);
@@ -24,6 +25,7 @@ const Date = () => {
 
   return (
     <div className="items-center py-60">
+      <Countdown/>;
       {electionStarted && (
         <p className="ml-80">Seçim başladı. Seçimi bitirmek için:</p>
       )}
