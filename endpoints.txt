@@ -2,16 +2,24 @@ Admin işleri:
 
 Adayları getirme:
 http://localhost:3001/api/v1/admin/candidates (get)
-Kazananları açıklama:
-http://localhost:3001/api/v1/admin/candidates/winners (get)
 Bildiri:
 http://localhost:3001/api/v1/admin/announcements (get/post)
 Ticketları getirme:
 http://localhost:3001/api/v1/admin/tickets(get)
+Ticketı silme:
+http://localhost:3001/api/v1/admin/tickets/:id (delete)
 Seçim başlat:
 http://localhost:3001/api/v1/admin/electionStart
 Seçim bitir:
 http://localhost:3001/api/v1/admin/electionEnd
+Temsilci yap:
+http://localhost:3001/api/v1/rep/makeRep/:id (post)
+Temsilcilcileri gör:
+http://localhost:3001/api/v1/rep/ (get)
+Temsilciyi görevden al:
+http://localhost:3001/api/v1/rep/cancelRep/:id (delete)
+Temsilciyi herkese duyur:
+http://localhost:3001/api/v1/rep/announceRep/:id (post)
 
 Aday adayı işleri:
 Aday adayı olma:
@@ -21,7 +29,7 @@ http://localhost:3001/api/v1/candidate/nomineeRejection/:id (put)
 
 
 Aday işleri:
-Aday olma ve çekilme:
+Adaylık kabulu veya adaylıktan alma:
 http://localhost:3001/api/v1/candidate/:id (post/delete)
 
 Öğrenci işleri:
@@ -32,7 +40,7 @@ Kendi departmanındaki adayları görme:
 http://localhost:3001/api/v1/student/:id (get)
 Oy verme:
 http://localhost:3001/api/v1/student/:id/:cid (put)
-Adayların oylarını görme:
+Kendi departmanındaki adayların oylarını görme:
 http://localhost:3001/api/v1/student/votes/:id(get)
 Ticket oluşturma:
 http://localhost:3001/api/v1/student/sendTicket/:id (post)

@@ -46,6 +46,10 @@ const studentSchema = new mongoose.Schema({
     trim: true,
     default: "default.jpg",
   },
+  isAnnounced: {
+    type: Boolean,
+    default: false,
+  },
   isNominee: {
     type: Boolean,
     default: false,

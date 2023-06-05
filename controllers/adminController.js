@@ -30,7 +30,10 @@ exports.makeRepresentative = catchAsync(async (req, res, next) => {
 
 exports.announceRepresentative = catchAsync(async (req, res, next) => {
   const id = req.params.id;
-  const student = await Student.findById(id);
+  const student = await Student.findOne({
+    _id: id,
+    isAnnounced: false,
+  });
   if (!student) {
     return next(new AppError("No student found with that ID", 404));
   }
@@ -56,6 +59,10 @@ exports.announceRepresentative = catchAsync(async (req, res, next) => {
     description: `${representative.studentInfos.name} ${representative.studentInfos.surname} ${representative.studentInfos.department.name} departmanı temsilcisi oldu.`,
   });
   await newAnnounce.save();
+
+  student.isAnnounced = true;
+  await student.save();
+
   res.status(200).json({
     status: "success",
     data: {
@@ -65,6 +72,7 @@ exports.announceRepresentative = catchAsync(async (req, res, next) => {
     },
   });
 });
+
 
 exports.cancelRepresentative = catchAsync(async (req, res, next) => {
   const id = req.params.id;
@@ -111,6 +119,7 @@ exports.getAllRepresentatives = catchAsync(async (req, res, next) => {
       select: "name",
     },
   });
+  console.log(representatives)
 
   res.status(200).json({
     status: "success",
