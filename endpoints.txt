@@ -53,6 +53,10 @@ http://localhost:3001/api/v1/student/notifications/:id (get)fakat öğrenci idsi
 Notification silme:
 http://localhost:3001/api/v1/student/notifications/:id (delete) fakat notification idsi
 
+Map işleri:
+Mapteki adayları görme:
+http://localhost:3001/api/v1/map/ (get)
+
 
 
 
