@@ -53,8 +53,6 @@ exports.getCandidatesFromStudentsDepartment = catchAsync(
   }
 );
 
-
-
 exports.voteDepartmentCandidate = catchAsync(async (req, res, next) => {
   const student = req.params.id;
   const candidate = req.params.cid;
@@ -63,12 +61,13 @@ exports.voteDepartmentCandidate = catchAsync(async (req, res, next) => {
     return next(new AppError("Öğrenci zaten oy kullanmış.", 400));
   }
 
-  const hasVoted = await Student.exists({ _id: student, isVotedForDepartment: true });
+  const hasVoted = await Student.exists({
+    _id: student,
+    isVotedForDepartment: true,
+  });
   if (hasVoted) {
     return next(new AppError("Öğrenci zaten oy kullanmış.", 400));
   }
-
-
 
   //const votingTime = new Date.now();
   const votedCandidate = await Candidate.findByIdAndUpdate(
@@ -81,17 +80,19 @@ exports.voteDepartmentCandidate = catchAsync(async (req, res, next) => {
     { isVotedForDepartment: true },
     { new: true, runValidators: true }
   );
+  const newNotification = new Notification({
+    message: "Oyunuz başarıyla kaydedildi.",
+    to: student,
+  });
+  await newNotification.save();
   res.status(200).json({
     status: "success",
     data: {
       votedCandidate,
       votedStudent,
-      //votingTime,
     },
   });
 });
-
-
 
 exports.getCandidatesVoteFromStudentsDepartment = catchAsync(
   async (req, res, next) => {
@@ -127,6 +128,11 @@ exports.sendTicket = catchAsync(async (req, res, next) => {
     studentInfos: studentInfos,
   });
   await newTicket.save();
+  const newNotification = new Notification({
+    message: "Ticket başarıyla gönderildi.",
+    to: studentInfos,
+  });
+  await newNotification.save();
   res.status(200).json({
     status: "success",
     data: {

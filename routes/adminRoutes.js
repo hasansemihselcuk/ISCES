@@ -12,11 +12,6 @@ router.route("/candidates").get(adminController.getAllDepartmentCandidates);
 
 router.route("/nominations").get(adminController.getNominations);
 
-router.route("/candidates/winners").get(
-  //authController.checkElectionStatusForEndElection,
-  adminController.announceDepartmentWinners
-);
-
 router
   .route("/announcements")
   .get(adminController.getAnnouncements)

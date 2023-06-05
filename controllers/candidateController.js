@@ -20,6 +20,12 @@ exports.nomineeApplication = catchAsync(async (req, res, next) => {
   if (existingNominee) {
     return next(new AppError("Öğrenci zaten aday olarak eklenmiş.", 400));
   }
+  const newNotification = new Notification({
+    message: "Aday olmak için başvurdunuz.",
+    to: student._id,
+  });
+
+  await newNotification.save();
   res.status(200).json({
     status: "success",
     data: {
@@ -99,6 +105,11 @@ exports.cancelCandidateApplication = catchAsync(async (req, res, next) => {
   student.isCandidate = false;
   await Candidate.findByIdAndDelete(departmentCandidate._id);
   await student.save();
+  const newNotification = new Notification({
+    message: "Adaylık başvurunuz iptal edildi",
+    to: student._id,
+  });
+
   res.status(200).json({
     status: "success",
     data: {

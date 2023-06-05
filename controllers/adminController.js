@@ -9,7 +9,6 @@ const Representative = require("../models/departmentRepModel");
 const Notification = require("../models/notificationModel");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
-const moment = require("moment");
 
 exports.makeRepresentative = catchAsync(async (req, res, next) => {
   const id = req.params.id;
@@ -25,6 +24,44 @@ exports.makeRepresentative = catchAsync(async (req, res, next) => {
     status: "success",
     data: {
       newRepresentative,
+    },
+  });
+});
+
+exports.announceRepresentative = catchAsync(async (req, res, next) => {
+  const id = req.params.id;
+  const student = await Student.findById(id);
+  if (!student) {
+    return next(new AppError("No student found with that ID", 404));
+  }
+  const representative = await Representative.findOne({
+    studentInfos: id,
+  }).populate({
+    path: "studentInfos",
+    populate: {
+      path: "department",
+      select: "name",
+    },
+  });
+  if (!representative) {
+    return next(new AppError("No representative found with that ID", 404));
+  }
+  const newNotification = new Notification({
+    message: `${representative.studentInfos.department.name} temsilcisi oldunuz.`,
+    to: id,
+  });
+  await newNotification.save();
+  const newAnnounce = new Announce({
+    title: "Departman Temsilcisi Seçildi",
+    description: `${representative.studentInfos.name} ${representative.studentInfos.surname} ${representative.studentInfos.department.name} departmanı temsilcisi oldu.`,
+  });
+  await newAnnounce.save();
+  res.status(200).json({
+    status: "success",
+    data: {
+      newAnnounce,
+      newNotification,
+      student,
     },
   });
 });
@@ -151,6 +188,11 @@ exports.startElection = catchAsync(async (req, res, next) => {
   });
 
   await departmentElection.save();
+  const newAnnounce = new Announce({
+    title: "Seçim Başladı",
+    description: "Departman seçimleri başladı.",
+  });
+  await newAnnounce.save();
 
   res.status(200).json({
     status: "success",
@@ -165,7 +207,7 @@ exports.endElection = catchAsync(async (req, res, next) => {
   const election = await Election.findOne({
     isStarted: true,
     isEnded: false,
-    isActive: true
+    isActive: true,
   });
   if (!election) {
     return next(new AppError("Seçim henüz başlamadı veya bitti", 400));
@@ -173,6 +215,11 @@ exports.endElection = catchAsync(async (req, res, next) => {
   election.isEnded = true;
   election.isActive = false;
   await election.save();
+  const newAnnounce = new Announce({
+    title: "Seçim Bitti",
+    description: "Departman seçimleri bitti.",
+  });
+  await newAnnounce.save();
   res.status(200).json({
     status: "success",
     message: "Seçim sonlandırıldı.",
@@ -182,42 +229,7 @@ exports.endElection = catchAsync(async (req, res, next) => {
   });
 });
 
-//sonra tekrar kontrol edilcek
-exports.announceDepartmentWinners = catchAsync(async (req, res, next) => {
-  const departments = await Department.find();
-  const winnersByDepartment = await Promise.all(
-    departments.map(async (department) => {
-      const winners = await DepartmentCandidate.find({
-        department: department._id,
-      })
-        .sort({ voteCount: -1 })
-        .populate({
-          path: "studentInfos",
-          model: "Student",
-        });
-
-      const winnersWithVoteCount = winners.map((winner) => {
-        return {
-          studentName: winner.studentInfos.name,
-          voteCount: winner.voteCount,
-        };
-      });
-
-      return {
-        department: department.name,
-        winners: winnersWithVoteCount,
-      };
-    })
-  );
-
-  res.status(200).json({
-    status: "success",
-    winnersByDepartment,
-  });
-});
-
 exports.makeAnnouncement = catchAsync(async (req, res, next) => {
-  const adminId = req.params.id;
   const body = Object.keys(req.body)[0];
   const fixedResponse = body.replace(/'/g, '"');
   const parsedResponse = JSON.parse(fixedResponse);
@@ -225,8 +237,6 @@ exports.makeAnnouncement = catchAsync(async (req, res, next) => {
   const newAnnounce = new Announce({
     title,
     description,
-    //burası sonradan eklencek
-    //sender: adminId,
   });
   await newAnnounce.save();
   res.status(200).json({
@@ -237,7 +247,6 @@ exports.makeAnnouncement = catchAsync(async (req, res, next) => {
   });
 });
 
-//burası student için de kullanılabilir
 exports.getAnnouncements = catchAsync(async (req, res, next) => {
   const announces = await Announce.find().sort({ date: -1 });
   res.status(200).json({
