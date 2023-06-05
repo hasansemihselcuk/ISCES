@@ -30,7 +30,7 @@ const ApplyCandidacy = (props) => {
   }, [markOne, markTwo, markThree, markFour]);
 
   useEffect(() => {
-    const isUserApplied = true; //CENK BURAYA VERİ TABANINDAN DOSYAYI ÇEKECEKSİN
+    const isUserApplied = true;
     if (isUserApplied) {
       setCanBeCandidate(true);
     }
@@ -40,7 +40,7 @@ const ApplyCandidacy = (props) => {
     event.preventDefault();
     setCanBeCandidate(false);
     const studentId = localStorage.getItem("sid");
-    //BURADAN DA VERİTABANINA BAŞVURUSU AKTARILACAK
+
     const res = await axios.put(
       `http://localhost:3001/api/v1/candidate/nomineeApplication/${studentId}`
     );

@@ -2,12 +2,18 @@
   display: flex;
   flex-direction: row;
   width: 90%;
-  place-content: center;
-  margin: 15px;
+  margin: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: white;
+  border: 2px solid red;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 .form label {
-  margin-top: 60px;
+  margin-top: auto;
+  margin-bottom: auto;
   font-size: x-large;
 }
 
@@ -24,12 +30,15 @@
   width: 100%;
 }
 
-.form p {
-  font-size: x-large;
+.white p{
+  margin: 0;
+  padding: 0;
+  color: aqua;
 }
 
 .form button {
-  margin-top: 20px;
+  margin-top: auto;
+  margin-bottom: auto;
   background-color: #ff0000;
   color: white;
   border: none;
@@ -39,5 +48,5 @@
 }
 
 .form button:hover {
-  background-color: #cc0000;
+  background-color: #7f0505;
 }

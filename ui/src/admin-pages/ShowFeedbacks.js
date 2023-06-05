@@ -21,7 +21,6 @@ const FeedBack = () => {
     axios
       .delete(`http://localhost:3001/api/v1/admin/tickets/${ticketId}`)
       .then(() => {
-
         setFeedbacks((prevFeedbacks) =>
           prevFeedbacks.filter((ticket) => ticket._id !== ticketId)
         );
@@ -31,8 +30,8 @@ const FeedBack = () => {
 
   return (
     <div>
-      <p className={classes.header}>GERİ BİLDİRİM</p>
-      <div className={classes.card}>
+      <p className={classes.header}>GERİ BİLDİRİMLER</p>
+      <div>
         {feedbacks.map((ticket) => (
           <TicketCard
             key={ticket._id}
