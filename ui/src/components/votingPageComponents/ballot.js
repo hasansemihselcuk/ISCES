@@ -46,6 +46,15 @@ const Ballot = (props) => {
     );
     if (res.data.status === "success") {
       console.log("Oy gönderildi");
+      // Önce localStorage'dan studentInfo'yu alın
+      const studentInfo = JSON.parse(localStorage.getItem("studentInfo"));
+
+      // isVoted değerini güncelleyin
+      studentInfo.isVoted = true;
+
+      // Güncellenen studentInfo'yu localStorage'a geri kaydedin
+      localStorage.setItem("studentInfo", JSON.stringify(studentInfo));
+
       navigate("/");
     } else {
       console.log("Oy gönderilemedi");
