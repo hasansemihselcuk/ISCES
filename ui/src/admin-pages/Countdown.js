@@ -1,35 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
+import AuthContext from "../context/AuthContext";
 import "./Countdown.css";
 
 const Countdown = () => {
-  const [targetDate, setTargetDate] = useState(null);
+  const authCtx = useContext(AuthContext);
 
   const handleDateChange = (event) => {
-    setTargetDate(event.target.value);
+    authCtx.handleTargetDate(event.target.value);
   };
-
-  const calculateCountdown = () => {
-    const now = new Date().getTime();
-    const targetTime = new Date(targetDate).getTime();
-    const remainingTime = targetTime - now;
-
-    // Calculate days, hours, and minutes
-    const days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
-    const hours = Math.floor(
-      (remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-    );
-    const minutes = Math.floor(
-      (remainingTime % (1000 * 60 * 60)) / (1000 * 60)
-    );
-
-    return {
-      days,
-      hours,
-      minutes,
-    };
-  };
-
-  const { days, hours, minutes } = calculateCountdown();
+  const { days, hours, minutes } = authCtx.calculateCountdown();
 
   return (
     <div className="countdown-container">
