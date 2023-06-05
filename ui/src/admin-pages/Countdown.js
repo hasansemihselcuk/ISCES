@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import './Countdown.css';
+import React, { useState } from "react";
+import "./Countdown.css";
 
 const Countdown = () => {
   const [targetDate, setTargetDate] = useState(null);
@@ -18,7 +18,9 @@ const Countdown = () => {
     const hours = Math.floor(
       (remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
     );
-    const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+    const minutes = Math.floor(
+      (remainingTime % (1000 * 60 * 60)) / (1000 * 60)
+    );
 
     return {
       days,
@@ -46,7 +48,11 @@ const Countdown = () => {
           <div className="countdown-unit">Minutes</div>
         </div>
       </div>
-      <input type="date" onChange={handleDateChange} className="countdown-input" />
+      <input
+        type="date"
+        onChange={handleDateChange}
+        className="countdown-input"
+      />
     </div>
   );
 };

@@ -11,6 +11,8 @@ const FeedBack = () => {
       .get("http://localhost:3001/api/v1/admin/tickets")
       .then((res) => {
         setFeedbacks(res.data.data.tickets);
+        console.log("feedbackler");
+        console.log(res.data.data.tickets);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -19,7 +21,7 @@ const FeedBack = () => {
     axios
       .delete(`http://localhost:3001/api/v1/admin/tickets/${ticketId}`)
       .then(() => {
-        // Remove the deleted ticket from the feedbacks state
+
         setFeedbacks((prevFeedbacks) =>
           prevFeedbacks.filter((ticket) => ticket._id !== ticketId)
         );
@@ -34,10 +36,11 @@ const FeedBack = () => {
         {feedbacks.map((ticket) => (
           <TicketCard
             key={ticket._id}
+            ticket_id={ticket._id}
             name={ticket.studentNameSurname}
             title={ticket.ticketTitle}
             ticketText={ticket.ticketDescription}
-            onDelete={() => handleDeleteTicket(ticket._id)}
+            onDelete={handleDeleteTicket}
           />
         ))}
       </div>

@@ -4,7 +4,8 @@ import classes from "./TicketCard.module.css";
 const TicketCard = (props) => {
   const handleDeleteClick = (event) => {
     event.preventDefault();
-    props.onDelete();
+    props.onDelete(props.ticket_id);
+
   };
 
   return (
