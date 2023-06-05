@@ -1,7 +1,9 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Feedback = () => {
+  const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
@@ -12,10 +14,13 @@ const Feedback = () => {
       ticketTitle: title,
       ticketDescription: content,
     };
-    const res = await axios.post(
-      `http://localhost:3001/api/v1/student/sendTicket/${sid}`,
-      JSON.stringify(data)
-    );
+    console.log(data.ticketDescription.length);
+    const res = await axios
+      .post(
+        `http://localhost:3001/api/v1/student/sendTicket/${sid}`,
+        JSON.stringify(data)
+      )
+      .then(data.ticketDescription.length ? navigate("/") : "");
 
     if (res.data.status === "success") {
       console.log("Posted");
