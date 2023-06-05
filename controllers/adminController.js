@@ -9,7 +9,21 @@ const Representative = require("../models/departmentRepModel");
 const Notification = require("../models/notificationModel");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
-const moment = require("moment");
+
+exports.createElection = catchAsync(async (req, res, next) => {
+  const newElection = new Election({
+    isStarted: false,
+    isEnded: false,
+    isActive: false,
+  });
+  await newElection.save();
+  res.status(200).json({
+    status: "success",
+    data: {
+      newElection,
+    },
+  });
+});
 
 exports.makeRepresentative = catchAsync(async (req, res, next) => {
   const id = req.params.id;
@@ -20,6 +34,13 @@ exports.makeRepresentative = catchAsync(async (req, res, next) => {
   const newRepresentative = new Representative({
     studentInfos: id,
   });
+  const studentName = await Student.findById(id);
+  const newAnnounce = new Announce({
+    title: "Temsilci Seçildi",
+    description: `${studentName.name} ${studentName.surname} temsilci seçildi.`,
+  });
+  await newAnnounce.save();
+
   await newRepresentative.save();
   res.status(200).json({
     status: "success",
@@ -144,17 +165,18 @@ exports.getAllDepartmentCandidates = catchAsync(async (req, res, next) => {
 });
 
 exports.startElection = catchAsync(async (req, res, next) => {
-  const currentDateTime = new Date();
-  const endDate = new Date(currentDateTime.getTime() + 24 * 60 * 60 * 1000);
-
   const departmentElection = new Election({
-    startDate: currentDateTime,
-    endDate: endDate,
     isStarted: true,
     isEnded: false,
+    isActive: true,
   });
 
   await departmentElection.save();
+  const newAnnounce = new Announce({
+    title: "Seçim Başladı",
+    description: "Seçim başladı, oy kullanabilirsiniz.",
+  });
+  await newAnnounce.save();
 
   res.status(200).json({
     status: "success",
@@ -169,11 +191,20 @@ exports.endElection = catchAsync(async (req, res, next) => {
   const election = await Election.findOne({
     isStarted: true,
     isEnded: false,
+    isActive: true,
   });
   if (!election) {
     return next(new AppError("Seçim henüz başlamadı veya bitti", 400));
   }
   election.isEnded = true;
+  election.isActive = false;
+
+  const newAnnounce = new Announce({
+    title: "Seçim Bitti",
+    description: "Seçim bitti, sonuçları görebilirsiniz.",
+  });
+  await newAnnounce.save();
+
   await election.save();
   res.status(200).json({
     status: "success",
@@ -195,9 +226,9 @@ exports.announceDepartmentWinners = catchAsync(async (req, res, next) => {
         .sort({ voteCount: -1 })
         .populate({
           path: "studentInfos",
-          model: "Student",
+          model: "Candidate",
         });
-
+      console.log(winners);
       const winnersWithVoteCount = winners.map((winner) => {
         return {
           studentName: winner.studentInfos.name,
@@ -271,5 +302,17 @@ exports.getTickets = catchAsync(async (req, res, next) => {
     data: {
       tickets: formattedTickets,
     },
+  });
+});
+
+exports.deleteTicket = catchAsync(async (req, res, next) => {
+  const ticketId = req.params.id;
+  const ticket = await Ticket.findByIdAndDelete(ticketId);
+  if (!ticket) {
+    return next(new AppError("No ticket found with that ID", 404));
+  }
+  res.status(200).json({
+    status: "success",
+    message: "Ticket deleted",
   });
 });
