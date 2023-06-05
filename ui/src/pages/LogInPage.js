@@ -4,7 +4,6 @@ import iyteLogo from "../components/nav-bar-pictures/iytelogo.png";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 const LogInPage = () => {
-  const [isRememberUser, setIsRememberUser] = useState(false);
   const [enteredEmail, setEnteredEmail] = useState("");
   const [enteredPassword, setEnteredPassword] = useState("");
   const [formIsValid, setFormIsValid] = useState(false);

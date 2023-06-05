@@ -7,6 +7,7 @@ const AuthContext = React.createContext({
   isAdmin: false,
   isClickedLogInButton: false,
   department: "",
+  isElectionStarted: false,
   //chefId: null,
   onLogout: () => {},
   onLogin: () => {},
@@ -14,6 +15,7 @@ const AuthContext = React.createContext({
   handleCandidate: () => {},
   handleAdmin: () => {},
   withdrawCand: () => {},
+  handleElection: () => {},
 });
 
 export const AuthContextProvider = (props) => {
@@ -22,6 +24,7 @@ export const AuthContextProvider = (props) => {
   const [isClickedLogInButton, setIsClickedLogInButton] = useState(false);
   const [isCandidate, setIsCandidate] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isElectionStarted, setIsElectionStarted] = useState(false);
 
   useEffect(() => {
     const sid = localStorage.getItem("sid");
@@ -50,6 +53,10 @@ export const AuthContextProvider = (props) => {
     }
   }, [isLoggedIn]);
 
+  useEffect(() => {
+    // ELECTION BAŞLAMA BACKEND KONTROLÜ
+  }, [isLoggedIn]);
+
   const logoutHandler = () => {
     const sid = localStorage.getItem("sid");
     const aid = localStorage.getItem("aid");
@@ -69,6 +76,10 @@ export const AuthContextProvider = (props) => {
 
   const handleCandidate = () => {
     setIsCandidate(true);
+  };
+
+  const handleElection = () => {
+    setIsElectionStarted((prevState) => !prevState);
   };
 
   const withdrawCand = () => {
@@ -100,6 +111,7 @@ export const AuthContextProvider = (props) => {
         handleCandidate: handleCandidate,
         handleAdmin: handleAdmin,
         withdrawCand: withdrawCand,
+        handleElection: handleElection,
       }}
     >
       {props.children}
