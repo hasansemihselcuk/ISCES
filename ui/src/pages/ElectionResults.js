@@ -1,32 +1,39 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import DepartmentResults from "../components/resultPageComponents/departmentResults";
 import resim from "../components/votingPageComponents/defaultUser.png";
 import AuthContext from "../context/AuthContext";
+import axios from "axios";
 
 const ElectionResult = ({ candidates, candidatesVote }) => {
   const authCtx = useContext(AuthContext);
-  const results = [
-    {
-      name: "Gökhan Türkmen",
-      photo: resim,
-      voteCount: 10,
-      id: 1,
-    },
-    {
-      name: "Gökhan Türk",
-      photo: resim,
-      voteCount: 5,
-      id: 2,
-    },
-  ];
+  const [candidateList, setCandidates] = useState([]);
 
+  const studentId = localStorage.getItem("sid");
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3001/api/v1/student/${studentId}`)
+      .then((res) => {
+        setCandidates(
+          res.data.data.candidatesFromStudentsDepartment.map((student) => {
+            console.log(student._id);
+            return {
+              id: student._id,
+              name: `${student.studentInfos.name} ${student.studentInfos.surname}`,
+              photo: resim,
+              voteCount: student.voteCount,
+            };
+          })
+        );
+      });
+  });
   return (
     <div>
       <div className="flex justify-center  mb-8 mt-16 text-3xl">
         <h1>{authCtx.department} Bölüm Temsilciliği Seçimi</h1>
       </div>
       <div className="p-8 mb-8 rounded-lg relative text-3xl ">
-        <DepartmentResults candidates={results} />
+        <DepartmentResults candidates={candidateList} />
       </div>
     </div>
   );

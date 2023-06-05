@@ -11,7 +11,7 @@ const VotingPage = ({
   student,
 }) => {
   const [candidateList, setCandidates] = useState([]);
-  const [canBeVoted, setCanBeVoted] = useState(true); // [TODO
+
 
   const authCtx = useContext(AuthContext);
 
