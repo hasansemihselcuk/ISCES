@@ -10,6 +10,17 @@ const Notification = require("../models/notificationModel");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 
+exports.getElectionInfos = catchAsync(async (req, res, next) => {
+  const election = await Election.find();
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      election,
+    },
+  });
+});
+
 exports.makeRepresentative = catchAsync(async (req, res, next) => {
   const id = req.params.id;
   const candidate = await DepartmentCandidate.find({ studentInfos: id });
@@ -73,7 +84,6 @@ exports.announceRepresentative = catchAsync(async (req, res, next) => {
   });
 });
 
-
 exports.cancelRepresentative = catchAsync(async (req, res, next) => {
   const id = req.params.id;
   const representative = await Representative.findOneAndDelete({
@@ -119,7 +129,7 @@ exports.getAllRepresentatives = catchAsync(async (req, res, next) => {
       select: "name",
     },
   });
-  console.log(representatives)
+  console.log(representatives);
 
   res.status(200).json({
     status: "success",
