@@ -1,23 +1,17 @@
 const express = require("express");
-const authController = require("../controllers/authController");
 const candidateController = require("../controllers/candidateController");
 
 const router = express.Router();
 
 router
   .route("/:id")
-  .post(authController.protect, candidateController.candidateApplication)
-  .delete(
-    authController.protect,
-    candidateController.cancelCandidateApplication
-  );
+  .post(candidateController.candidateApplication)
+  .delete(candidateController.cancelCandidateApplication);
 
 router
   .route("/nomineeApplication/:id")
-  .put(authController.protect, candidateController.nomineeApplication);
+  .put(candidateController.nomineeApplication);
 
-router
-  .route("/nomineeRejection/:id")
-  .put(authController.protect, candidateController.nomineeRejection);
+router.route("/nomineeRejection/:id").put(candidateController.nomineeRejection);
 
 module.exports = router;

@@ -103,7 +103,12 @@ exports.login = catchAsync(async (req, res, next) => {
       });
     }
   }
-  
+  /*
+  const users1 = await datasAdmin;
+  const user1 = users1.find((user1) => user1.iztechMail === email);
+  const password1 = user1.password;
+  const admin = await Admin.findOne({ iztechMail: user1.iztechMail }).select("+password1");
+  */
   if (admin) {
     const isPasswordCorrect = await admin.correctPassword(
       retrievedPassword,
@@ -166,7 +171,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   );
 });
 
-exports.checkElectionStatusStart = catchAsync(async (req, res, next) => {
+exports.checkElectionStatus = catchAsync(async (req, res, next) => {
   const election = await Election.findOne({
     isStarted: true,
     isEnded: false,
@@ -177,7 +182,7 @@ exports.checkElectionStatusStart = catchAsync(async (req, res, next) => {
   next();
 });
 
-exports.checkElectionStatusForEnd = catchAsync(
+exports.checkElectionStatusForEndElection = catchAsync(
   async (req, res, next) => {
     const election = await Election.findOne({
       isStarted: true,

@@ -9,7 +9,4 @@ router.route("/").get(adminController.getAllRepresentatives);
 
 router.route("/cancelRep/:id").delete(adminController.cancelRepresentative);
 
-router
-    .route("/election").post(adminController.createElection);
-
 module.exports = router;

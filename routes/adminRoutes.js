@@ -8,35 +8,26 @@ router.route("/create").post(adminController.createAdmin);
 
 router.route("/").get(adminController.getAllStudents);
 
-router
-  .route("/candidates")
-  .get(authController.protect, adminController.getAllDepartmentCandidates);
+router.route("/candidates").get(adminController.getAllDepartmentCandidates);
 
-router
-  .route("/nominations")
-  .get(authController.protect, adminController.getNominations);
+router.route("/nominations").get(adminController.getNominations);
+
+router.route("/candidates/winners").get(
+  //authController.checkElectionStatusForEndElection,
+  adminController.announceDepartmentWinners
+);
 
 router
   .route("/announcements")
-  .get(authController.protect, adminController.getAnnouncements)
-  .post(authController.protect, adminController.makeAnnouncement);
+  .get(adminController.getAnnouncements)
+  .post(adminController.makeAnnouncement);
 
-router
-  .route("/tickets")
-  .get(authController.protect,
-     adminController.getTickets);
+router.route("/tickets").get(adminController.getTickets);
 
-router
-  .route("/electionStart")
-  .post(authController.protect, adminController.startElection);
+router.route("/electionStart").post(adminController.startElection);
 
-router
-  .route("/electionEnd")
-  .put(authController.protect, adminController.endElection);
+router.route("/electionEnd").put(adminController.endElection);
 
-router.route("/:id").get(authController.protect, adminController.getStudent);
-
-router
-  .route("/deleteTicker/:id").delete(authController.protect, adminController.deleteTicket);
+router.route("/:id").get(adminController.getStudent);
 
 module.exports = router;
