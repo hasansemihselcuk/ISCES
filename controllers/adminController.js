@@ -144,14 +144,10 @@ exports.getAllDepartmentCandidates = catchAsync(async (req, res, next) => {
 });
 
 exports.startElection = catchAsync(async (req, res, next) => {
-  const currentDateTime = new Date();
-  const endDate = new Date(currentDateTime.getTime() + 24 * 60 * 60 * 1000);
-
   const departmentElection = new Election({
-    startDate: currentDateTime,
-    endDate: endDate,
     isStarted: true,
     isEnded: false,
+    isActive: true,
   });
 
   await departmentElection.save();
@@ -169,11 +165,13 @@ exports.endElection = catchAsync(async (req, res, next) => {
   const election = await Election.findOne({
     isStarted: true,
     isEnded: false,
+    isActive: true
   });
   if (!election) {
     return next(new AppError("Seçim henüz başlamadı veya bitti", 400));
   }
   election.isEnded = true;
+  election.isActive = false;
   await election.save();
   res.status(200).json({
     status: "success",

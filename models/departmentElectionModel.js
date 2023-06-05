@@ -1,12 +1,6 @@
 const mongoose = require("mongoose");
 
 const departmentElectionSchema = new mongoose.Schema({
-  officialCandidates: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: "DepartmentCandidate",
-    },
-  ],
   startDate: {
     type: Date,
     default: Date.now,
@@ -23,6 +17,10 @@ const departmentElectionSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  isActive:{
+    type: Boolean,
+    default: false,
+  }
 });
 
 const DepartmentElection = mongoose.model(
