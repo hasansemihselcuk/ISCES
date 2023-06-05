@@ -37,11 +37,8 @@ const FeedBack = () => {
             name={ticket.studentNameSurname}
             title={ticket.ticketTitle}
             ticketText={ticket.ticketDescription}
-          >
-            <button onClick={() => handleDeleteTicket(ticket._id)}>
-              Delete
-            </button>
-          </TicketCard>
+            onDelete={() => handleDeleteTicket(ticket._id)}
+          />
         ))}
       </div>
     </div>

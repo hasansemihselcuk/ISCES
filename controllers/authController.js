@@ -103,12 +103,6 @@ exports.login = catchAsync(async (req, res, next) => {
       });
     }
   }
-  /*
-  const users1 = await datasAdmin;
-  const user1 = users1.find((user1) => user1.iztechMail === email);
-  const password1 = user1.password;
-  const admin = await Admin.findOne({ iztechMail: user1.iztechMail }).select("+password1");
-  */
   if (admin) {
     const isPasswordCorrect = await admin.correctPassword(
       retrievedPassword,
@@ -171,7 +165,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   );
 });
 
-exports.checkElectionStatus = catchAsync(async (req, res, next) => {
+exports.checkElectionStatusForStart = catchAsync(async (req, res, next) => {
   const election = await Election.findOne({
     isStarted: true,
     isEnded: false,
@@ -182,15 +176,24 @@ exports.checkElectionStatus = catchAsync(async (req, res, next) => {
   next();
 });
 
-exports.checkElectionStatusForEndElection = catchAsync(
-  async (req, res, next) => {
-    const election = await Election.findOne({
-      isStarted: true,
-      isEnded: true,
-    });
-    if (!election) {
-      return next(new AppError("Seçim henüz başlamadı", 400));
-    }
-    next();
+exports.checkElectionStatusForEnd = catchAsync(async (req, res, next) => {
+  const election = await Election.findOne({
+    isStarted: true,
+    isEnded: true,
+  });
+  if (!election) {
+    return next(new AppError("Seçim henüz başlamadı", 400));
   }
-);
+  next();
+});
+
+exports.checkElectionStatusNotStarted = catchAsync(async (req, res, next) => {
+  const election = await Election.findOne({
+    isStarted: false,
+    isEnded: false,
+  });
+  if (!election) {
+    return next(new AppError("Seçim henüz başlamadı veya bitti", 400));
+  }
+  next();
+});

@@ -30,4 +30,5 @@ router.route("/electionEnd").put(adminController.endElection);
 
 router.route("/:id").get(adminController.getStudent);
 
+router.route("/tickets/:id").delete(adminController.deleteTicket);
 module.exports = router;

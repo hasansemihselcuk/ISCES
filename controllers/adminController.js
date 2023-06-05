@@ -271,3 +271,14 @@ exports.getTickets = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+exports.deleteTicket = catchAsync(async (req, res, next) => {
+  const ticket = await Ticket.findByIdAndDelete(req.params.id);
+  if (!ticket) {
+    return next(new AppError("No ticket found with that ID", 404));
+  }
+  res.status(200).json({
+    status: "success",
+    data: null,
+  });
+});
