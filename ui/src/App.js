@@ -27,7 +27,9 @@ function App() {
         <NavBar></NavBar>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LogInPage />} />
+          {!authCtx.isLoggedIn && (
+            <Route path="/login" element={<LogInPage />} />
+          )}
 
           {authCtx.isAdmin && (
             <Route path="/admin/feedback" element={<ShowFeedbacks />} />

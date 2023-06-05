@@ -24,10 +24,6 @@ const LogInPage = () => {
     };
   }, [enteredEmail, enteredPassword]);
 
-  const rememberMe = () => {
-    setIsRememberUser((prevState) => !prevState);
-  };
-
   const emailChangeHandler = (event) => {
     event.preventDefault();
     setEnteredEmail(event.target.value);
@@ -45,7 +41,10 @@ const LogInPage = () => {
   };
 
   const submitHandler = async (event) => {
-    const signInInfo = { email: enteredEmail, retrievedPassword: enteredPassword };
+    const signInInfo = {
+      email: enteredEmail,
+      retrievedPassword: enteredPassword,
+    };
 
     event.preventDefault();
     if (formIsValid) {
@@ -117,17 +116,7 @@ const LogInPage = () => {
                 placeholder="Enter a password"
                 className="mt-4 ml-12 w-48 px-4 h-8"
               />
-              <div className="flex mt-4">
-                <div
-                  onClick={rememberMe}
-                  className={
-                    isRememberUser
-                      ? "w-5 h-5 bg-rose-700 border-2 ml-16 mt-1"
-                      : "w-5 h-5 border-rose-700 border-2 ml-16 mt-1"
-                  }
-                ></div>
-                <p className="ml-5">Beni Hatırla</p>
-              </div>
+
               <button
                 onClick={submitHandler}
                 className="mt-8 ml-16 mb-12 w-40 h-10 border-rose-700 border-2 hover:bg-red-700 rounded-lg"
