@@ -2,6 +2,9 @@
   "name": "isces",
   "version": "1.0.0",
   "main": "index.js",
+  "engines": {
+    "node": "18.14.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js"
@@ -34,8 +37,5 @@
     "promisify": "^0.0.3",
     "validator": "^13.9.0"
   },
-  "description": "",
-  "engines": {
-    "node": "18.14.0"
-  }
+  "description": ""
 }
