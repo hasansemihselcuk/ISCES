@@ -90,11 +90,7 @@ const ApplyCandidacy = (props) => {
               {option.label}{" "}
             </p>
           ))}
-          <div className="in">
-            {" "}
-            <label>Fotoğraf(isteğe bağlı) </label>
-            <input type="file" id="photo" />
-          </div>
+      
           <button
             onClick={sendHandler}
             className={`apply-button ${isValid ? "" : "not-valid"}`}
