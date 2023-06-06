@@ -8,7 +8,7 @@ const departmentElectionSchema = new mongoose.Schema({
   endDate: {
     type: Date,
     // 1 gün sonrasına
-    default: Date.now + 1 * 24 * 60 * 60 * 1000,
+    default: Date.now() + 1 * 24 * 60 * 60 * 1000,
   },
   isStarted: {
     type: Boolean,
