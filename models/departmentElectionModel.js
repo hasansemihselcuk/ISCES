@@ -3,11 +3,12 @@ const mongoose = require("mongoose");
 const departmentElectionSchema = new mongoose.Schema({
   startDate: {
     type: Date,
-    default : Date.now
+    default: Date.now,
   },
   endDate: {
     type: Date,
-    
+    // 1 gün sonrasına
+    default: Date.now + 1 * 24 * 60 * 60 * 1000,
   },
   isStarted: {
     type: Boolean,
@@ -17,10 +18,10 @@ const departmentElectionSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  isActive:{
+  isActive: {
     type: Boolean,
     default: false,
-  }
+  },
 });
 
 const DepartmentElection = mongoose.model(
