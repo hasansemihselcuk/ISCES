@@ -271,11 +271,9 @@ exports.editElection = catchAsync(async (req, res, next) => {
   if (!election) {
     return next(new AppError("Seçim henüz başlamadı veya bitti", 400));
   }
-  const body = Object.keys(req.body)[0];
-  const fixedResponse = body.replace(/'/g, '"');
-  const parsedResponse = JSON.parse(fixedResponse);
-  const endDate = new Date(parsedResponse);
-  election.endDate = endDate;
+  const { endDate } = req.body;
+  const parsedEndDate = new Date(endDate);
+  election.endDate = parsedEndDate;
   await election.save();
   res.status(200).json({
     status: "success",
