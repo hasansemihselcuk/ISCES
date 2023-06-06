@@ -19,22 +19,26 @@ const Countdown = (props) => {
 
   return (
     <div className="countdown-container">
-      <div className="countdown-label">Countdown Timer</div>
-      <div className="countdown-timer">
-        <div className="countdown-value">
-          {days}
-          <div className="countdown-unit">Days</div>
+      {!props.isInSetDate && (
+        <div className="countdown-label">Countdown Timer</div>
+      )}
+      {!props.isInSetDate && (
+        <div className="countdown-timer">
+          <div className="countdown-value">
+            {days}
+            <div className="countdown-unit">Days</div>
+          </div>
+          <div className="countdown-value">
+            {hours}
+            <div className="countdown-unit">Hours</div>
+          </div>
+          <div className="countdown-value">
+            {minutes}
+            <div className="countdown-unit">Minutes</div>
+          </div>
         </div>
-        <div className="countdown-value">
-          {hours}
-          <div className="countdown-unit">Hours</div>
-        </div>
-        <div className="countdown-value">
-          {minutes}
-          <div className="countdown-unit">Minutes</div>
-        </div>
-      </div>
-      {props.isInSetDate && (
+      )}
+      {props.isInSetDate && authCtx.isElectionStarted && (
         <input
           type="date"
           onChange={handleDateChange}

@@ -5,12 +5,12 @@ import Countdown from "./Countdown";
 
 const Date = () => {
   const authCtx = useContext(AuthContext);
-
   const startElection = async () => {
     await axios
       .post("http://localhost:3001/api/v1/admin/electionStart")
       .then((res) => {
         authCtx.handleElection();
+        localStorage.setItem("isElectionStarted", true);
       })
       .catch((err) => console.log(err));
   };
@@ -21,6 +21,7 @@ const Date = () => {
       .then((res) => {
         authCtx.handleElection();
         authCtx.finishElection();
+        localStorage.removeItem("isElectionStarted");
       })
       .catch((err) => console.log(err));
   };

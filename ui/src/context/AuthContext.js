@@ -37,6 +37,10 @@ export const AuthContextProvider = (props) => {
     const studentInfo = localStorage.getItem("studentInfo");
     const aid = localStorage.getItem("aid");
     const adminInfo = localStorage.getItem("adminInfo");
+    const isElectionStarted = localStorage.getItem("isElectionStarted");
+    if (isElectionStarted) {
+      setIsElectionStarted(true);
+    }
     if (sid) {
       axios
         .get(`http://localhost:3001/api/v1/student/department/${sid}`)
@@ -44,7 +48,6 @@ export const AuthContextProvider = (props) => {
           setDepartment(res.data.data.depName.name);
         });
     }
-
     if (sid !== undefined && sid !== null) {
       if (JSON.parse(studentInfo).isCandidate) {
         setIsCandidate(true);
@@ -57,18 +60,6 @@ export const AuthContextProvider = (props) => {
       }
       setIsLoggedIn(true);
     }
-  }, [isLoggedIn]);
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:3001/api/v1/map/control")
-      .then((res) => {
-        setIsElectionStarted(res.data.data.control.isActive);
-        setIsElectionFinished(res.data.data.control.isEnded);
-      })
-      .catch((err) => console.log(err));
-    // ELECTION BAŞLAMA BACKEND KONTROLÜ
-    // BACKENDDEN TARGET DATAYI ALMA
   }, [isLoggedIn]);
 
   const logoutHandler = () => {
