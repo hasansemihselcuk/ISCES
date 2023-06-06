@@ -4,6 +4,7 @@ const Student = require("../models/studentModel");
 const Admin = require("../models/adminModel");
 const catchAsync = require("./../utils/catchAsync");
 const Election = require("../models/departmentElectionModel");
+const Control = require("../models/controlModel");
 const AppError = require("./../utils/appError");
 const axios = require("axios");
 
@@ -169,10 +170,20 @@ exports.checkElectionStatusForStart = catchAsync(async (req, res, next) => {
   const election = await Election.findOne({
     isStarted: true,
     isEnded: false,
+    isActive: true,
   });
   if (!election) {
     return next(new AppError("Seçim henüz başlamadı veya bitti", 400));
   }
+  const control = await Control.findOne({
+    isStarted: true,
+    isEnded: false,
+    isActive: true,
+  });
+  if (!control) {
+    return next(new AppError("Seçim henüz başlamadı veya bitti", 400));
+  }
+
   next();
 });
 
@@ -180,10 +191,20 @@ exports.checkElectionStatusForEnd = catchAsync(async (req, res, next) => {
   const election = await Election.findOne({
     isStarted: true,
     isEnded: true,
+    isActive: false,
   });
   if (!election) {
     return next(new AppError("Seçim henüz başlamadı", 400));
   }
+  const control = await Control.findOne({
+    isStarted: true,
+    isEnded: true,
+    isActive: false,
+  });
+  if (!control) {
+    return next(new AppError("Seçim henüz başlamadı", 400));
+  }
+
   next();
 });
 
@@ -191,8 +212,17 @@ exports.checkElectionStatusNotStarted = catchAsync(async (req, res, next) => {
   const election = await Election.findOne({
     isStarted: false,
     isEnded: false,
+    isActive: false,
   });
   if (!election) {
+    return next(new AppError("Seçim henüz başlamadı veya bitti", 400));
+  }
+  const control = await Control.findOne({
+    isStarted: false,
+    isEnded: false,
+    isActive: false,
+  });
+  if (!control) {
     return next(new AppError("Seçim henüz başlamadı veya bitti", 400));
   }
   next();

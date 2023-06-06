@@ -1,5 +1,6 @@
 Admin işleri:
-
+Aktif seçim durumunu çekme:
+http://localhost:3001/api/v1/map/control(get)
 Adayları getirme:
 http://localhost:3001/api/v1/admin/candidates (get)
 Bildiri:

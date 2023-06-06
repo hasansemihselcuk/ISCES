@@ -7,6 +7,7 @@ const Admin = require("../models/adminModel");
 const Department = require("../models/departmentModel");
 const Representative = require("../models/departmentRepModel");
 const Notification = require("../models/notificationModel");
+const Control = require("../models/controlModel");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 
@@ -207,6 +208,14 @@ exports.startElection = catchAsync(async (req, res, next) => {
   });
 
   await departmentElection.save();
+  const control = await Control.findOne({
+    isStarted: false,
+    isEnded: false,
+    isActive: false,
+  });
+  control.isStarted = true;
+  control.isActive = true;
+  await control.save();
   const newAnnounce = new Announce({
     title: "Seçim Başladı",
     description: "Departman seçimleri başladı.",
@@ -233,6 +242,14 @@ exports.endElection = catchAsync(async (req, res, next) => {
   }
   election.isEnded = true;
   election.isActive = false;
+  const control = await Control.findOne({
+    isStarted: true,
+    isEnded: false,
+    isActive: true,
+  });
+  control.isEnded = true;
+  control.isActive = false;
+  await control.save();
   await election.save();
   const newAnnounce = new Announce({
     title: "Seçim Bitti",

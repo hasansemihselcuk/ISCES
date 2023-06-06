@@ -9,6 +9,7 @@ const Department = require("../models/departmentModel");
 const Representative = require("../models/departmentRepModel");
 const Notification = require("../models/notificationModel");
 const catchAsync = require("../utils/catchAsync");
+const Control = require("../models/controlModel");
 const AppError = require("../utils/appError");
 
 exports.getCandidatesByDepartment = catchAsync(async (req, res, next) => {
@@ -37,3 +38,23 @@ exports.getCandidatesByDepartment = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.createControl = catchAsync(async (req, res, next) => {
+  const control = new Control({});
+  await control.save();
+  res.status(200).json({
+    status: "success",
+    data: {
+      control,
+    },
+  });
+});
+
+exports.getControl = catchAsync(async (req, res, next) => {
+  const control = await Control.find();
+  res.status(200).json({
+    status: "success",
+    data: {
+      control,
+    },
+  });
+});
