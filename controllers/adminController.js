@@ -232,34 +232,41 @@ exports.getAllDepartmentCandidates = catchAsync(async (req, res, next) => {
 });
 
 exports.startElection = catchAsync(async (req, res, next) => {
-  const departmentElection = new Election({
-    isStarted: true,
-    isEnded: false,
-    isActive: true,
-  });
-
-  await departmentElection.save();
   const control = await Control.findOne({
     isStarted: false,
     isEnded: false,
     isActive: false,
   });
-  control.isStarted = true;
-  control.isActive = true;
-  await control.save();
-  const newAnnounce = new Announce({
-    title: "Seçim Başladı",
-    description: "Departman seçimleri başladı.",
-  });
-  await newAnnounce.save();
+  if (control) {
+    const departmentElection = new Election({
+      isStarted: true,
+      isEnded: false,
+      isActive: true,
+    });
 
-  res.status(200).json({
-    status: "success",
-    message: "Seçim başlatıldı.",
-    data: {
-      departmentElection,
-    },
-  });
+    await departmentElection.save();
+    control.isStarted = true;
+    control.isActive = true;
+    await control.save();
+    const newAnnounce = new Announce({
+      title: "Seçim Başladı",
+      description: "Departman seçimleri başladı.",
+    });
+    await newAnnounce.save();
+
+    res.status(200).json({
+      status: "success",
+      message: "Seçim başlatıldı.",
+      data: {
+        departmentElection,
+      },
+    });
+  } else {
+    res.status(400).json({
+      status: "fail",
+      message: "Seçim başlatılamadı.",
+    });
+  }
 });
 
 exports.editElection = catchAsync(async (req, res, next) => {
