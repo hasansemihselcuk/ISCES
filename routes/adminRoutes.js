@@ -19,7 +19,10 @@ router
 
 router.route("/tickets").get(adminController.getTickets);
 
-router.route("/election").get(adminController.getElectionInfos);
+router
+  .route("/election")
+  .get(adminController.getElectionInfos)
+  .put(adminController.editElection);
 
 router.route("/electionStart").post(adminController.startElection);
 

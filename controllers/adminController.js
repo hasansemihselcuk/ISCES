@@ -262,6 +262,31 @@ exports.startElection = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.editElection = catchAsync(async (req, res, next) => {
+  const election = await Election.findOne({
+    isStarted: true,
+    isEnded: false,
+    isActive: true,
+  });
+  if (!election) {
+    return next(new AppError("Seçim henüz başlamadı veya bitti", 400));
+  }
+  const body = Object.keys(req.body)[0];
+  const fixedResponse = body.replace(/'/g, '"');
+  const parsedResponse = JSON.parse(fixedResponse);
+  const endDate = new Date(parsedResponse);
+  election.endDate = endDate;
+  await election.save();
+  res.status(200).json({
+    status: "success",
+    message: "Seçim tarihi güncellendi.",
+    data: {
+      election,
+    },
+  });
+});
+
+
 exports.endElection = catchAsync(async (req, res, next) => {
   const election = await Election.findOne({
     isStarted: true,
