@@ -8,11 +8,17 @@ const Countdown = (props) => {
 
   const handleDateChange = async (event) => {
     authCtx.handleTargetDate(event.target.value);
-
     // BACKEND PUT REQUEST FOR SET FINISH DATE
     await axios.put(
       "http://localhost:3001/api/v1/admin/election",
       JSON.stringify({ endDate: event.target.value })
+    );
+    localStorage.setItem(
+      "electionInfos",
+      JSON.stringify({
+        isActive: true,
+        endDate: event.target.value,
+      })
     );
   };
   const { days, hours, minutes } = authCtx.calculateCountdown();

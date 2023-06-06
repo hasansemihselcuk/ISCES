@@ -40,6 +40,17 @@ export const AuthContextProvider = (props) => {
     const isElectionStarted = localStorage.getItem("isElectionStarted");
     if (isElectionStarted) {
       setIsElectionStarted(true);
+    } else {
+      axios.get("http://localhost:3001/api/v1/admin/election").then((res) => {
+        setIsElectionStarted(res.data.data.control.isActive);
+        localStorage.setItem(
+          "electionInfos",
+          JSON.stringify({
+            isActive: true,
+            endDate: res.data.data.control.endDate,
+          })
+        );
+      });
     }
     if (sid) {
       axios

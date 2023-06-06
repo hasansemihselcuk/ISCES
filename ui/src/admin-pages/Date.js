@@ -10,7 +10,10 @@ const Date = () => {
       .post("http://localhost:3001/api/v1/admin/electionStart")
       .then((res) => {
         authCtx.handleElection();
-        localStorage.setItem("isElectionStarted", true);
+        localStorage.setItem(
+          "electionInfos",
+          JSON.stringify({ isActive: true })
+        );
       })
       .catch((err) => console.log(err));
   };
@@ -21,7 +24,7 @@ const Date = () => {
       .then((res) => {
         authCtx.handleElection();
         authCtx.finishElection();
-        localStorage.removeItem("isElectionStarted");
+        localStorage.removeItem("electionInfos");
       })
       .catch((err) => console.log(err));
   };
