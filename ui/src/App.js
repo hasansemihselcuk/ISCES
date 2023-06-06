@@ -12,21 +12,37 @@ import Date from "./admin-pages/Date";
 import Authority from "./admin-pages/Authority";
 import Result from "./admin-pages/Result";
 import AnnounceCandidate from "./admin-pages/AnnounceCandidate";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import AuthContext from "./context/AuthContext";
 import Feedback from "./pages/Feedback";
 import ShowFeedbacks from "./admin-pages/ShowFeedbacks";
 import CandidateControl from "./admin-pages/CandidateControl";
 import Countdown from "./admin-pages/Countdown";
+import axios from "axios";
 
 function App() {
   const authCtx = useContext(AuthContext);
+
+  useEffect(() => {
+    axios.get("http://localhost:3001/api/v1/admin/election").then((res) => {
+      if (!authCtx.isElectionStarted) {
+        authCtx.handleElection();
+      }
+      localStorage.setItem(
+        "electionInfos",
+        JSON.stringify({
+          isActive: true,
+          endDate: res.data.data.election[0].endDate,
+        })
+      );
+    });
+  }, []);
 
   return (
     <div className="">
       <BrowserRouter>
         <NavBar></NavBar>
-        {authCtx.isElectionStarted && (
+        {authCtx.isElectionStarted && authCtx.isLoggedIn && (
           <Countdown isInSetDate={false}></Countdown>
         )}
         <Routes>

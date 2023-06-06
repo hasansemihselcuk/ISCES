@@ -37,24 +37,9 @@ export const AuthContextProvider = (props) => {
     const studentInfo = localStorage.getItem("studentInfo");
     const aid = localStorage.getItem("aid");
     const adminInfo = localStorage.getItem("adminInfo");
-    const isElectionStarted = JSON.parse(localStorage.getItem("electionInfos"));
-
-    if (isElectionStarted) {
-      if (isElectionStarted.isActive) {
-        setIsElectionStarted(true);
-      }
-    } else {
-      axios.get("http://localhost:3001/api/v1/admin/election").then((res) => {
-        console.log(res);
-        setIsElectionStarted(res.data.data.election.isActive);
-        localStorage.setItem(
-          "electionInfos",
-          JSON.stringify({
-            isActive: true,
-            endDate: res.data.data.election.endDate,
-          })
-        );
-      });
+    const electionInfo = JSON.parse(localStorage.getItem("electionInfos"));
+    if (electionInfo) {
+      setIsElectionStarted(electionInfo.isActive);
     }
     if (sid) {
       axios
@@ -80,15 +65,18 @@ export const AuthContextProvider = (props) => {
   const logoutHandler = () => {
     const sid = localStorage.getItem("sid");
     const aid = localStorage.getItem("aid");
+
     if (sid) {
+      localStorage.removeItem("electionInfos");
       localStorage.removeItem("sid");
       localStorage.removeItem("studentInfo");
     }
     if (aid) {
+      localStorage.removeItem("electionInfos");
       localStorage.removeItem("aid");
       localStorage.removeItem("adminInfo");
     }
-    localStorage.removeItem("electionInfos");
+
     setIsAdmin(false);
     setIsCandidate(false);
     setIsLoggedIn(false);
@@ -101,23 +89,26 @@ export const AuthContextProvider = (props) => {
 
   const calculateCountdown = () => {
     const now = new Date().getTime();
-    const targetTime = new Date(targetDate).getTime();
-    const remainingTime = targetTime - now;
+    if (localStorage.getItem("electionInfos")) {
+      const endDate = JSON.parse(localStorage.getItem("electionInfos")).endDate;
+      const targetTime = new Date(endDate).getTime();
+      const remainingTime = targetTime - now;
 
-    // Calculate days, hours, and minutes
-    const days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
-    const hours = Math.floor(
-      (remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-    );
-    const minutes = Math.floor(
-      (remainingTime % (1000 * 60 * 60)) / (1000 * 60)
-    );
+      // Calculate days, hours, and minutes
+      const days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
+      const hours = Math.floor(
+        (remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      const minutes = Math.floor(
+        (remainingTime % (1000 * 60 * 60)) / (1000 * 60)
+      );
 
-    return {
-      days,
-      hours,
-      minutes,
-    };
+      return {
+        days,
+        hours,
+        minutes,
+      };
+    }
   };
 
   const handleCandidate = () => {
