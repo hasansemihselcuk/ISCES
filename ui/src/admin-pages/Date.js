@@ -20,6 +20,7 @@ const Date = () => {
       .put("http://localhost:3001/api/v1/admin/electionEnd")
       .then((res) => {
         authCtx.handleElection();
+        authCtx.finishElection();
       })
       .catch((err) => console.log(err));
   };

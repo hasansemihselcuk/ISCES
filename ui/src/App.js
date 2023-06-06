@@ -67,7 +67,9 @@ function App() {
           {authCtx.isCandidate && (
             <Route path="/withdraw" element={<CandidateWithdraw />} />
           )}
-          <Route path="/result" element={<ElectionResult />} />
+          {authCtx.isElectionFinished && (
+            <Route path="/result" element={<ElectionResult />} />
+          )}
         </Routes>
       </BrowserRouter>
     </div>

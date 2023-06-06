@@ -8,6 +8,7 @@ const AuthContext = React.createContext({
   isClickedLogInButton: false,
   department: "",
   isElectionStarted: false,
+  isElectionFinished: false,
   //chefId: null,
   onLogout: () => {},
   onLogin: () => {},
@@ -18,6 +19,7 @@ const AuthContext = React.createContext({
   handleTargetDate: () => {},
   withdrawCand: () => {},
   handleElection: () => {},
+  finishElection: () => {},
 });
 
 export const AuthContextProvider = (props) => {
@@ -28,6 +30,7 @@ export const AuthContextProvider = (props) => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isElectionStarted, setIsElectionStarted] = useState(false);
   const [targetDate, setTargetDate] = useState(null);
+  const [isElectionFinished, setIsElectionFinished] = useState(false);
 
   useEffect(() => {
     const sid = localStorage.getItem("sid");
@@ -61,6 +64,7 @@ export const AuthContextProvider = (props) => {
       .get("http://localhost:3001/api/v1/map/control")
       .then((res) => {
         setIsElectionStarted(res.data.data.control.isActive);
+        setIsElectionFinished(res.data.data.control.isEnded);
       })
       .catch((err) => console.log(err));
     // ELECTION BAŞLAMA BACKEND KONTROLÜ
@@ -113,6 +117,10 @@ export const AuthContextProvider = (props) => {
     setIsCandidate(true);
   };
 
+  const finishElection = () => {
+    setIsElectionFinished((prevState) => !prevState);
+  };
+
   const handleElection = () => {
     setIsElectionStarted((prevState) => !prevState);
   };
@@ -150,6 +158,7 @@ export const AuthContextProvider = (props) => {
         handleElection: handleElection,
         calculateCountdown: calculateCountdown,
         handleTargetDate: handleTargetDate,
+        finishElection: finishElection,
       }}
     >
       {props.children}
