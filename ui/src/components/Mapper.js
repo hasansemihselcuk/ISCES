@@ -5,19 +5,6 @@ import axios from "axios";
 const Mapper = (props) => {
   const [isHovered, setIsHovered] = useState(false);
   const [candidateInfo, setCandidateInfo] = useState(null);
-  const [candidates, setCandidates] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:3001/api/v1/map/")
-      .then((res) => {
-        console.log(res.data.data.candidates);
-        setCandidates(res.data.data.candidates);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
 
   const handleMouseEnter = () => {
     setIsHovered(true);
@@ -200,7 +187,8 @@ const Mapper = (props) => {
 
   const handleAreaClick = async (area) => {
     console.log("Tıklanan Bölge:", area.name);
-    console.log(candidates);
+    const res = await axios.get("http://localhost:3001/api/v1/map/");
+    const candidates = res.data.data.candidates;
     const filteredCandidates = candidates.filter(
       (candidate) =>
         candidate.department === area.name ||

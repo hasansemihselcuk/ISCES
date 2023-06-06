@@ -102,7 +102,12 @@ exports.cancelRepresentative = catchAsync(async (req, res, next) => {
   }
   const student = await Student.findByIdAndUpdate(
     id,
-    { isCandidate: false, isNominee: false },
+    {
+      isCandidate: false,
+      isNominee: false,
+      isRepresentative: false,
+      isAnnounced: false,
+    },
     { new: true, runValidators: true }
   );
   await student.save();

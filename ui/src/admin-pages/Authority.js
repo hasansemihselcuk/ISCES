@@ -25,8 +25,20 @@ const Authority = () => {
     fetchData();
   }, []);
 
-  const handleRemoveAuthority = (student) => {
-    console.log("Authority removed for:", student.name, student.surname);
+  const handleRemoveAuthority = async (student) => {
+    const updatedStudents = students.filter(
+      (std) => student.studentInfos._id !== std.studentInfos._id
+    );
+    setStudents(updatedStudents);
+    if (student.studentInfos.isRepresentative) {
+      await axios.delete(
+        `http://localhost:3001/api/v1/rep/cancelRep/${student.studentInfos._id}`
+      );
+    } else if (student.studentInfos.isCandidate) {
+      await axios.delete(
+        `http://localhost:3001/api/v1/candidate/${student.studentInfos._id}`
+      );
+    }
   };
 
   return (
