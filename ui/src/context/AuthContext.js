@@ -37,17 +37,21 @@ export const AuthContextProvider = (props) => {
     const studentInfo = localStorage.getItem("studentInfo");
     const aid = localStorage.getItem("aid");
     const adminInfo = localStorage.getItem("adminInfo");
-    const isElectionStarted = localStorage.getItem("isElectionStarted");
+    const isElectionStarted = JSON.parse(localStorage.getItem("electionInfos"));
+
     if (isElectionStarted) {
-      setIsElectionStarted(true);
+      if (isElectionStarted.isActive) {
+        setIsElectionStarted(true);
+      }
     } else {
       axios.get("http://localhost:3001/api/v1/admin/election").then((res) => {
-        setIsElectionStarted(res.data.data.control.isActive);
+        console.log(res);
+        setIsElectionStarted(res.data.data.election.isActive);
         localStorage.setItem(
           "electionInfos",
           JSON.stringify({
             isActive: true,
-            endDate: res.data.data.control.endDate,
+            endDate: res.data.data.election.endDate,
           })
         );
       });
@@ -84,6 +88,7 @@ export const AuthContextProvider = (props) => {
       localStorage.removeItem("aid");
       localStorage.removeItem("adminInfo");
     }
+    localStorage.removeItem("electionInfos");
     setIsAdmin(false);
     setIsCandidate(false);
     setIsLoggedIn(false);
