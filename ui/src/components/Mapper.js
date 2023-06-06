@@ -1,8 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ImageMapper from "react-img-mapper";
+import axios from "axios";
 
 const Mapper = (props) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [candidateInfo, setCandidateInfo] = useState(null);
+  const [candidates, setCandidates] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3001/api/v1/map/")
+      .then((res) => {
+        console.log(res.data.data.candidates);
+        setCandidates(res.data.data.candidates);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const handleMouseEnter = () => {
     setIsHovered(true);
@@ -15,7 +30,9 @@ const Mapper = (props) => {
     {
       title: "Mimarlık Fakültesi",
       shape: "poly",
-      name: "1",
+      name: "Mimarlık",
+      name2: "Şehir ve Bölge Planlama",
+      name3: "Endüstriyel Tasarım",
       fillColor: "rgba(0, 128, 0, 0.4)",
       strokeColor: "black",
       coords: [35, 20, 100, 30, 70, 170, 20, 160],
@@ -29,7 +46,7 @@ const Mapper = (props) => {
     {
       title: "MBG",
       shape: "poly",
-      name: "2",
+      name: "Moleküler Biyoloji ve Genetik",
       fillColor: "rgba(233, 130, 235, 0.4)",
       strokeColor: "black",
       coords: [165, 140, 160, 176, 234, 185, 240, 150],
@@ -43,7 +60,7 @@ const Mapper = (props) => {
     {
       title: "Matematik Bölümü",
       shape: "poly",
-      name: "3",
+      name: "Matematik",
       fillColor: "rgba(255, 99, 71, 0.4)",
       strokeColor: "black",
       coords: [158, 178, 148, 217, 182, 224, 191, 184],
@@ -57,7 +74,7 @@ const Mapper = (props) => {
     {
       title: "Fizik Bölümü",
       shape: "poly",
-      name: "4",
+      name: "Fizik",
       fillColor: "rgba(49, 33, 235, 0.3)",
       strokeColor: "black",
       coords: [147, 228, 141, 276, 190, 285, 197, 262, 171, 256, 176, 229],
@@ -73,7 +90,7 @@ const Mapper = (props) => {
     {
       title: "Kimya Bölümü",
       shape: "poly",
-      name: "5",
+      name: "Kimya",
       fillColor: "rgba(255, 255, 27, 0.4)",
       strokeColor: "black",
       coords: [302, 152, 288, 221, 332, 233, 347, 158],
@@ -102,7 +119,7 @@ const Mapper = (props) => {
     {
       title: "Kimya Mühendisliği",
       shape: "poly",
-      name: "7",
+      name: "Kimya Mühendisliği",
       fillColor: "rgba(139, 0, 0, 0.3)",
       strokeColor: "black",
       coords: [407, 508, 403, 553, 444, 563, 455, 514],
@@ -117,7 +134,8 @@ const Mapper = (props) => {
     {
       title: "EHM ve Malzeme",
       shape: "poly",
-      name: "8",
+      name: "Elektronik ve Haberleşme Mühendisliği",
+      name2: "Malzeme Bilimi ve Mühendisliği",
       fillColor: "rgba(0, 255, 103, 0.3)",
       strokeColor: "black",
       coords: [481, 463, 473, 515, 496, 523, 500, 486, 530, 490, 536, 468],
@@ -133,7 +151,7 @@ const Mapper = (props) => {
     {
       title: "İnşaat Mühendisliği",
       shape: "poly",
-      name: "9",
+      name: "İnşaat Mühendisliği",
       fillColor: "rgba(143, 73, 30, 0.5)",
       strokeColor: "black",
       coords: [542, 469, 538, 486, 581, 494, 575, 537, 598, 543, 610, 482],
@@ -150,6 +168,8 @@ const Mapper = (props) => {
       title: "Gıda Mühendisliği,Biyo Mühendislik, Enerji Sistemleri",
       shape: "poly",
       name: "Biyomühendislik",
+      name2: "Gıda Mühendisliği",
+      name3: "Enerji Sistemleri Mühendisliği",
       fillColor: "rgba(255, 0, 52, 0.3)",
       strokeColor: "black",
       coords: [570, 544, 563, 585, 529, 606, 547, 632, 588, 603, 603, 550],
@@ -165,7 +185,7 @@ const Mapper = (props) => {
     {
       title: "Makine Mühendisliği",
       shape: "poly",
-      name: "11",
+      name: "Makine Mühendisliği",
       fillColor: "rgba(62, 143, 255, 0.4)",
       strokeColor: "black",
       coords: [518, 593, 540, 633, 497, 663, 467, 618],
@@ -178,116 +198,22 @@ const Mapper = (props) => {
     },
   ];
 
-  const [selectedArea, setSelectedArea] = useState(null);
-
-  const handleAreaClick = (area) => {
+  const handleAreaClick = async (area) => {
     console.log("Tıklanan Bölge:", area.name);
-    setSelectedArea(area);
-  };
+    console.log(candidates);
+    const filteredCandidates = candidates.filter(
+      (candidate) =>
+        candidate.department === area.name ||
+        candidate.department === area.name2 ||
+        candidate.department === area.name3
+    );
 
-  const renderCandidateInfo = () => {
-    if (selectedArea) {
-      const candidates = {
-        status: "success",
-        results: 9,
-        data: {
-          candidates: [
-            {
-              name: "Fatma",
-              surname: "Yılmaz",
-              department: "Biyomühendislik",
-              voteCount: 0,
-            },
-            {
-              name: "Mehmet",
-              surname: "Kaya",
-              department: "Bilgisayar Mühendisliği",
-              voteCount: 8,
-            },
-            {
-              name: "Emre",
-              surname: "Demir",
-              department: "Bilgisayar Mühendisliği",
-              voteCount: 2,
-            },
-            {
-              name: "Mehmet",
-              surname: "Aydın",
-              department: "Biyomühendislik",
-              voteCount: 0,
-            },
-            {
-              name: "Selin",
-              surname: "Aydın",
-              department: "Bilgisayar Mühendisliği",
-              voteCount: 3,
-            },
-            {
-              name: "XXelin",
-              surname: "XXAydın",
-              department: "Fotonik",
-              voteCount: 3,
-            },
-            {
-              name: "Emir",
-              surname: "Demir",
-              department: "Biyomühendislik",
-              voteCount: 0,
-            },
-            {
-              name: "Ayşe",
-              surname: "Yılmaz",
-              department: "Bilgisayar Mühendisliği",
-              voteCount: 1,
-            },
-            {
-              name: "Burak",
-              surname: "Yıldız",
-              department: "Bilgisayar Mühendisliği",
-              voteCount: 2,
-            },
-            {
-              name: "Gül",
-              surname: "Aydın",
-              department: "Biyomühendislik",
-              voteCount: 0,
-            },
-          ],
-        },
-      };
-
-      const candidateInfo = candidates.data.candidates.filter(
-        (candidate) =>
-          candidate.department === selectedArea.name ||
-          candidate.department === selectedArea.name2
-      );
-
-      if (candidateInfo.length > 0) {
-        return (
-          <div
-            style={{
-              display: "grid",
-              gap: "1rem",
-              gridTemplateColumns: "repeat(3, 1fr)",
-            }}
-          >
-            {candidateInfo.map((candidate, index) => (
-              <div className="bg-white w-auto h-auto relative z-50" key={index}>
-                <h3>
-                  {candidate.name} {candidate.surname}
-                </h3>
-                <p>{candidate.department}</p>
-                <p>Oy Sayısı: {candidate.voteCount}</p>
-              </div>
-            ))}
-          </div>
-        );
-      }
-
-      return null;
+    if (filteredCandidates.length > 0) {
+      console.log("Aday bulundu");
+      setCandidateInfo(filteredCandidates);
+    } else {
+      console.log("Aday bulunamadı");
     }
-
-    return null;
   };
 
   return (
@@ -306,7 +232,25 @@ const Mapper = (props) => {
           className="img-mapper-img"
           onClick={handleAreaClick}
         />
-        {renderCandidateInfo()}
+        {candidateInfo && candidateInfo.length > 0 ? (
+          <div
+            style={{
+              display: "grid",
+              gap: "1rem",
+              gridTemplateColumns: "repeat(3, 1fr)",
+            }}
+          >
+            {candidateInfo.map((candidate, index) => (
+              <div className="bg-white w-auto h-auto relative z-50" key={index}>
+                <h3>
+                  {candidate.name} {candidate.surname}
+                </h3>
+                <p>{candidate.department}</p>
+                <p>Oy Sayısı: {candidate.voteCount}</p>
+              </div>
+            ))}
+          </div>
+        ) : null}
       </div>
     </div>
   );
