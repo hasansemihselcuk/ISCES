@@ -36,6 +36,9 @@ exports.makeRepresentative = catchAsync(async (req, res, next) => {
     { isRepresentative: true, isCandidate: false, isNominee: false },
     { new: true, runValidators: true }
   );
+  const deleteCandidate = await DepartmentCandidate.findOneAndDelete({
+    studentInfos: id,
+  });
   await student.save();
 
   await newRepresentative.save();
