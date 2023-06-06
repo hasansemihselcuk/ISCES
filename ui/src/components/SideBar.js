@@ -38,15 +38,17 @@ const SideBar = () => {
       )}
       {authCtx.isAdmin && (
         <li className="mb-2 bg-gray-100 hover:bg-gray-300 ml-4 mr-4 mt-4">
-          <Link to="/admin/candidate">
-            <button className="w-full text-left p-2 ">Kişileri Duyur</button>
+          <Link to="/admin/result">
+            <button className="w-full text-left p-2 ">Sonuç Göster</button>
           </Link>
         </li>
       )}
       {authCtx.isAdmin && (
         <li className="mb-2 bg-gray-100 hover:bg-gray-300 ml-4 mr-4 mt-4">
-          <Link to="/admin/result">
-            <button className="w-full text-left p-2 ">Sonuç Göster</button>
+          <Link to="/admin/candidate">
+            <button className="w-full text-left p-2 ">
+              Seçilmiş Kişileri Duyur
+            </button>
           </Link>
         </li>
       )}
