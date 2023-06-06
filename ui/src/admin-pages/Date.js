@@ -1,15 +1,16 @@
 import axios from "axios";
-import { useState } from "react";
+import { useContext } from "react";
+import AuthContext from "../context/AuthContext";
 import Countdown from "./Countdown";
 
 const Date = () => {
-  const [electionStarted, setElectionStarted] = useState(false);
+  const authCtx = useContext(AuthContext);
 
   const startElection = async () => {
     await axios
       .post("http://localhost:3001/api/v1/admin/electionStart")
       .then((res) => {
-        setElectionStarted(true);
+        authCtx.handleElection();
       })
       .catch((err) => console.log(err));
   };
@@ -18,21 +19,21 @@ const Date = () => {
     await axios
       .put("http://localhost:3001/api/v1/admin/electionEnd")
       .then((res) => {
-        setElectionStarted(false);
+        authCtx.handleElection();
       })
       .catch((err) => console.log(err));
   };
 
   return (
     <div className="items-center py-60">
-      <Countdown/>;
-      {electionStarted && (
+      <Countdown isInSetDate={true} />;
+      {authCtx.isElectionStarted && (
         <p className="ml-80">Seçim başladı. Seçimi bitirmek için:</p>
       )}
-      {!electionStarted && (
+      {!authCtx.isElectionStarted && (
         <p className="ml-80">Seçim Henüz başlamadı veya sona erdi.</p>
       )}
-      {!electionStarted && (
+      {!authCtx.isElectionStarted && (
         <button
           className="w-60 ml-80  h-20 border-rose-700 border-2 hover:bg-red-700 rounded-lg"
           onClick={startElection}
@@ -40,7 +41,7 @@ const Date = () => {
           Seçimi Başlat
         </button>
       )}
-      {electionStarted && (
+      {authCtx.isElectionStarted && (
         <button
           className="w-60 h-20 ml-80 border-rose-700 border-2 hover:bg-red-700 rounded-lg"
           onClick={finishElection}

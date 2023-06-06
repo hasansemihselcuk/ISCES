@@ -79,7 +79,7 @@ const SideBar = () => {
           </Link>
         </li>
       )}
-      {!authCtx.isAdmin && (
+      {!authCtx.isAdmin && authCtx.isElectionStarted && (
         <li className="mb-2 bg-gray-100 hover:bg-gray-300 ml-4 mr-4 mt-4">
           <Link to="/vote">
             <button className="w-full text-left p-2 ">Oy Ver</button>

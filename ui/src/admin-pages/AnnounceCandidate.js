@@ -14,9 +14,11 @@ const AnnounceCandidate = () => {
           name: rep.studentInfos.name,
           surname: rep.studentInfos.surname,
           department: rep.studentInfos.department.name,
+          isAnnounced: rep.studentInfos.isAnnounced,
         };
       });
-      setNominees(representatives);
+
+      setNominees(representatives.filter((rep) => !rep.isAnnounced));
     } catch (error) {
       console.log("Error fetching representatives:", error);
     }

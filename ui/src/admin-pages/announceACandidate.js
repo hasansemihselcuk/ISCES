@@ -1,16 +1,20 @@
+import axios from "axios";
 import React, { useState } from "react";
 import image from "./indir.png";
 
 const AnounceACandidate = (props) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
-  const handleDuyurClick = () => {
+  const handleDuyurClick = async () => {
     setIsConfirmationOpen(true);
   };
 
-  const handleConfirmation = (confirmation) => {
+  const handleConfirmation = async (confirmation) => {
     setIsConfirmationOpen(false);
     if (confirmation === "Evet") {
+      await axios.post(
+        `http://localhost:3001/api/v1/rep/announceRep/${props.data.id}`
+      );
       props.onUpdate(props.data.id);
       setIsSubmitted(false);
       // Backend'e gönderme işlemleri burada yapılabilir
@@ -47,7 +51,7 @@ const AnounceACandidate = (props) => {
             <div className="flex justify-end mt-4 mr-8 ml-8 mb-2">
               <button
                 className="bg-green-500 hover:bg-green-700 text-white px-4 py-2 rounded mr-2"
-                onClick={() => handleConfirmation("Evet")}
+                onClick={async () => await handleConfirmation("Evet")}
               >
                 Evet
               </button>

@@ -57,6 +57,12 @@ export const AuthContextProvider = (props) => {
   }, [isLoggedIn]);
 
   useEffect(() => {
+    axios
+      .get("http://localhost:3001/api/v1/map/control")
+      .then((res) => {
+        setIsElectionStarted(res.data.data.control.isActive);
+      })
+      .catch((err) => console.log(err));
     // ELECTION BAŞLAMA BACKEND KONTROLÜ
     // BACKENDDEN TARGET DATAYI ALMA
   }, [isLoggedIn]);
@@ -134,6 +140,7 @@ export const AuthContextProvider = (props) => {
         isCandidate: isCandidate,
         isAdmin: isAdmin,
         department: department,
+        isElectionStarted: isElectionStarted,
         onLogout: logoutHandler,
         onLogin: loginHandler,
         handleLogin: handleLogin,

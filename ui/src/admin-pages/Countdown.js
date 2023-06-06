@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import AuthContext from "../context/AuthContext";
 import "./Countdown.css";
 
-const Countdown = () => {
+const Countdown = (props) => {
   const authCtx = useContext(AuthContext);
 
   const handleDateChange = (event) => {
@@ -27,11 +27,13 @@ const Countdown = () => {
           <div className="countdown-unit">Minutes</div>
         </div>
       </div>
-      <input
-        type="date"
-        onChange={handleDateChange}
-        className="countdown-input"
-      />
+      {props.isInSetDate && (
+        <input
+          type="date"
+          onChange={handleDateChange}
+          className="countdown-input"
+        />
+      )}
     </div>
   );
 };
