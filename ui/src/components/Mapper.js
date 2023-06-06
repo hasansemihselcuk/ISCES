@@ -195,7 +195,6 @@ const Mapper = (props) => {
         candidate.department === area.name2 ||
         candidate.department === area.name3
     );
-
     if (filteredCandidates.length > 0) {
       console.log("Aday bulundu");
       setCandidateInfo(filteredCandidates);

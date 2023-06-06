@@ -271,7 +271,13 @@ exports.editElection = catchAsync(async (req, res, next) => {
   if (!election) {
     return next(new AppError("Seçim henüz başlamadı veya bitti", 400));
   }
-  const { endDate } = req.body;
+  const body = Object.keys(req.body)[0];
+  const fixedResponse = body.replace(/'/g, '"');
+  const parsedResponse = JSON.parse(fixedResponse);
+
+  const endDate = new Date(parsedResponse.endDate);
+  election.endDate = endDate;
+
   const parsedEndDate = new Date(endDate);
   election.endDate = parsedEndDate;
   await election.save();
@@ -283,7 +289,6 @@ exports.editElection = catchAsync(async (req, res, next) => {
     },
   });
 });
-
 
 exports.endElection = catchAsync(async (req, res, next) => {
   const election = await Election.findOne({

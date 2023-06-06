@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useContext } from "react";
 import AuthContext from "../context/AuthContext";
 import "./Countdown.css";
@@ -5,8 +6,14 @@ import "./Countdown.css";
 const Countdown = (props) => {
   const authCtx = useContext(AuthContext);
 
-  const handleDateChange = (event) => {
+  const handleDateChange = async (event) => {
     authCtx.handleTargetDate(event.target.value);
+
+    // BACKEND PUT REQUEST FOR SET FINISH DATE
+    await axios.put(
+      "http://localhost:3001/api/v1/admin/election",
+      JSON.stringify({ endDate: event.target.value })
+    );
   };
   const { days, hours, minutes } = authCtx.calculateCountdown();
 
