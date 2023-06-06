@@ -19,6 +19,8 @@ Temsilcilcileri gör:
 http://localhost:3001/api/v1/rep/ (get)
 Temsilciyi görevden al:
 http://localhost:3001/api/v1/rep/cancelRep/:id (delete)
+Duyurulmamış temsilcileri gör:
+http://localhost:3001/api/v1/rep/UnannouncedRep (get)
 Temsilciyi herkese duyur:
 http://localhost:3001/api/v1/rep/announceRep/:id (post)
 Seçim durumunu görme:

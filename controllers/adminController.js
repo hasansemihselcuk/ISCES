@@ -148,6 +148,22 @@ exports.getAllRepresentatives = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.getUnannouncedRepresentatives = catchAsync(async (req, res, next) => {
+  const representatives = await Student.find({
+    isRepresentative: true,
+    isAnnounced: false,
+  }).populate("department", "name");
+  console.log(representatives);
+
+  res.status(200).json({
+    status: "success",
+    results: representatives.length,
+    data: {
+      representatives,
+    },
+  });
+});
+
 exports.createAdmin = catchAsync(async (req, res, next) => {
   const { name, surname, iztechMail, password } = req.body;
   const newAdmin = new Admin({

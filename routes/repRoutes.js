@@ -7,6 +7,8 @@ router.route("/makeRep/:id").post(adminController.makeRepresentative);
 
 router.route("/").get(adminController.getAllRepresentatives);
 
+router.route("/UnannouncedRep").get(adminController.getUnannouncedRepresentatives);
+
 router.route("/cancelRep/:id").delete(adminController.cancelRepresentative);
 
 router.route("/announceRep/:id").post(adminController.announceRepresentative);
