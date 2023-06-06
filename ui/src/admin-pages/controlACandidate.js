@@ -44,6 +44,9 @@ const AnounceACandidate = (props) => {
           {props.data.name} {props.data.surname}
         </p>
         <p className="text-sm text-gray-500">{props.data.department}</p>
+        <p className="text-sm text-gray-500">
+          Sınıfı : {props.data.year} , Not Ort: {props.data.GPA}
+        </p>
       </div>
       <div className="flex justify-center sm:justify-end w-full sm:w-auto">
         <button

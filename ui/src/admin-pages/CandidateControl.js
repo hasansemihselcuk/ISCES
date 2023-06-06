@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import AnnounceACandidate from "./controlACandidate";
+import ControlACandidate from "./controlACandidate";
 import axios from "axios";
 const CandidateControl = () => {
   const [nominees, setNominees] = useState([]);
@@ -15,6 +15,8 @@ const CandidateControl = () => {
           name: nom.name,
           surname: nom.surname,
           department: nom.department.name,
+          year: nom.year,
+          GPA: nom.GPA,
         };
       });
       setNominees(nominations);
@@ -46,7 +48,7 @@ const CandidateControl = () => {
             key={index}
             className="flex justify-center m-16 bg-gray-200 h-32 rounded-xl"
           >
-            <AnnounceACandidate
+            <ControlACandidate
               data={data}
               onUpdate={(id) => updateNominees(id)}
             />
