@@ -9,7 +9,7 @@ const Date = () => {
     await axios
       .post("http://localhost:3001/api/v1/admin/electionStart")
       .then((res) => {
-        authCtx.handleElection();
+        authCtx.startElection();
         localStorage.setItem(
           "electionInfos",
           JSON.stringify({ isActive: true })
@@ -22,7 +22,6 @@ const Date = () => {
     await axios
       .put("http://localhost:3001/api/v1/admin/electionEnd")
       .then((res) => {
-        authCtx.handleElection();
         authCtx.finishElection();
         localStorage.removeItem("electionInfos");
       })

@@ -24,16 +24,19 @@ function App() {
   const authCtx = useContext(AuthContext);
   useEffect(() => {
     axios.get("http://localhost:3001/api/v1/admin/election").then((res) => {
-      if (!authCtx.isElectionStarted) {
-        authCtx.handleElection();
+      if (!authCtx.isElectionStarted && res.data.data.election[0].isActive) {
+        authCtx.startElection();
       }
-      localStorage.setItem(
-        "electionInfos",
-        JSON.stringify({
-          isActive: true,
-          endDate: res.data.data.election[0].endDate,
-        })
-      );
+      console.log(res);
+      if (res.data.data.election.length !== 0) {
+        localStorage.setItem(
+          "electionInfos",
+          JSON.stringify({
+            isActive: res.data.data.election[0].isActive,
+            endDate: res.data.data.election[0].endDate,
+          })
+        );
+      }
     });
   }, [authCtx]);
 

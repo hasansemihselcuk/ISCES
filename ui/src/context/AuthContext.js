@@ -18,8 +18,8 @@ const AuthContext = React.createContext({
   calculateCountdown: () => {},
   handleTargetDate: () => {},
   withdrawCand: () => {},
-  handleElection: () => {},
   finishElection: () => {},
+  startElection: () => {},
 });
 
 export const AuthContextProvider = (props) => {
@@ -108,6 +108,15 @@ export const AuthContextProvider = (props) => {
         hours,
         minutes,
       };
+    } else {
+      const day = 0;
+      const month = 0;
+      const year = 0;
+      return {
+        day,
+        month,
+        year,
+      };
     }
   };
 
@@ -116,11 +125,12 @@ export const AuthContextProvider = (props) => {
   };
 
   const finishElection = () => {
-    setIsElectionFinished((prevState) => !prevState);
+    setIsElectionFinished(true);
+    setIsElectionStarted(false);
   };
 
-  const handleElection = () => {
-    setIsElectionStarted((prevState) => !prevState);
+  const startElection = () => {
+    setIsElectionStarted(true);
   };
 
   const withdrawCand = () => {
@@ -153,7 +163,7 @@ export const AuthContextProvider = (props) => {
         handleCandidate: handleCandidate,
         handleAdmin: handleAdmin,
         withdrawCand: withdrawCand,
-        handleElection: handleElection,
+        startElection: startElection,
         calculateCountdown: calculateCountdown,
         handleTargetDate: handleTargetDate,
         finishElection: finishElection,
