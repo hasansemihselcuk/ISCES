@@ -22,7 +22,6 @@ import axios from "axios";
 
 function App() {
   const authCtx = useContext(AuthContext);
-  console.log("a");
   useEffect(() => {
     axios.get("http://localhost:3001/api/v1/admin/election").then((res) => {
       if (!authCtx.isElectionStarted) {
@@ -36,7 +35,7 @@ function App() {
         })
       );
     });
-  }, []);
+  }, [authCtx]);
 
   return (
     <div className="">
