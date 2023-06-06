@@ -46,9 +46,9 @@ const ApplyCandidacy = (props) => {
     );
     if (res.data.status === "success") {
       const studentInfos = await localStorage.getItem("studentInfo");
-      const newStudentInfo = { ...JSON.parse(studentInfos), isCandidate: true };
+      const newStudentInfo = { ...JSON.parse(studentInfos), isNominee: true };
       await localStorage.setItem("studentInfo", JSON.stringify(newStudentInfo));
-      authCtx.handleCandidate();
+      authCtx.handleNominee();
       navigate("/");
     } else {
       console.log("You can not be candidate.");
@@ -90,7 +90,6 @@ const ApplyCandidacy = (props) => {
               {option.label}{" "}
             </p>
           ))}
-      
           <button
             onClick={sendHandler}
             className={`apply-button ${isValid ? "" : "not-valid"}`}

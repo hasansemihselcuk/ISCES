@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 const AuthContext = React.createContext({
   isLoggedIn: false,
   isCandidate: false,
+  isNominee: false,
   isAdmin: false,
   isClickedLogInButton: false,
   department: "",
@@ -14,6 +15,7 @@ const AuthContext = React.createContext({
   onLogin: () => {},
   handleLogin: () => {},
   handleCandidate: () => {},
+  handleNominee: () => {},
   handleAdmin: () => {},
   calculateCountdown: () => {},
   handleTargetDate: () => {},
@@ -27,6 +29,7 @@ export const AuthContextProvider = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isClickedLogInButton, setIsClickedLogInButton] = useState(false);
   const [isCandidate, setIsCandidate] = useState(false);
+  const [isNominee, setIsNominee] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isElectionStarted, setIsElectionStarted] = useState(false);
   const [targetDate, setTargetDate] = useState(null);
@@ -87,6 +90,10 @@ export const AuthContextProvider = (props) => {
     setTargetDate(date);
   };
 
+  const handleNominee = () => {
+    setIsNominee((prevState) => !prevState);
+  };
+
   const calculateCountdown = () => {
     const now = new Date().getTime();
     if (localStorage.getItem("electionInfos")) {
@@ -134,6 +141,7 @@ export const AuthContextProvider = (props) => {
   };
 
   const withdrawCand = () => {
+    setIsNominee(false);
     setIsCandidate(false);
   };
 
@@ -157,6 +165,7 @@ export const AuthContextProvider = (props) => {
         isAdmin: isAdmin,
         department: department,
         isElectionStarted: isElectionStarted,
+        isNominee: isNominee,
         onLogout: logoutHandler,
         onLogin: loginHandler,
         handleLogin: handleLogin,
@@ -167,6 +176,7 @@ export const AuthContextProvider = (props) => {
         calculateCountdown: calculateCountdown,
         handleTargetDate: handleTargetDate,
         finishElection: finishElection,
+        handleNominee: handleNominee,
       }}
     >
       {props.children}

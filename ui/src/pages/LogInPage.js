@@ -55,9 +55,8 @@ const LogInPage = () => {
         );
 
         if (res.data.status === "success") {
-          console.log(res.data);
-          if (res.data.isCandidate) {
-            authCtx.handleCandidate();
+          if (res.data.isNominee) {
+            authCtx.handleNominee();
           }
           if (res.data.isAdmin) {
             authCtx.handleAdmin();

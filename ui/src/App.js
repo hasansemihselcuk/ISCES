@@ -78,11 +78,11 @@ function App() {
           {authCtx.isElectionStarted && (
             <Route path="/vote" element={<VotingPage />} />
           )}
-          {!authCtx.isCandidate && (
+          {!authCtx.isNominee && (
             <Route path="/apply" element={<ApplyCandidacy />} />
           )}
           <Route path="/feedback" element={<Feedback />} />
-          {authCtx.isCandidate && (
+          {authCtx.isNominee && (
             <Route path="/withdraw" element={<CandidateWithdraw />} />
           )}
           {authCtx.isElectionFinished && (
