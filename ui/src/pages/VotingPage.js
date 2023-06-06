@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState, useContext } from "react";
 import CandidateForVote from "../components/votingPageComponents/candidateForVote";
-import resim from "../components/votingPageComponents/defaultUser.png";
+import resim from "../image.jpg";
 import AuthContext from "../context/AuthContext";
 
 const VotingPage = ({

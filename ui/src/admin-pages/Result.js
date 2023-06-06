@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import faviconImage from "./indir.png";
+import faviconImage from "./../image.jpg";
 import { useNavigate } from "react-router-dom";
 
 const StudentCard = ({ student }) => {

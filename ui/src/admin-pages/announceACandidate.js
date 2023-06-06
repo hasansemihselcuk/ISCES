@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import image from "./indir.png";
+import image from "./../image.jpg";
 
 const AnounceACandidate = (props) => {
   const [isSubmitted, setIsSubmitted] = useState(false);

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import DepartmentResults from "../components/resultPageComponents/departmentResults";
-import resim from "../components/votingPageComponents/defaultUser.png";
+import resim from "../image.jpg";
 import AuthContext from "../context/AuthContext";
 import axios from "axios";
 

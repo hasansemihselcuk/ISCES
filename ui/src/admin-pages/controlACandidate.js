@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import image from "./indir.png";
+import image from "./../image.jpg";
 import axios from "axios";
 
 const AnounceACandidate = (props) => {

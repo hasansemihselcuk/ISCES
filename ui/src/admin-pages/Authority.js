@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import faviconImage from "./indir.png";
+import faviconImage from "./../image.jpg";
 
 const Authority = () => {
   const [students, setStudents] = useState([]);
