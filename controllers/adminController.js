@@ -31,6 +31,13 @@ exports.makeRepresentative = catchAsync(async (req, res, next) => {
   const newRepresentative = new Representative({
     studentInfos: id,
   });
+  const student = await Student.findByIdAndUpdate(
+    id,
+    { isRepresentative: true, isCandidate: false, isNominee: false },
+    { new: true, runValidators: true }
+  );
+  await student.save();
+
   await newRepresentative.save();
   res.status(200).json({
     status: "success",

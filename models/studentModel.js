@@ -50,6 +50,10 @@ const studentSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  isRepresentative: {
+    type: Boolean,
+    default: false,
+  },
   isNominee: {
     type: Boolean,
     default: false,

@@ -109,6 +109,7 @@ exports.cancelCandidateApplication = catchAsync(async (req, res, next) => {
     message: "Adaylık başvurunuz iptal edildi",
     to: student._id,
   });
+  await newNotification.save();
 
   res.status(200).json({
     status: "success",
