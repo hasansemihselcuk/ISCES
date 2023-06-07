@@ -1,11 +1,13 @@
 import axios from "axios";
 import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import "./Countdown.css";
 
 const Countdown = (props) => {
   const authCtx = useContext(AuthContext);
   const [isInvalidDate, setIsInvalidDate] = useState(false);
+  const navigate = useNavigate();
 
   const handleDateChange = async (event) => {
     authCtx.handleTargetDate(event.target.value);
@@ -13,6 +15,7 @@ const Countdown = (props) => {
       setIsInvalidDate(true);
       return;
     }
+
     // BACKEND PUT REQUEST FOR SET FINISH DATE
     await axios.put(
       "http://localhost:3001/api/v1/admin/election",
@@ -25,6 +28,8 @@ const Countdown = (props) => {
         endDate: event.target.value,
       })
     );
+    authCtx.handleTargetDate(event.target.value);
+    navigate("/admin/date");
   };
 
   const handleInvalid = () => {

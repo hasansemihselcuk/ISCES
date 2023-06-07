@@ -35,6 +35,10 @@ function App() {
             endDate: res.data.data.election[0].endDate,
           })
         );
+        localStorage.setItem(
+          "isReset",
+          JSON.stringify({ isReset: res.data.data.election[0].isReset })
+        );
       }
     });
   }, [authCtx]);

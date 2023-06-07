@@ -10,6 +10,7 @@ const AuthContext = React.createContext({
   department: "",
   isElectionStarted: false,
   isElectionFinished: false,
+  targetDate: "",
   //chefId: null,
   onLogout: () => {},
   onLogin: () => {},
@@ -63,7 +64,7 @@ export const AuthContextProvider = (props) => {
       }
       setIsLoggedIn(true);
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, isElectionStarted, targetDate]);
 
   const logoutHandler = () => {
     const sid = localStorage.getItem("sid");
@@ -79,7 +80,7 @@ export const AuthContextProvider = (props) => {
       localStorage.removeItem("aid");
       localStorage.removeItem("adminInfo");
     }
-
+    localStorage.removeItem("isReset");
     setIsAdmin(false);
     setIsCandidate(false);
     setIsLoggedIn(false);
@@ -167,6 +168,7 @@ export const AuthContextProvider = (props) => {
         isElectionStarted: isElectionStarted,
         isNominee: isNominee,
         isElectionFinished: isElectionFinished,
+        targetDate: targetDate,
         onLogout: logoutHandler,
         onLogin: loginHandler,
         handleLogin: handleLogin,
