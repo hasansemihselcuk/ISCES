@@ -147,7 +147,12 @@ exports.resetAll = catchAsync(async (req, res, next) => {
     }
   }
 
-  const election = await Election.deleteMany();
+  const election = await Election.find();
+  if (election.length > 0) {
+    for (const e of election) {
+      await e.deleteOne();
+    }
+  }
 
   const control = await Control.find();
   for (const c of control) {
