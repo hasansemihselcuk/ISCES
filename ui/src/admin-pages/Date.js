@@ -29,17 +29,17 @@ const Date = () => {
   };
 
   return (
-    <div className="items-center py-60">
+    <div className="items-center  flex flex-col items-center justify-center py-20">
       <Countdown isInSetDate={true} />;
       {authCtx.isElectionStarted && (
-        <p className="ml-80">Seçim başladı. Seçimi bitirmek için:</p>
+        <p className="mb-4">Seçim başladı. Seçimi bitirmek için:</p>
       )}
       {!authCtx.isElectionStarted && (
-        <p className="ml-80">Seçim Henüz başlamadı veya sona erdi.</p>
+        <p className="mb-4">Seçim Henüz başlamadı veya sona erdi.</p>
       )}
       {!authCtx.isElectionStarted && (
         <button
-          className="w-60 ml-80  h-20 border-rose-700 border-2 hover:bg-red-700 rounded-lg"
+          className="w-60 px-auto mt-50 mb-4  h-20 border-rose-700 border-2 hover:bg-red-700 rounded-lg"
           onClick={startElection}
         >
           Seçimi Başlat
@@ -47,7 +47,7 @@ const Date = () => {
       )}
       {authCtx.isElectionStarted && (
         <button
-          className="w-60 h-20 ml-80 border-rose-700 border-2 hover:bg-red-700 rounded-lg"
+          className="w-60 h-20 px-auto mt-50 mb-4 border-rose-700 border-2 hover:bg-red-700 rounded-lg"
           onClick={finishElection}
         >
           Seçimi Bitir
