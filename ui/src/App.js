@@ -23,24 +23,29 @@ import axios from "axios";
 function App() {
   const authCtx = useContext(AuthContext);
   useEffect(() => {
-    axios.get("http://localhost:3001/api/v1/admin/election").then((res) => {
-      if (res.data.data.election.length !== 0) {
-        if (!authCtx.isElectionStarted && res.data.data.election[0].isActive) {
-          authCtx.startElection();
+    axios
+      .get("https://isces.onrender.com/api/v1/admin/election")
+      .then((res) => {
+        if (res.data.data.election.length !== 0) {
+          if (
+            !authCtx.isElectionStarted &&
+            res.data.data.election[0].isActive
+          ) {
+            authCtx.startElection();
+          }
+          localStorage.setItem(
+            "electionInfos",
+            JSON.stringify({
+              isActive: res.data.data.election[0].isActive,
+              endDate: res.data.data.election[0].endDate,
+            })
+          );
+          localStorage.setItem(
+            "isReset",
+            JSON.stringify({ isReset: res.data.data.election[0].isReset })
+          );
         }
-        localStorage.setItem(
-          "electionInfos",
-          JSON.stringify({
-            isActive: res.data.data.election[0].isActive,
-            endDate: res.data.data.election[0].endDate,
-          })
-        );
-        localStorage.setItem(
-          "isReset",
-          JSON.stringify({ isReset: res.data.data.election[0].isReset })
-        );
-      }
-    });
+      });
   }, [authCtx]);
 
   return (

@@ -11,7 +11,7 @@ const CandidateWithdraw = () => {
   const withdrawCand = async () => {
     const sid = localStorage.getItem("sid");
     const res = await axios.delete(
-      `http://localhost:3001/api/v1/candidate/${sid}`
+      `https://isces.onrender.com/api/v1/candidate/${sid}`
     );
     if (res.data.status === "success") {
       setWithdraw(true);

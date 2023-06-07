@@ -7,7 +7,7 @@ const CandidateControl = () => {
   const fetchNominations = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:3001/api/v1/admin/nominations"
+        "https://isces.onrender.com/api/v1/admin/nominations"
       );
       const nominations = res.data.data.nominations.map((nom) => {
         return {

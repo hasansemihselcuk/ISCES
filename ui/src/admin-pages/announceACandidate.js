@@ -13,7 +13,7 @@ const AnounceACandidate = (props) => {
     setIsConfirmationOpen(false);
     if (confirmation === "Evet") {
       await axios.post(
-        `http://localhost:3001/api/v1/rep/announceRep/${props.data.id}`
+        `https://isces.onrender.com/api/v1/rep/announceRep/${props.data.id}`
       );
       props.onUpdate(props.data.id);
       setIsSubmitted(false);

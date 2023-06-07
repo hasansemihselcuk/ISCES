@@ -8,7 +8,7 @@ const FeedBack = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/api/v1/admin/tickets")
+      .get("https://isces.onrender.com/api/v1/admin/tickets")
       .then((res) => {
         setFeedbacks(res.data.data.tickets);
       })
@@ -17,7 +17,7 @@ const FeedBack = () => {
 
   const handleDeleteTicket = (ticketId) => {
     axios
-      .delete(`http://localhost:3001/api/v1/admin/tickets/${ticketId}`)
+      .delete(`https://isces.onrender.com/api/v1/admin/tickets/${ticketId}`)
       .then(() => {
         setFeedbacks((prevFeedbacks) =>
           prevFeedbacks.filter((ticket) => ticket._id !== ticketId)

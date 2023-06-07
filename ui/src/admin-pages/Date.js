@@ -25,7 +25,7 @@ const Date = () => {
   }, []);
   const startElection = () => {
     axios
-      .post("http://localhost:3001/api/v1/admin/electionStart")
+      .post("https://isces.onrender.com/api/v1/admin/electionStart")
       .then((res) => {
         authCtx.startElection();
 
@@ -41,7 +41,7 @@ const Date = () => {
 
   const finishElection = async () => {
     await axios
-      .put("http://localhost:3001/api/v1/admin/electionEnd")
+      .put("https://isces.onrender.com/api/v1/admin/electionEnd")
       .then((res) => {
         authCtx.finishElection();
         localStorage.removeItem("electionInfos");
@@ -54,7 +54,7 @@ const Date = () => {
   const reset = async () => {
     setIsLoading(true);
     const res = await axios.delete(
-      "http://localhost:3001/api/v1/admin/election"
+      "https://isces.onrender.com/api/v1/admin/election"
     );
     if (res.data.status === "success") {
       localStorage.setItem("isReset", JSON.stringify({ isReset: true }));

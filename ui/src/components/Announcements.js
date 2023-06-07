@@ -7,7 +7,7 @@ const Announcements = () => {
   useEffect(() => {
     const sid = localStorage.getItem("sid");
     axios
-      .get(`http://localhost:3001/api/v1/student/notifications/${sid}`)
+      .get(`https://isces.onrender.com/api/v1/student/notifications/${sid}`)
       .then((res) => {
         setNotifications(res.data.data.notifications);
       })
@@ -19,7 +19,7 @@ const Announcements = () => {
     setNotifications(updatedNotifications);
 
     await axios.delete(
-      `http://localhost:3001/api/v1/student/notifications/${id}`
+      `https://isces.onrender.com/api/v1/student/notifications/${id}`
     );
   };
 

@@ -42,7 +42,7 @@ const ApplyCandidacy = (props) => {
     const studentId = localStorage.getItem("sid");
 
     const res = await axios.put(
-      `http://localhost:3001/api/v1/candidate/nomineeApplication/${studentId}`
+      `https://isces.onrender.com/api/v1/candidate/nomineeApplication/${studentId}`
     );
     if (res.data.status === "success") {
       const studentInfos = await localStorage.getItem("studentInfo");

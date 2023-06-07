@@ -12,7 +12,7 @@ const Announcement = () => {
       description: content,
     };
     const res = await axios.post(
-      "http://localhost:3001/api/v1/admin/announcements",
+      "https://isces.onrender.com/api/v1/admin/announcements",
       JSON.stringify(data)
     );
 
@@ -21,7 +21,7 @@ const Announcement = () => {
     } else {
       console.log("Can not posted.");
     }
-// For demonstration purposes
+    // For demonstration purposes
   };
 
   const handleTitleChange = (event) => {

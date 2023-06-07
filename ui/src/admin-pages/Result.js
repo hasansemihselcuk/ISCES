@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 const StudentCard = ({ student }) => {
   const makeRepresentative = async (id) => {
     try {
-      await axios.post(`http://localhost:3001/api/v1/rep/makeRep/${id}`);
+      await axios.post(`https://isces.onrender.com/api/v1/rep/makeRep/${id}`);
       // Handle success or update the UI accordingly
       window.location.reload();
     } catch (error) {
@@ -70,7 +70,7 @@ const Result = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3001/api/v1/admin/candidates"
+          "https://isces.onrender.com/api/v1/admin/candidates"
         );
         const apiStudents = response.data.data.candidates.map((candidate) => ({
           _id: candidate.studentInfos._id,

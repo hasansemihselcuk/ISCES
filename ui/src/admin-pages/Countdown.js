@@ -18,7 +18,7 @@ const Countdown = (props) => {
 
     // BACKEND PUT REQUEST FOR SET FINISH DATE
     await axios.put(
-      "http://localhost:3001/api/v1/admin/election",
+      "https://isces.onrender.com/api/v1/admin/election",
       JSON.stringify({ endDate: event.target.value })
     );
     localStorage.setItem(

@@ -187,7 +187,7 @@ const Mapper = (props) => {
 
   const handleAreaClick = async (area) => {
     console.log("Tıklanan Bölge:", area.name);
-    const res = await axios.get("http://localhost:3001/api/v1/map/");
+    const res = await axios.get("https://isces.onrender.com/api/v1/map/");
     const candidates = res.data.data.candidates;
     const filteredCandidates = candidates.filter(
       (candidate) =>

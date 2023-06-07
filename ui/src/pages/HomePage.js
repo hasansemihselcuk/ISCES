@@ -18,7 +18,7 @@ const HomePage = () => {
   useEffect(() => {
     let announceDatas;
     axios
-      .get("http://localhost:3001/api/v1/admin/announcements")
+      .get("https://isces.onrender.com/api/v1/admin/announcements")
       .then((res) => {
         announceDatas = res.data.data.announces;
         const backendData = announceDatas.map((announce) => {

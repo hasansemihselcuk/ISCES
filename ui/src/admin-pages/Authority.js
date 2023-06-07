@@ -8,10 +8,10 @@ const Authority = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get("http://localhost:3001/api/v1/rep/");
+        const res = await axios.get("https://isces.onrender.com/api/v1/rep/");
         const representatives = res.data.data.representatives;
         const candidateRes = await axios.get(
-          "http://localhost:3001/api/v1/admin/candidates"
+          "https://isces.onrender.com/api/v1/admin/candidates"
         );
         const candidates = candidateRes.data.data.candidates;
         const allStudents = [...representatives, ...candidates];
@@ -32,11 +32,11 @@ const Authority = () => {
     setStudents(updatedStudents);
     if (student.studentInfos.isRepresentative) {
       await axios.delete(
-        `http://localhost:3001/api/v1/rep/cancelRep/${student.studentInfos._id}`
+        `https://isces.onrender.com/api/v1/rep/cancelRep/${student.studentInfos._id}`
       );
     } else if (student.studentInfos.isCandidate) {
       await axios.delete(
-        `http://localhost:3001/api/v1/candidate/${student.studentInfos._id}`
+        `https://isces.onrender.com/api/v1/candidate/${student.studentInfos._id}`
       );
     }
   };

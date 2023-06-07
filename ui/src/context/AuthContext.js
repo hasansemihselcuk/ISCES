@@ -47,7 +47,7 @@ export const AuthContextProvider = (props) => {
     }
     if (sid) {
       axios
-        .get(`http://localhost:3001/api/v1/student/department/${sid}`)
+        .get(`https://isces.onrender.com/api/v1/student/department/${sid}`)
         .then((res) => {
           setDepartment(res.data.data.depName.name);
         });

@@ -7,7 +7,7 @@ const AnnounceCandidate = () => {
 
   const fetchRepresantatives = async () => {
     try {
-      const res = await axios.get("http://localhost:3001/api/v1/rep/");
+      const res = await axios.get("https://isces.onrender.com/api/v1/rep/");
       const representatives = res.data.data.representatives.map((rep) => {
         return {
           id: rep.studentInfos._id,

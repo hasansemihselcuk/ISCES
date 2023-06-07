@@ -14,7 +14,7 @@ const AnounceACandidate = (props) => {
     setIsSubmitted(false);
     // Backend'e ret için bişi yazılcak gönderme işlemleri burada yapılabilir
     const res = await axios.put(
-      `http://localhost:3001/api/v1/candidate/nomineeRejection/${props.data.id}`
+      `https://isces.onrender.com/api/v1/candidate/nomineeRejection/${props.data.id}`
     );
   };
 
@@ -25,7 +25,7 @@ const AnounceACandidate = (props) => {
       setIsSubmitted(false);
       // Backend'e gönderme işlemleri burada yapılabilir
       const res = await axios.post(
-        `http://localhost:3001/api/v1/candidate/${props.data.id}`
+        `https://isces.onrender.com/api/v1/candidate/${props.data.id}`
       );
     }
   };

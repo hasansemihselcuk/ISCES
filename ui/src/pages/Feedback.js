@@ -17,7 +17,7 @@ const Feedback = () => {
     console.log(data.ticketDescription.length);
     const res = await axios
       .post(
-        `http://localhost:3001/api/v1/student/sendTicket/${sid}`,
+        `https://isces.onrender.com/api/v1/student/sendTicket/${sid}`,
         JSON.stringify(data)
       )
       .then(data.ticketDescription.length ? navigate("/") : "");
@@ -27,7 +27,6 @@ const Feedback = () => {
     } else {
       console.log("Can not posted.");
     }
-
   };
 
   const handleTitleChange = (event) => {

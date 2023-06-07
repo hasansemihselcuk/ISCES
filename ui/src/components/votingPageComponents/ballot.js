@@ -42,7 +42,7 @@ const Ballot = (props) => {
     const id = await localStorage.getItem("sid");
     console.log(selectedCandidate);
     const res = await axios.put(
-      `http://localhost:3001/api/v1/student/${id}/${selectedCandidate.id}`
+      `https://isces.onrender.com/api/v1/student/${id}/${selectedCandidate.id}`
     );
     if (res.data.status === "success") {
       console.log("Oy gönderildi");

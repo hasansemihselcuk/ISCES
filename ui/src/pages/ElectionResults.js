@@ -12,7 +12,7 @@ const ElectionResult = ({ candidates, candidatesVote }) => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/api/v1/student/${studentId}`)
+      .get(`https://isces.onrender.com/api/v1/student/${studentId}`)
       .then((res) => {
         setCandidates(
           res.data.data.candidatesFromStudentsDepartment.map((student) => {
