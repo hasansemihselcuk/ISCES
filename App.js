@@ -26,6 +26,10 @@ app.use("/api/v1/student", studentRouter);
 app.use("/api/v1/rep", repRouter);
 app.use("/api/v1/map", mapRouter);
 
+app.use("/", (req, res) => {
+  res.send("Hello World!");
+});
+
 app.all("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
