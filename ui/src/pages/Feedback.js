@@ -28,7 +28,6 @@ const Feedback = () => {
       console.log("Can not posted.");
     }
 
-    console.log(data); // For demonstration purposes
   };
 
   const handleTitleChange = (event) => {

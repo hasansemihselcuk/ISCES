@@ -5,11 +5,9 @@ import { useNavigate } from "react-router-dom";
 
 const StudentCard = ({ student }) => {
   const makeRepresentative = async (id) => {
-    console.log(id);
     try {
       await axios.post(`http://localhost:3001/api/v1/rep/makeRep/${id}`);
       // Handle success or update the UI accordingly
-      console.log(`Representative assigned for student with ID ${id}`);
       window.location.reload();
     } catch (error) {
       console.error(error);

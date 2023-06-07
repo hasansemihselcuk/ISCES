@@ -16,7 +16,6 @@ const ElectionResult = ({ candidates, candidatesVote }) => {
       .then((res) => {
         setCandidates(
           res.data.data.candidatesFromStudentsDepartment.map((student) => {
-            console.log(student._id);
             return {
               id: student._id,
               name: `${student.studentInfos.name} ${student.studentInfos.surname}`,

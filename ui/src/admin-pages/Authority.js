@@ -84,16 +84,14 @@ const Authority = () => {
             />
             <div style={{ textAlign: "center" }}>
               <p style={{ margin: 0, fontWeight: "bold" }}>
-                {student.studentInfos.department.name || "Department"}
+                {student.studentInfos.department.name || "Departman"}
               </p>
               <p style={{ margin: 0 }}>
-                {student.studentInfos.name || "Name"}{" "}
-                {student.studentInfos.surname || "Surname"}
+                {student.studentInfos.name || "İsim"}{" "}
+                {student.studentInfos.surname || "Soysim"}
               </p>
               <p style={{ margin: 0 }}>
-                {student.studentInfos.isCandidate
-                  ? "Candidate"
-                  : "Representative"}
+                {student.studentInfos.isCandidate ? "Aday" : "Temsilci"}
               </p>
             </div>
 

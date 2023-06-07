@@ -168,7 +168,6 @@ exports.getNominations = catchAsync(async (req, res, next) => {
     "department",
     "name"
   );
-  console.log(nominations);
   res.status(200).json({
     status: "success",
     results: nominations.length,
@@ -186,7 +185,6 @@ exports.getAllRepresentatives = catchAsync(async (req, res, next) => {
       select: "name",
     },
   });
-  console.log(representatives);
 
   res.status(200).json({
     status: "success",
@@ -202,7 +200,6 @@ exports.getUnannouncedRepresentatives = catchAsync(async (req, res, next) => {
     isRepresentative: true,
     isAnnounced: false,
   }).populate("department", "name");
-  console.log(representatives);
 
   res.status(200).json({
     status: "success",

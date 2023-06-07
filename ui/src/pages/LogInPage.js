@@ -84,14 +84,14 @@ const LogInPage = () => {
     <div>
       {incorrectData && (
         <div className="bg-gray-100 border-gray-100 border-3 p-8 text-center">
-          <p className="text-3xl">Incorrect email or password</p>
+          <p className="text-3xl">Kullanıcı veya şifre hatalı</p>
           <button
             className="w-40 h-10 border-rose-700 border-2 hover:bg-red-700 rounded-lg mt-8"
             onClick={() => {
               setIncorrectData(false);
             }}
           >
-            Okay
+            Tamam
           </button>
         </div>
       )}

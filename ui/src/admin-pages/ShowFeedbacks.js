@@ -11,8 +11,6 @@ const FeedBack = () => {
       .get("http://localhost:3001/api/v1/admin/tickets")
       .then((res) => {
         setFeedbacks(res.data.data.tickets);
-        console.log("feedbackler");
-        console.log(res.data.data.tickets);
       })
       .catch((err) => console.log(err));
   }, []);
