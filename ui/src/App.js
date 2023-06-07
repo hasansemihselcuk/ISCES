@@ -63,7 +63,7 @@ function App() {
           {authCtx.isAdmin && (
             <Route path="/admin/announcement" element={<Announcement />} />
           )}
-          {authCtx.isAdmin && (
+          {authCtx.isAdmin && !authCtx.isElectionStarted && (
             <Route
               path="/admin/candidatecontrol"
               element={<CandidateControl />}
@@ -78,7 +78,7 @@ function App() {
           {authCtx.isElectionStarted && (
             <Route path="/vote" element={<VotingPage />} />
           )}
-          {!authCtx.isNominee && (
+          {!authCtx.isNominee && !authCtx.isElectionStarted && (
             <Route path="/apply" element={<ApplyCandidacy />} />
           )}
           <Route path="/feedback" element={<Feedback />} />
