@@ -67,17 +67,13 @@ const SideBar = () => {
           </Link>
         </li>
       )}
-      {!authCtx.isAdmin &&
-        !authCtx.isNominee &&
-        !authCtx.isElectionStarted(
-          <li className="mb-2 bg-gray-100 hover:bg-gray-300 ml-4 mr-4 mt-4">
-            <Link to="/apply">
-              <button className="w-full text-left p-2 ">
-                Adaylık Başvurusu
-              </button>
-            </Link>
-          </li>
-        )}
+      {!authCtx.isAdmin && !authCtx.isNominee && !authCtx.isElectionStarted && (
+        <li className="mb-2 bg-gray-100 hover:bg-gray-300 ml-4 mr-4 mt-4">
+          <Link to="/apply">
+            <button className="w-full text-left p-2 ">Adaylık Başvurusu</button>
+          </Link>
+        </li>
+      )}
       {!authCtx.isAdmin && authCtx.isNominee && (
         <li className="mb-2 bg-gray-100 hover:bg-gray-300 ml-4 mr-4 mt-4">
           <Link to="/withdraw">
