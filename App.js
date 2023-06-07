@@ -19,16 +19,12 @@ app.use(bodyparser.urlencoded({ extended: true }));
 app.use(bodyparser.json());
 app.use(cors());
 
-//ROUTESLER BURAYA GELECEK
 app.use("/api/v1/admin", adminRouter);
 app.use("/api/v1/candidate", candidateRouter);
 app.use("/api/v1/student", studentRouter);
 app.use("/api/v1/rep", repRouter);
 app.use("/api/v1/map", mapRouter);
 
-app.use("/", (req, res) => {
-  res.send("Hello World!");
-});
 
 app.all("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

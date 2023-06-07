@@ -124,58 +124,45 @@ exports.cancelRepresentative = catchAsync(async (req, res, next) => {
 
 exports.resetAll = catchAsync(async (req, res, next) => {
   const students = await Student.find();
-  const candidates = await DepartmentCandidate.find();
-  const representatives = await Representative.find();
-  const election = await Election.findOne({
-    isStarted: true,
-    isEnded: true,
-    isActive: false,
-  });
-  const control = await Control.findOne({
-    isStarted: true,
-    isEnded: true,
-    isActive: false,
-  });
-  const announces = await Announce.find();
-  const notifications = await Notification.find();
-  const tickets = await Ticket.find();
-  students.forEach(async (student) => {
+  for (const student of students) {
     student.isCandidate = false;
     student.isNominee = false;
     student.isRepresentative = false;
     student.isAnnounced = false;
     await student.save();
-  });
-  candidates.forEach(async (candidate) => {
-    await candidate.remove();
-  });
-  representatives.forEach(async (representative) => {
-    await representative.remove();
-  });
-  election.isStarted = false;
-  election.isEnded = false;
-  election.isActive = false;
-  await election.save();
-  control.isStarted = false;
-  control.isEnded = false;
-  control.isActive = false;
-  await control.save();
-  announces.forEach(async (announce) => {
-    await announce.remove();
-  });
-  notifications.forEach(async (notification) => {
-    await notification.remove();
-  });
-  tickets.forEach(async (ticket) => {
-    await ticket.remove();
-  });
+  }
+
+  const candidates = await DepartmentCandidate.find();
+  if (candidates.length > 0) {
+    for (const candidate of candidates) {
+      await candidate.deleteOne();
+    }
+  }
+
+  const representatives = await Representative.find();
+  if (representatives.length > 0) {
+    for (const representative of representatives) {
+      await representative.deleteOne();
+    }
+  }
+
+  const election = await Election.deleteMany();
+
+  const control = await Control.find();
+  for(const c of control){
+    c.isStarted = false;
+    c.isEnded = false;
+    c.isActive = false;
+    await c.save();
+  }
+
+  
+
   res.status(200).json({
     status: "success",
-    message: "Seçim sıfırlandı.",
+    message: "Tüm süreç sıfırlandı",
   });
 });
-
-
 
 exports.getNominations = catchAsync(async (req, res, next) => {
   const nominations = await Student.find({ isNominee: true }).populate(
