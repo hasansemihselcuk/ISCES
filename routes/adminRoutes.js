@@ -22,7 +22,8 @@ router.route("/tickets").get(adminController.getTickets);
 router
   .route("/election")
   .get(adminController.getElectionInfos)
-  .put(adminController.editElection);
+  .put(adminController.editElection)
+  .delete(adminController.resetAll);
 
 router.route("/electionStart").post(adminController.startElection);
 
