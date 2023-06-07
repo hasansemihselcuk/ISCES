@@ -89,33 +89,53 @@ const Ballot = (props) => {
       </div>
       <div
         className={
-          isSubmitted ? "absolute  bg-gray-100 -mt-80 ml-52 z-20 p-8" : "hidden"
+          isSubmitted
+            ? "fixed inset-0 flex items-center justify-center z-50 bg-opacity-50 bg-gray-500"
+            : "hidden"
         }
       >
         {isSubmitted && !isDeclined && (
-          <p className="mb-4">Oyunuzu bu kişiye kullanmak istiyor musunuz?</p>
+          <div className="bg-white p-4 rounded shadow">
+            <p>Oyunuzu bu kişiye kullanmak istiyor musunuz?</p>
+            <div className="flex justify-end mt-4">
+              <button
+                onClick={sendVote}
+                className="bg-green-500 hover:bg-green-700 text-white px-4 py-2 rounded mr-2"
+              >
+                Evet
+              </button>
+              <button
+                className="bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded"
+                onClick={() => {
+                  setIsSubmitted(false);
+                }}
+              >
+                Hayır
+              </button>
+            </div>
+          </div>
         )}
         {isSubmitted && isDeclined && (
-          <p className="mb-4">
-            Oyunuzu kimseye vermek istemediğinizden emin misiniz?
-          </p>
+          <div className="bg-white p-4 rounded shadow">
+            <p>Oyunuzu kimseye vermek istemediğinizden emin misiniz?</p>
+            <div className="flex justify-end mt-4">
+              <button
+                onClick={sendVote}
+                className="bg-green-500 hover:bg-green-700 text-white px-4 py-2 rounded mr-2"
+              >
+                Evet
+              </button>
+              <button
+                className="bg-red-500 hover:bg-red-700 text-white px-4 py-2 rounded"
+                onClick={() => {
+                  setIsSubmitted(false);
+                }}
+              >
+                Hayır
+              </button>
+            </div>
+          </div>
         )}
-        <div className="flex">
-          <button
-            onClick={sendVote}
-            className="p-2 border-2 border-rose-600 hover:bg-rose-600"
-          >
-            Evet
-          </button>
-          <button
-            className="p-2 border-2 ml-72 border-rose-600 hover:bg-rose-600"
-            onClick={() => {
-              setIsSubmitted(false);
-            }}
-          >
-            Hayır
-          </button>
-        </div>
       </div>
 
       <div>

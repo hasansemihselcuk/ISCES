@@ -220,16 +220,13 @@ const Mapper = (props) => {
           onClick={handleAreaClick}
         />
         {candidateInfo && candidateInfo.length > 0 ? (
-          <div
-            style={{
-              display: "grid",
-              gap: "1rem",
-              gridTemplateColumns: "repeat(3, 1fr)",
-            }}
-          >
+          <div className="grid gap-4 grid-cols-3  p-4 rounded-lg">
             {candidateInfo.map((candidate, index) => (
-              <div className="bg-white w-auto h-auto relative z-50" key={index}>
-                <h3>
+              <div
+                className="bg-white w-auto h-auto relative z-50 rounded-lg p-4"
+                key={index}
+              >
+                <h3 className="text-xl font-bold">
                   {candidate.name} {candidate.surname}
                 </h3>
                 <p>{candidate.department}</p>

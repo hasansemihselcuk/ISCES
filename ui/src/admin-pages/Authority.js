@@ -49,6 +49,7 @@ const Authority = () => {
           width: "100%",
           display: "flex",
           justifyContent: "center",
+
           alignItems: "center",
           flexWrap: "wrap",
         }}
@@ -59,6 +60,7 @@ const Authority = () => {
             style={{
               display: "flex",
               flexDirection: "column",
+              justifyContent: "space-between",
               alignItems: "center",
               gap: "0.5rem",
               width: "200px",
@@ -103,6 +105,7 @@ const Authority = () => {
                 borderRadius: "5px",
                 fontSize: "16px",
                 fontWeight: "bold",
+
                 cursor: "pointer",
               }}
               onClick={() => handleRemoveAuthority(student)}
