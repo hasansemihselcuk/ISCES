@@ -99,13 +99,6 @@ const ApplyCandidacy = (props) => {
           </button>
         </form>
       )}
-      {!canBeCandidate && (
-        <div className="error">
-          <label>Adaylık başvurunuz yapılmıştır</label>
-          <br></br>
-          <label>Birden fazla defa aday olamazsınız!</label>
-        </div>
-      )}
     </>
   );
 };

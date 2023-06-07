@@ -22,6 +22,10 @@ const departmentElectionSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  isReset: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const DepartmentElection = mongoose.model(

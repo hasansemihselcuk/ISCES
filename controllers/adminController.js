@@ -381,6 +381,24 @@ exports.endElection = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.changeElectionReset = catchAsync(async (req, res, next) => {
+  const election = await Election.findOne({
+    isReset: false,
+  });
+  if (!election) {
+    return next(new AppError("Seçim henüz başlamadı veya bitti", 400));
+  }
+  election.isReset = true;
+  await election.save();
+  res.status(200).json({
+    status: "success",
+    message: "Seçim sıfırlandı.",
+    data: {
+      election,
+    },
+  });
+});
+
 exports.makeAnnouncement = catchAsync(async (req, res, next) => {
   const body = Object.keys(req.body)[0];
   const fixedResponse = body.replace(/'/g, '"');

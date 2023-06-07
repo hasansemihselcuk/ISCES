@@ -25,6 +25,8 @@ router
   .put(adminController.editElection)
   .delete(adminController.resetAll);
 
+router.route("/isReset").put(adminController.changeElectionReset);
+
 router.route("/electionStart").post(adminController.startElection);
 
 router.route("/electionEnd").put(adminController.endElection);
