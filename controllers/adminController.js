@@ -129,6 +129,7 @@ exports.resetAll = catchAsync(async (req, res, next) => {
     student.isNominee = false;
     student.isRepresentative = false;
     student.isAnnounced = false;
+    student.isVotedForDepartment = false;
     await student.save();
   }
 
@@ -149,14 +150,12 @@ exports.resetAll = catchAsync(async (req, res, next) => {
   const election = await Election.deleteMany();
 
   const control = await Control.find();
-  for(const c of control){
+  for (const c of control) {
     c.isStarted = false;
     c.isEnded = false;
     c.isActive = false;
     await c.save();
   }
-
-  
 
   res.status(200).json({
     status: "success",
@@ -325,6 +324,15 @@ exports.editElection = catchAsync(async (req, res, next) => {
   const parsedResponse = JSON.parse(fixedResponse);
 
   const endDate = new Date(parsedResponse.endDate);
+
+  if (endDate < Date.now()) {
+    return next(
+      new AppError(
+        "Şu anki zamandan daha önce bir bitiş tarihi veremezsin",
+        400
+      )
+    );
+  }
   election.endDate = endDate;
 
   const parsedEndDate = new Date(endDate);

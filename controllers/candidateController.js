@@ -10,10 +10,6 @@ exports.nomineeApplication = catchAsync(async (req, res, next) => {
     { isNominee: true },
     { new: true, runValidators: true }
   );
-  if (student.GPA < 2.75 || student.year < 2) {
-    student.isNominee = false;
-    return next(new AppError("Başvuru için GPA yetersiz.", 400));
-  }
   const existingNominee = await Candidate.findOne({
     studentInfos: student._id,
   });
@@ -62,10 +58,6 @@ exports.candidateApplication = catchAsync(async (req, res, next) => {
     { isCandidate: true, isNominee: false },
     { new: true, runValidators: true }
   );
-  if (student.GPA < 2.75 || student.year < 2) {
-    student.isCandidate = false;
-    return next(new AppError("Başvuru için GPA yetersiz.", 400));
-  }
   const existingCandidate = await Candidate.findOne({
     studentInfos: student._id,
   });
