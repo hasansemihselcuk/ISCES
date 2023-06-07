@@ -24,7 +24,6 @@ function App() {
   const authCtx = useContext(AuthContext);
   useEffect(() => {
     axios.get("http://localhost:3001/api/v1/admin/election").then((res) => {
-      console.log(res);
       if (res.data.data.election.length !== 0) {
         if (!authCtx.isElectionStarted && res.data.data.election[0].isActive) {
           authCtx.startElection();

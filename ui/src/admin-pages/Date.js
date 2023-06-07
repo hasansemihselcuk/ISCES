@@ -30,8 +30,13 @@ const Date = () => {
   };
 
   const reset = async () => {
-    setIsReset(true);
-    await axios.delete("http://localhost:3001/api/v1/admin/election");
+    const res = await axios.delete(
+      "http://localhost:3001/api/v1/admin/election"
+    );
+    console.log(res);
+    if (res.data.status === "success") {
+      setIsReset(true);
+    }
   };
 
   return (
