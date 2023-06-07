@@ -84,7 +84,7 @@ const LogInPage = () => {
     <div>
       {incorrectData && (
         <div className="bg-gray-100 border-gray-100 border-3 p-8 text-center">
-          <p className="text-3xl">Kullanıcı veya şifre hatalı</p>
+          <p className="text-3xl">Kullanıcı adı veya şifre hatalı</p>
           <button
             className="w-40 h-10 border-rose-700 border-2 hover:bg-red-700 rounded-lg mt-8"
             onClick={() => {
@@ -105,13 +105,13 @@ const LogInPage = () => {
               <input
                 onChange={emailChangeHandler}
                 type="text"
-                placeholder="Enter a email"
+                placeholder="İYTE Mail Adresi"
                 className="mt-12 ml-12 w-48 h-8 px-4"
               />
               <input
                 onChange={passwordChangeHandler}
                 type="password"
-                placeholder="Enter a password"
+                placeholder="Şifre"
                 className="mt-4 ml-12 w-48 px-4 h-8"
               />
 
@@ -119,7 +119,7 @@ const LogInPage = () => {
                 onClick={submitHandler}
                 className="mt-8 ml-16 mb-12 w-40 h-10 border-rose-700 border-2 hover:bg-red-700 rounded-lg"
               >
-                Submit
+                Giriş Yap
               </button>
             </div>
           </div>

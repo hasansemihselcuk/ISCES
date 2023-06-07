@@ -1,9 +1,11 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Announcement = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const navigate = useNavigate();
 
   const handleSendData = async () => {
     // Simulating sending data to the backend
@@ -21,6 +23,7 @@ const Announcement = () => {
     } else {
       console.log("Can not posted.");
     }
+    navigate("/");
     // For demonstration purposes
   };
 

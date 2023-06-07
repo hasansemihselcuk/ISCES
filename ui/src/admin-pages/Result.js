@@ -3,12 +3,12 @@ import axios from "axios";
 import faviconImage from "./../image.jpg";
 import { useNavigate } from "react-router-dom";
 
-const StudentCard = ({ student }) => {
+const StudentCard = ({ student, onUpdate }) => {
   const makeRepresentative = async (id) => {
     try {
       await axios.post(`https://isces.onrender.com/api/v1/rep/makeRep/${id}`);
       // Handle success or update the UI accordingly
-      window.location.reload();
+      onUpdate(id);
     } catch (error) {
       console.error(error);
     }
@@ -87,11 +87,16 @@ const Result = () => {
     };
 
     fetchData();
-  }, []);
+  }, [students]);
 
   const handleShowOnMap = () => {
     navigate("/");
     setShowOnMap(!showOnMap);
+  };
+  const updateStudentList = (id) => {
+    const updatedStudents = students.filter((s) => s.id !== id);
+    setStudents(updatedStudents);
+    navigate("/admin/result");
   };
 
   return (
@@ -118,7 +123,11 @@ const Result = () => {
         }}
       >
         {students.map((student, index) => (
-          <StudentCard key={index} student={student} />
+          <StudentCard
+            key={index}
+            student={student}
+            onUpdate={(id) => updateStudentList(id)}
+          />
         ))}
       </div>
       <div style={{ textAlign: "center", marginTop: "20px" }}>

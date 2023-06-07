@@ -13,13 +13,15 @@ const Date = () => {
   useEffect(() => {
     const isReset = localStorage.getItem("isReset");
     if (isReset) {
-      if (isReset.isReset) {
+      if (JSON.parse(isReset).isReset) {
         setIsReset(JSON.parse(isReset).isReset);
         setIsFirst(JSON.parse(isReset).isReset);
       } else {
+        setIsReset(false);
         setIsFirst(true);
       }
     } else {
+      setIsReset(false);
       setIsFirst(true);
     }
   }, []);
@@ -45,6 +47,7 @@ const Date = () => {
       .then((res) => {
         authCtx.finishElection();
         localStorage.removeItem("electionInfos");
+        localStorage.setItem("isReset", JSON.stringify({ isReset: false }));
         setIsReset(false);
         setIsFirst(false);
       })
@@ -89,17 +92,14 @@ const Date = () => {
           Seçimi Bitir
         </button>
       )}
-      {authCtx.isElectionFinished &&
-        !isReset &&
-        !isLoading &&
-        !authCtx.isElectionStarted && (
-          <button
-            className="w-60 h-20 px-auto mt-50 mb-4 border-rose-700 border-2 hover:bg-red-700 rounded-lg"
-            onClick={reset}
-          >
-            Yeni seçim için her şeyi sıfırlayın.
-          </button>
-        )}
+      {authCtx.isElectionFinished && !isReset && !isLoading && (
+        <button
+          className="w-60 h-20 px-auto mt-50 mb-4 border-rose-700 border-2 hover:bg-red-700 rounded-lg"
+          onClick={reset}
+        >
+          Yeni Bir Seçim İçin Her Şeyi Sıfırla
+        </button>
+      )}
       {authCtx.isElectionFinished && isLoading && (
         <p className="w-60 h-20 px-auto mt-50 mb-4 ">Seçim sıfırlanıyor...</p>
       )}

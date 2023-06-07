@@ -58,6 +58,7 @@ const Ballot = (props) => {
       navigate("/");
     } else {
       console.log("Oy gönderilemedi");
+      navigate("/");
     }
     setIsSubmitted(false);
   };
@@ -120,7 +121,9 @@ const Ballot = (props) => {
             <p>Oyunuzu kimseye vermek istemediğinizden emin misiniz?</p>
             <div className="flex justify-end mt-4">
               <button
-                onClick={sendVote}
+                onClick={() => {
+                  navigate("/");
+                }}
                 className="bg-green-500 hover:bg-green-700 text-white px-4 py-2 rounded mr-2"
               >
                 Evet
