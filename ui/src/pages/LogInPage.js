@@ -50,7 +50,7 @@ const LogInPage = () => {
       try {
         //"http://localhost:3001/api/v1/student/login",
         const res = await axios.post(
-          "http://localhost:3001/api/v1/student/login",
+          "https://isces.onrender.com/api/v1/student/login",
           JSON.stringify(signInInfo)
         );
 
