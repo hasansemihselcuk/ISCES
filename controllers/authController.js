@@ -15,15 +15,9 @@ const getMockData = async () => {
   return response.data;
 };
 
-const getMockDataAdmin = async () => {
-  const response = await axios.get(
-    "https://6479f2d2a455e257fa641adf.mockapi.io/api/v1/admin"
-  );
-  return response.data;
-};
+
 
 const datas = getMockData();
-const datasAdmin = getMockDataAdmin();
 
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
