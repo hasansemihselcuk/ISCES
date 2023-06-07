@@ -21,36 +21,47 @@ const Countdown = (props) => {
       })
     );
   };
+
   const { days, hours, minutes } = authCtx.calculateCountdown();
+
+  const isCountdownVisible =
+    !props.isInSetDate && days !== null && hours !== null && minutes !== null;
+  const isInvalidDate =
+    props.isInSetDate &&
+    authCtx.isElectionStarted &&
+    authCtx.targetDate < new Date();
 
   return (
     <div className="flex flex-col items-center justify-center mt-10 ml-100">
-      {!props.isInSetDate && (
-        <div className="text-2xl font-bold mb-8 ml-500">
-          Oy Kullanmak İçin Kalan Süre
-        </div>
+      {isCountdownVisible && (
+        <>
+          <div className="text-2xl font-bold mb-8 ml-500">
+            Oy Kullanmak İçin Kalan Süre
+          </div>
+          <div className="flex items-center justify-center gap-5 text-lg">
+            <div className="flex flex-col items-center justify-center py-3 px-3 bg-gray-200 rounded">
+              {days}
+              <div className="text-xs mt-5">Gün</div>
+            </div>
+            <div className="flex flex-col items-center justify-center py-3 px-3 bg-gray-200 rounded">
+              {hours}
+              <div className="text-xs mt-5">Saat</div>
+            </div>
+            <div className="flex flex-col items-center justify-center py-3 px-3 bg-gray-200 rounded">
+              {minutes}
+              <div className="text-xs mt-5">Dakika</div>
+            </div>
+          </div>
+        </>
       )}
-      {!props.isInSetDate && (
-        <div className="flex items-center justify-center gap-5 text-lg">
-          <div className="flex flex-col items-center justify-center py-3 px-3 bg-gray-200 rounded">
-            {days}
-            <div className="text-xs mt-5">Gün</div>
-          </div>
-          <div className="flex flex-col items-center justify-center py-3 px-3 bg-gray-200 rounded">
-            {hours}
-            <div className="text-xs mt-5">Saat</div>
-          </div>
-          <div className="flex flex-col items-center justify-center py-3 px-3 bg-gray-200 rounded">
-            {minutes}
-            <div className="text-xs mt-5">Dakika</div>
-          </div>
-        </div>
+      {isInvalidDate && (
+        <div className="text-red-500 mt-5">Geçmiş bir tarih seçemezsiniz.</div>
       )}
       {props.isInSetDate && authCtx.isElectionStarted && (
         <input
           type="date"
           onChange={handleDateChange}
-          className=" px-auto mt-50"
+          className="px-auto mt-50"
         />
       )}
     </div>
