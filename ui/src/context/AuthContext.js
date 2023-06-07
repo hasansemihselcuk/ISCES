@@ -166,6 +166,7 @@ export const AuthContextProvider = (props) => {
         department: department,
         isElectionStarted: isElectionStarted,
         isNominee: isNominee,
+        isElectionFinished: isElectionFinished,
         onLogout: logoutHandler,
         onLogin: loginHandler,
         handleLogin: handleLogin,

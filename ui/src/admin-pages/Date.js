@@ -1,9 +1,10 @@
 import axios from "axios";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import AuthContext from "../context/AuthContext";
 import Countdown from "./Countdown";
 
 const Date = () => {
+  const [isReset, setIsReset] = useState(false);
   const authCtx = useContext(AuthContext);
   const startElection = async () => {
     await axios
@@ -26,6 +27,11 @@ const Date = () => {
         localStorage.removeItem("electionInfos");
       })
       .catch((err) => console.log(err));
+  };
+
+  const reset = async () => {
+    setIsReset(true);
+    await axios.delete("http://localhost:3001/api/v1/admin/election");
   };
 
   return (
@@ -52,6 +58,17 @@ const Date = () => {
         >
           Seçimi Bitir
         </button>
+      )}
+      {authCtx.isElectionFinished && !isReset && (
+        <button
+          className="w-60 h-20 px-auto mt-50 mb-4 border-rose-700 border-2 hover:bg-red-700 rounded-lg"
+          onClick={reset}
+        >
+          Yeni seçim için her şeyi sıfırlayın.
+        </button>
+      )}
+      {authCtx.isElectionFinished && isReset && (
+        <p className="w-60 h-20 px-auto mt-50 mb-4 ">Seçim sıfırlandı.</p>
       )}
     </div>
   ); // set dates
