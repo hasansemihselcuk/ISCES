@@ -122,6 +122,61 @@ exports.cancelRepresentative = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.resetAll = catchAsync(async (req, res, next) => {
+  const students = await Student.find();
+  const candidates = await DepartmentCandidate.find();
+  const representatives = await Representative.find();
+  const election = await Election.findOne({
+    isStarted: true,
+    isEnded: true,
+    isActive: false,
+  });
+  const control = await Control.findOne({
+    isStarted: true,
+    isEnded: true,
+    isActive: false,
+  });
+  const announces = await Announce.find();
+  const notifications = await Notification.find();
+  const tickets = await Ticket.find();
+  students.forEach(async (student) => {
+    student.isCandidate = false;
+    student.isNominee = false;
+    student.isRepresentative = false;
+    student.isAnnounced = false;
+    await student.save();
+  });
+  candidates.forEach(async (candidate) => {
+    await candidate.remove();
+  });
+  representatives.forEach(async (representative) => {
+    await representative.remove();
+  });
+  election.isStarted = false;
+  election.isEnded = false;
+  election.isActive = false;
+  await election.save();
+  control.isStarted = false;
+  control.isEnded = false;
+  control.isActive = false;
+  await control.save();
+  announces.forEach(async (announce) => {
+    await announce.remove();
+  });
+  notifications.forEach(async (notification) => {
+    await notification.remove();
+  });
+  tickets.forEach(async (ticket) => {
+    await ticket.remove();
+  });
+  res.status(200).json({
+    status: "success",
+    message: "Seçim sıfırlandı.",
+  });
+});
+
+
+
 exports.getNominations = catchAsync(async (req, res, next) => {
   const nominations = await Student.find({ isNominee: true }).populate(
     "department",
