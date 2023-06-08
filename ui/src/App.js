@@ -41,6 +41,9 @@ function App() {
               isEnded: res.data.data.election[0].isEnded,
             })
           );
+          if (res.data.data.election[0].isEnded) {
+            authCtx.finishElection();
+          }
           localStorage.setItem(
             "isReset",
             JSON.stringify({ isReset: res.data.data.election[0].isReset })
