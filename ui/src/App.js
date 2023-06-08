@@ -38,6 +38,7 @@ function App() {
             JSON.stringify({
               isActive: res.data.data.election[0].isActive,
               endDate: res.data.data.election[0].endDate,
+              isEnded: res.data.data.election[0].isEnded,
             })
           );
           localStorage.setItem(

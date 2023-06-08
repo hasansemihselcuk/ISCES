@@ -44,6 +44,7 @@ export const AuthContextProvider = (props) => {
     const electionInfo = JSON.parse(localStorage.getItem("electionInfos"));
     if (electionInfo) {
       setIsElectionStarted(electionInfo.isActive);
+      setIsElectionFinished(electionInfo.isEnded);
     }
     if (sid) {
       axios
